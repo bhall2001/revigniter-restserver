@@ -24,14 +24,11 @@ put FALSE into gConfig["force_https"]
 |
 | The default format of the response
 |
-| 'array':      Array data structure
-| 'csv':        Comma separated file
-| 'json':       Uses json_encode(). Note: If a GET query string
-|               called 'callback' is passed, then jsonp will be returned
-| 'html'        HTML using the table library in CodeIgniter
-| 'php':        Uses var_export()
-| 'serialized':  Uses serialize()
-| 'xml':        Uses simplexml_load_string()
+| 'csv':        NOT IMPLEMENTED Comma separated file
+| 'json':       Uses LC8 jsonExport
+| 'html'        NOT IMPLEMENTED HTML using the table library in revIgniter
+| 'lson':       Uses arrayEncode
+| 'xml':        NOT IMPLEMENTED
 |
 */
 put "json" into gConfig["rest_default_format"]
@@ -43,12 +40,12 @@ put "json" into gConfig["rest_default_format"]
 |
 | The following setting contains a list of the supported/allowed formats.
 | You may remove those formats that you don't want to use.
-| If the default format $config['rest_default_format'] is missing within
-| $config['rest_supported_formats'], it will be added silently during
-| REST_Controller initialization.
+| If the default format gConfig["rest_default_format"] is missing within
+| gConfig["rest_supported_formats"], json will be used.
 |
 */
-put "json, lson, csv, html, xml" into gConfig["rest_supported_formats"]
+//put "json, lson, csv, html, xml" into gConfig["rest_supported_formats"]
+put "json, lson" into gConfig["rest_supported_formats"]
 
 
 /*
@@ -116,11 +113,12 @@ put FALSE into gConfig["rest_auth"]
 |
 | Is login required and if so, the user store to use
 |
-| ''        Use config based users or wildcard testing
-| 'ldap'    Use LDAP authentication
-| 'library' Use a authentication library
+| ""        Use config based users or wildcard testing
+| "ldap"    Use LDAP authentication
+| "library" Use a authentication library
 |
-| Note: If 'rest_auth' is set to 'session' then change 'auth_source' to the name of the session variable
+| Note: If 'rest_auth' is set to 'session' then change 'auth_source' to 
+| the name of the session variable
 |
 */
 put "ldap" into gConfig["auth_source"]
@@ -130,8 +128,8 @@ put "ldap" into gConfig["auth_source"]
 | Allow Authentication and API Keys
 |--------------------------------------------------------------------------
 |
-| Where you wish to have Basic, Digest or Session login, but also want to use API Keys (for limiting
-| requests etc), set to TRUE;
+| Where you wish to have Basic, Digest or Session login, but also want 
+| to use API Keys (for limiting requests etc), set to TRUE;
 |
 */
 put TRUE into gConfig["allow_auth_and_keys"]
@@ -162,27 +160,34 @@ put TRUE into gConfig["allow_auth_and_keys"]
 |
 | Set specific authentication types for methods within a class (controller)
 |
-| Set as many config entries as needed.  Any methods not set will use the default 'rest_auth' config value.
+| Set as many config entries as needed.  Any methods not set will use the 
+| default 'rest_auth' config value.
 |
 | e.g:
 |
-|           $config['auth_override_class_method']['deals']['view'] = 'none';
-|           $config['auth_override_class_method']['deals']['insert'] = 'digest';
-|           $config['auth_override_class_method']['accounts']['user'] = 'basic';
-|           $config['auth_override_class_method']['dashboard']['*'] = 'none|digest|basic';
+|     put "none" into gConfig["auth_override_class_method"]["deals"]["view"]
+|     put "digest" into gConfig["auth_override_class_method"]["deals"]["insert"]
+|     put "basic" into gConfig["auth_override_class_method"]["accounts"]["user"]
+|     put "none|digest|basic" into gConfig["auth_override_class_method"]["dashboard"]["*"]
 |
-| Here 'deals', 'accounts' and 'dashboard' are controller names, 'view', 'insert' and 'user' are methods within. An asterisk may also be used to specify an authentication method for an entire classes methods. Ex: $config['auth_override_class_method']['dashboard']['*'] = 'basic'; (NOTE: leave off the '_get' or '_post' from the end of the method name)
-| Acceptable values are; 'none', 'digest' and 'basic'.
+| Here "deals", "accounts" and "dashboard" are controller names, "view", "insert" and "user"
+| are methods within. An asterisk may also be used to specify an authentication method for an
+| entire classes methods.
+|
+| Ex: put "basic" into gConfig["auth_override_class_method"]["dashboard"]["*"]
+| (NOTE: leave off the "_get" or "_post" from the end of the method name)
+|
+| Acceptable values are; "none", "digest" and "basic".
 |
 */
-// $config['auth_override_class_method']['deals']['view'] = 'none';
-// $config['auth_override_class_method']['deals']['insert'] = 'digest';
-// $config['auth_override_class_method']['accounts']['user'] = 'basic';
-// $config['auth_override_class_method']['dashboard']['*'] = 'basic';
+//put "none" into gConfig["auth_override_class_method"]["deals"]["view"]
+//put "digest" into gConfig["auth_override_class_method"]["deals"]["insert"]
+//put "basic" into gConfig["auth_override_class_method"]["accounts"]["user"]
+//put "none|digest|basic" into gConfig["auth_override_class_method"]["dashboard"]["*"]
 
 
 // ---Uncomment list line for the wildard unit test
-// $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';
+// put "basic" into gConfig["auth_override_class_method"]["wildcard_test_cases"]["*"]
 
 /*
 |--------------------------------------------------------------------------
@@ -191,13 +196,13 @@ put TRUE into gConfig["allow_auth_and_keys"]
 |
 | example:
 |
-|            $config['auth_override_class_method_http']['deals']['view']['get'] = 'none';
-|            $config['auth_override_class_method_http']['deals']['insert']['post'] = 'none';
-|            $config['auth_override_class_method_http']['deals']['*']['options'] = 'none';
+|        put "none" into gConfig["auth_override_class_method_http"]["deals"]["view"]["get"]
+|        put "none" into gConfig["auth_override_class_method_http"]["deals"]["insert"]["post"]
+|        put "none" into gConfig["auth_override_class_method_http"]["deals"]["*"]["options"]
 */
 
 // ---Uncomment list line for the wildard unit test
-// $config['auth_override_class_method_http']['wildcard_test_cases']['*']['options'] = 'basic';
+// put "basic" into gConfig["auth_override_class_method_http"]["deals"]["*"]["options"]
 
 /*
 |--------------------------------------------------------------------------
@@ -207,6 +212,7 @@ put TRUE into gConfig["allow_auth_and_keys"]
 | Array of usernames and passwords for login, if ldap is configured this is ignored
 |
 */
+//put "ABCD" into gConfig["rest_valid_logins"]["user1"]
 put "1234" into gConfig["rest_valid_logins"]["admin"]
 
 /*
@@ -220,7 +226,7 @@ put "1234" into gConfig["rest_valid_logins"]["admin"]
 | 1. Set to TRUE and select an auth option for extreme security (client's IP
 |    address must be in whitelist and they must also log in)
 | 2. Set to TRUE with auth set to FALSE to allow whitelisted IPs access with no login
-| 3. Set to FALSE but set 'auth_override_class_method' to 'whitelist' to
+| 3. Set to FALSE but set "auth_override_class_method" to "whitelist" to
 |    restrict certain methods to IPs in your whitelist
 |
 */
@@ -234,7 +240,7 @@ put FALSE into gConfig["rest_ip_whitelist_enabled"]
 | Limit connections to your REST server with a comma separated
 | list of IP addresses
 |
-| e.g: '123.456.789.0, 987.654.32.1'
+| e.g: "123.456.789.0, 987.654.32.1"
 |
 | 127.0.0.1 and 0.0.0.0 are allowed by default
 |
@@ -249,7 +255,7 @@ put "" into gConfig["rest_ip_whitelist"]
 | Prevent connections to the REST server from blacklisted IP addresses
 |
 | Usage:
-| 1. Set to TRUE and add any IP address to 'rest_ip_blacklist'
+| 1. Set to TRUE and add any IP address to "rest_ip_blacklist"
 |
 */
 put FALSE into gConfig["rest_ip_blacklist_enabled"]
@@ -261,7 +267,7 @@ put FALSE into gConfig["rest_ip_blacklist_enabled"]
 |
 | Prevent connections from the following IP addresses
 |
-| e.g: '123.456.789.0, 987.654.32.1'
+| e.g: "123.456.789.0, 987.654.32.1"
 |
 */
 put "" into gConfig["rest_ip_blacklist"]
@@ -295,7 +301,7 @@ put "keys" into gConfig["rest_keys_table"]
 |
 | When set to TRUE, the REST API will look for a column name called 'key'.
 | If no key is provided, the request will result in an error. To override the
-| column name see 'rest_key_column'
+| column name see "rest_key_column"
 |
 | Default table schema:
 |   CREATE TABLE `keys` (
@@ -318,7 +324,7 @@ put FALSE into gConfig["rest_enable_keys"]
 | REST Table Key Column Name
 |--------------------------------------------------------------------------
 |
-| If not using the default table schema in 'rest_enable_keys', specify the
+| If not using the default table schema in "rest_enable_keys", specify the
 | column name to match e.g. my_key
 |
 */
@@ -332,10 +338,10 @@ put "key" into gConfig["rest_key_column"]
 | Specify the method used to limit the API calls
 |
 | Available methods are :
-| $config['rest_limits_method'] = 'IP_ADDRESS'; // Put a limit per ip address
-| $config['rest_limits_method'] = 'API_KEY'; // Put a limit per api key
-| $config['rest_limits_method'] = 'METHOD_NAME'; // Put a limit on method calls
-| $config['rest_limits_method'] = 'ROUTED_URL';  // Put a limit on the routed URL
+| IP_ADDRESS -- Put a limit per ip address
+| API_KEY -- Put a limit per api key
+| METHOD_NAME -- Put a limit on method calls
+| ROUTED_URL' -- Put a limit on the routed URL
 |
 */
 put "ROUTED_URL" into gConfig["rest_limits_method"]
@@ -398,7 +404,7 @@ put FALSE into gConfig["rest_enable_logging"]
 | REST API Logs Table Name
 |--------------------------------------------------------------------------
 |
-| If not using the default table schema in 'rest_enable_logging', specify the
+| If not using the default table schema in "rest_enable_logging", specify the
 | table name to match e.g. my_logs
 |
 */
@@ -409,7 +415,7 @@ put "logs" into gConfig["rest_logs_table"]
 | REST Method Access Control
 |--------------------------------------------------------------------------
 | When set to TRUE, the REST API will check the access table to see if
-| the API key can access that controller. 'rest_enable_keys' must be enabled
+| the API key can access that controller. "rest_enable_keys" must be enabled
 | to use this
 |
 | Default table schema:
@@ -431,7 +437,7 @@ put FALSE into gConfig["rest_enable_access"]
 | REST API Access Table Name
 |--------------------------------------------------------------------------
 |
-| If not using the default table schema in 'rest_enable_access', specify the
+| If not using the default table schema in "rest_enable_access", specify the
 | table name to match e.g. my_access
 |
 */
@@ -443,7 +449,7 @@ put "access" into gConfig["rest_access_table"]
 |--------------------------------------------------------------------------
 |
 | When set to TRUE, the REST API log parameters will be stored in the database as JSON
-| Set to FALSE to log as LSON
+| Set to FALSE to log as LSON <--UP FOR DEBATE
 |
 */
 put FALSE into gConfig["rest_logs_json_params"]
@@ -467,12 +473,12 @@ put FALSE into gConfig["rest_logs_json_params"]
 |       PRIMARY KEY (`id`)
 |   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 |
-| To specify the limits within the controller's __construct() method, add per-method
+| To specify the limits within a controller, add per-method
 | limits with:
 |
-|       $this->method['METHOD_NAME']['limit'] = [NUM_REQUESTS_PER_HOUR];
+|      put [NUM_REQUESTS_PER_HOUR] into gConfig["METHOD_NAME"]["limit"]
 |
-| See application/controllers/api/example.php for examples
+| See application/controllers/api/example.lc for examples
 */
 put FALSE into gConfig["rest_enable_limits"]
 
@@ -481,7 +487,7 @@ put FALSE into gConfig["rest_enable_limits"]
 | REST API Limits Table Name
 |--------------------------------------------------------------------------
 |
-| If not using the default table schema in 'rest_enable_limits', specify the
+| If not using the default table schema in "rest_enable_limits", specify the
 | table name to match e.g. my_limits
 |
 */
@@ -571,10 +577,12 @@ put FALSE into gConfig["allow_any_cors_domain"]
 | CORS Allowable Domains
 |--------------------------------------------------------------------------
 |
-| Used if $config['check_cors'] is set to TRUE and $config['allow_any_cors_domain']
-| is set to FALSE. Set all the allowable domains within the array
+| Used if gConfig["check_cors"] is set to TRUE and gConfig["allow_any_cors_domain"]
+| is set to FALSE. Set all the allowable domains within the array as follows:
 |
-| e.g. $config['allowed_origins'] = ['http://www.example.com', 'https://spa.example.com']
+| e.g. 
 |
+|      put "http" into gConfig["allowed_origins"]["www.example.com"]
+|      put "https" into gConfig["allowed_origins"]["spa.example.com"]
 */
 put "" into gConfig["allowed_cors_origins"]
