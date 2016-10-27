@@ -2,18 +2,20 @@
 A RESTful Server for revIgniter.
 
 ## DOES NOT WORK AS OF 2016-OCT-26
-This is a very early development state at the moment. Github is being
-used to store the project in the hopes of someone wanting to jump
-onboard to help with development.
+This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
 ## Requirements
-Livecode Server 8.0.2 or above
-revIgniter 1.9.3
+  * Livecode Server 8.0.2 or above
+  * revIgniter 1.9.3
 
 
 ## Installation
 
-Drag and drop the application/libraries/Format.php and application/libraries/REST_Controller.php files into your application's directories. To use require_once it at the top of your controllers to load it into the scope. Additionally, copy the rest.php file from application/config in your application's configuration directory.
+Copy the application/libraries/Format.lc and application/libraries/REST_Controller.lc files into your revIgniter application's directory. Additionally, copy the application/config/rest.lc file to your application's configuration directory.
+
+## Dependencies
+
+The Rest_Controller library requires the Livecode 8 JSON Livecode Builder Library to be in stalled.
 
 ## Handling Requests
 
