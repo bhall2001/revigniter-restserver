@@ -79,6 +79,11 @@ put "123.456.789.0, 987.654.32.1" into gConfig["rest_ip_whitelist"]
 ```
 Your localhost IPs (127.0.0.1 and 0.0.0.0) are allowed by default.
 
+Any client connecting to your API will be checked against the blacklisted IP list. If they're on the list, they will NOT be allowed access to the API. The blacklist is a comma-separated string:
+```
+put "123.456.666.0, 987.654.93.1" into gConfig["rest_ip_blacklist"]
+```
+
 ## API Keys
 
 In addition to the authentication methods above, the REST_Controller class also supports the use of API keys. Enabling API keys is easy. Turn it on in your config/rest.php file:
