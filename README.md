@@ -107,6 +107,9 @@ By default, the HTTP will be X-API-KEY. This can be configured in config/rest.ph
 ```
 $ curl -X POST -H "X-API-KEY: some_key_here" http://example.com/books
 ```
+
+Additional security is placed on API keys by enabling rate limits for each key. Each call to the API from an authorized key increments a counter for that key. When the number of calls per hour reaches the key's limit, the requester is notified they have reached their hourly limit.
+ 
 ## Other Documentation / Tutorials
 
 NetTuts: Working with RESTful Services in CodeIgniter
