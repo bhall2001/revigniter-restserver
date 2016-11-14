@@ -17,7 +17,6 @@ end if
  * @link            https://github.com/bhall2001/revigniter-restserver
  * @version         0.0.1
  */
-abstract class REST_Controller extends CI_Controller {
 
     // Note: Only the widely used HTTP status codes are documented
 
@@ -158,21 +157,21 @@ abstract class REST_Controller extends CI_Controller {
      *
      * @var string|NULL
      */
-    protected $rest_format = NULL;
+    sRestFormat = "";
 
     /**
      * Defines the list of method properties such as limit, log and level
      *
      * @var array
      */
-    protected $methods = [];
+    ##protected $methods = [];
 
     /**
      * List of allowed HTTP methods
      *
      * @var array
      */
-    protected $allowed_http_methods = ['get', 'delete', 'post', 'put', 'options', 'patch', 'head'];
+    sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
 
     /**
      * Contains details about the request
@@ -181,7 +180,7 @@ abstract class REST_Controller extends CI_Controller {
      *
      * @var object
      */
-    protected $request = NULL;
+    ##protected $request = NULL;
 
     /**
      * Contains details about the response
@@ -190,7 +189,7 @@ abstract class REST_Controller extends CI_Controller {
      *
      * @var object
      */
-    protected $response = NULL;
+    ##protected $response = NULL;
 
     /**
      * Contains details about the REST API
@@ -199,77 +198,77 @@ abstract class REST_Controller extends CI_Controller {
      *
      * @var object
      */
-    protected $rest = NULL;
+    ##protected $rest = NULL;
 
     /**
      * The arguments for the GET request method
      *
      * @var array
      */
-    protected $_get_args = [];
+    local sGetArgsA = []
 
     /**
      * The arguments for the POST request method
      *
      * @var array
      */
-    protected $_post_args = [];
+    ##protected $_post_args = [];
 
     /**
      * The arguments for the PUT request method
      *
      * @var array
      */
-    protected $_put_args = [];
+    local sPutArgsA = []
 
     /**
      * The arguments for the DELETE request method
      *
      * @var array
      */
-    protected $_delete_args = [];
+    local sDeleteArgsA = []
 
     /**
      * The arguments for the PATCH request method
      *
      * @var array
      */
-    protected $_patch_args = [];
+    local sPatchArgsA = []
 
     /**
      * The arguments for the HEAD request method
      *
      * @var array
      */
-    protected $_head_args = [];
+    local sHeadArgsA  = []
 
     /**
      * The arguments for the OPTIONS request method
      *
      * @var array
      */
-    protected $_options_args = [];
+    local sOptionsArgsA = []
 
     /**
      * The arguments for the query parameters
      *
      * @var array
      */
-    protected $_query_args = [];
+    local sQueryArgsA = []
 
     /**
      * The arguments from GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods combined
      *
      * @var array
      */
-    protected $_args = [];
+    local sArgsA = []
 
     /**
      * The insert_id of the log entry (if we have one)
      *
      * @var string
      */
-    protected $_insert_id = '';
+    protected $_insert_id = ''
 
     /**
      * If the request is allowed based on the API key provided
