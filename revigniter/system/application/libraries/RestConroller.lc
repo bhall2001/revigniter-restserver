@@ -268,65 +268,62 @@ end if
      *
      * @var string
      */
-    protected $_insert_id = ''
+    local sInsertId = ""
 
     /**
      * If the request is allowed based on the API key provided
      *
      * @var bool
      */
-    protected $_allow = TRUE;
+    local sAllow = true
 
     /**
      * The LDAP Distinguished Name of the User post authentication
      *
      * @var string
      */
-    protected $_user_ldap_dn = '';
+    local sUserLdapDn = ""
 
     /**
      * The start of the response time from the server
      *
      * @var string
      */
-    protected $_start_rtime = '';
+    local sStartRTime = ""
 
     /**
      * The end of the response time from the server
      *
      * @var string
      */
-    protected $_end_rtime = '';
+    local sEndRTime = ""
 
     /**
      * List all supported methods, the first will be the default format
      *
      * @var array
      */
-    protected $_supported_formats = [
-            'json' => 'application/json',
-            'array' => 'application/json',
-            'csv' => 'application/csv',
-            'html' => 'text/html',
-            'jsonp' => 'application/javascript',
-            'php' => 'text/plain',
-            'serialized' => 'application/vnd.php.serialized',
-            'xml' => 'application/xml'
-        ];
+     local sSupportedFormats = []
+     put "application/json" into sSupportedFormats["json"]
+     put "application/json" into sSupportedFormats["array"]
+     put "application/csv" into sSupportedFormats["csv"]
+     put "text/html" into sSupportedFormats["html"]
+     put "text/plain" into sSupportedFormats["lson"]
+     put "application/xml" into sSupportedFormats["xml"]
 
     /**
      * Information about the current API user
      *
      * @var object
      */
-    protected $_apiuser;
+    local sApiUser
 
     /**
      * Whether or not to perform a CORS check and apply CORS headers to the request
      *
      * @var bool
      */
-    protected $check_cors = NULL;
+    local sCheckCors = ""
 
     /**
      * Enable XSS flag
@@ -336,7 +333,7 @@ end if
      *
      * @var bool
      */
-    protected $_enable_xss = FALSE;
+    local sEnableXSS = false
 
     /**
      * HTTP status codes and their respective description
@@ -345,6 +342,9 @@ end if
      * @var array
      * @link http://www.restapitutorial.com/httpstatuscodes.html
      */
+     put "OK" into sHttpStatusCodes[HTTP_OK]
+
+
     protected $http_status_codes = [
         self::HTTP_OK => 'OK',
         self::HTTP_CREATED => 'CREATED',
