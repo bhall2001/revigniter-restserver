@@ -343,23 +343,18 @@ end if
      * @link http://www.restapitutorial.com/httpstatuscodes.html
      */
      put "OK" into sHttpStatusCodes[HTTP_OK]
-
-
-    protected $http_status_codes = [
-        self::HTTP_OK => 'OK',
-        self::HTTP_CREATED => 'CREATED',
-        self::HTTP_NO_CONTENT => 'NO CONTENT',
-        self::HTTP_NOT_MODIFIED => 'NOT MODIFIED',
-        self::HTTP_BAD_REQUEST => 'BAD REQUEST',
-        self::HTTP_UNAUTHORIZED => 'UNAUTHORIZED',
-        self::HTTP_FORBIDDEN => 'FORBIDDEN',
-        self::HTTP_NOT_FOUND => 'NOT FOUND',
-        self::HTTP_METHOD_NOT_ALLOWED => 'METHOD NOT ALLOWED',
-        self::HTTP_NOT_ACCEPTABLE => 'NOT ACCEPTABLE',
-        self::HTTP_CONFLICT => 'CONFLICT',
-        self::HTTP_INTERNAL_SERVER_ERROR => 'INTERNAL SERVER ERROR',
-        self::HTTP_NOT_IMPLEMENTED => 'NOT IMPLEMENTED'
-    ];
+     put "CREATED" into sHttpStatusCodes[HTTP_CREATED]
+     put "NO CONTENT" into sHttpStatusCodes[HTTP_NO_CONTENT]
+     put "NOT MODIFIED" into sHttpStatusCodes[HTTP_NOT_MODIFIED]
+     put "BAD REQUEST" into sHttpStatusCodes[HTTP_BAD_REQUEST]
+     put "UNAUTHORIZED" into sHttpStatusCodes[HTTP_UNAUTHORIZED]
+     put "FORBIDDEN" into sHttpStatusCodes[HTTP_FORBIDDEN]
+     put "NOT FOUND" into sHttpStatusCodes[HTTP_NOT_FOUND]
+     put "METHOD NOT ALLOWED" into sHttpStatusCodes[HTTP_METHOD_NOT_ALLOWED]
+     put "NOT ACCEPTABLE" into sHttpStatusCodes[HTTP_NOT_ACCEPTABLE]
+     put "CONFLICT" into sHttpStatusCodes[HTTP_CONFLICT]
+     put "INTERNAL SERVER ERROR" into sHttpStatusCodes[HTTP_INTERNAL_SERVER_ERROR]
+     put "NOT IMPLEMENTED" into sHttpStatusCodes[HTTP_NOT_IMPLEMENTED]
 
     /**
      * Extend this function to apply additional checking early on in the process
