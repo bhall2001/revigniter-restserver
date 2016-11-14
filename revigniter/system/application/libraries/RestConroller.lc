@@ -181,6 +181,7 @@ end if
      * @var object
      */
     ##protected $request = NULL;
+    local sRequestA = []
 
     /**
      * Contains details about the response
@@ -190,6 +191,7 @@ end if
      * @var object
      */
     ##protected $response = NULL;
+    local sResponseA = []
 
     /**
      * Contains details about the REST API
@@ -199,6 +201,7 @@ end if
      * @var object
      */
     ##protected $rest = NULL;
+    local sRestA = []
 
     /**
      * The arguments for the GET request method
