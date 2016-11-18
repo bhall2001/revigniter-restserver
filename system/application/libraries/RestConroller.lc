@@ -18,370 +18,371 @@ end if
  * @version         0.0.1
  */
 
-    // Note: Only the widely used HTTP status codes are documented
+// Note: Only the widely used HTTP status codes are documented
 
-    // Informational
+// Informational
 
-    constant HTTP_CONTINUE = 100
-    constant HTTP_SWITCHING_PROTOCOLS = 101
-    constant HTTP_PROCESSING = 102            // RFC2518
+constant HTTP_CONTINUE = 100
+constant HTTP_SWITCHING_PROTOCOLS = 101
+constant HTTP_PROCESSING = 102            // RFC2518
 
-    // Success
+// Success
 
-    /**
-     * The request has succeeded
-     */
-    constant HTTP_OK = 200
+/**
+ * The request has succeeded
+ */
+constant HTTP_OK = 200
 
-    /**
-     * The server successfully created a new resource
-     */
-    constant HTTP_CREATED = 201
-    constant HTTP_ACCEPTED = 202
-    constant HTTP_NON_AUTHORITATIVE_INFORMATION = 203
+/**
+ * The server successfully created a new resource
+ */
+constant HTTP_CREATED = 201
+constant HTTP_ACCEPTED = 202
+constant HTTP_NON_AUTHORITATIVE_INFORMATION = 203
 
-    /**
-     * The server successfully processed the request, though no content is returned
-     */
-    constant HTTP_NO_CONTENT = 204
-    constant HTTP_RESET_CONTENT = 205
-    constant HTTP_PARTIAL_CONTENT = 206
-    constant HTTP_MULTI_STATUS = 207          // RFC4918
-    constant HTTP_ALREADY_REPORTED = 208      // RFC5842
-    constant HTTP_IM_USED = 226               // RFC3229
+/**
+ * The server successfully processed the request, though no content is returned
+ */
+constant HTTP_NO_CONTENT = 204
+constant HTTP_RESET_CONTENT = 205
+constant HTTP_PARTIAL_CONTENT = 206
+constant HTTP_MULTI_STATUS = 207          // RFC4918
+constant HTTP_ALREADY_REPORTED = 208      // RFC5842
+constant HTTP_IM_USED = 226               // RFC3229
 
-    // Redirection
+// Redirection
 
-    constant HTTP_MULTIPLE_CHOICES = 300
-    constant HTTP_MOVED_PERMANENTLY = 301
-    constant HTTP_FOUND = 302
-    constant HTTP_SEE_OTHER = 303
+constant HTTP_MULTIPLE_CHOICES = 300
+constant HTTP_MOVED_PERMANENTLY = 301
+constant HTTP_FOUND = 302
+constant HTTP_SEE_OTHER = 303
 
-    /**
-     * The resource has not been modified since the last request
-     */
-    constant HTTP_NOT_MODIFIED = 304
-    constant HTTP_USE_PROXY = 305
-    constant HTTP_RESERVED = 306
-    constant HTTP_TEMPORARY_REDIRECT = 307
-    constant HTTP_PERMANENTLY_REDIRECT = 308  // RFC7238
+/**
+ * The resource has not been modified since the last request
+ */
+constant HTTP_NOT_MODIFIED = 304
+constant HTTP_USE_PROXY = 305
+constant HTTP_RESERVED = 306
+constant HTTP_TEMPORARY_REDIRECT = 307
+constant HTTP_PERMANENTLY_REDIRECT = 308  // RFC7238
 
-    // Client Error
+// Client Error
 
-    /**
-     * The request cannot be fulfilled due to multiple errors
-     */
-    constant HTTP_BAD_REQUEST = 400
+/**
+ * The request cannot be fulfilled due to multiple errors
+ */
+constant HTTP_BAD_REQUEST = 400
 
-    /**
-     * The user is unauthorized to access the requested resource
-     */
-    constant HTTP_UNAUTHORIZED = 401
-    constant HTTP_PAYMENT_REQUIRED = 402
+/**
+ * The user is unauthorized to access the requested resource
+ */
+constant HTTP_UNAUTHORIZED = 401
+constant HTTP_PAYMENT_REQUIRED = 402
 
-    /**
-     * The requested resource is unavailable at this present time
-     */
-    constant HTTP_FORBIDDEN = 403
+/**
+ * The requested resource is unavailable at this present time
+ */
+constant HTTP_FORBIDDEN = 403
 
-    /**
-     * The requested resource could not be found
-     *
-     * Note: This is sometimes used to mask if there was an UNAUTHORIZED (401) or
-     * FORBIDDEN (403) error, for security reasons
-     */
-    constant HTTP_NOT_FOUND = 404
+/**
+ * The requested resource could not be found
+ *
+ * Note: This is sometimes used to mask if there was an UNAUTHORIZED (401) or
+ * FORBIDDEN (403) error, for security reasons
+ */
+constant HTTP_NOT_FOUND = 404
 
-    /**
-     * The request method is not supported by the following resource
-     */
-    constant HTTP_METHOD_NOT_ALLOWED = 405
+/**
+ * The request method is not supported by the following resource
+ */
+constant HTTP_METHOD_NOT_ALLOWED = 405
 
-    /**
-     * The request was not acceptable
-     */
-    constant HTTP_NOT_ACCEPTABLE = 406
-    constant HTTP_PROXY_AUTHENTICATION_REQUIRED = 407
-    constant HTTP_REQUEST_TIMEOUT = 408
+/**
+ * The request was not acceptable
+ */
+constant HTTP_NOT_ACCEPTABLE = 406
+constant HTTP_PROXY_AUTHENTICATION_REQUIRED = 407
+constant HTTP_REQUEST_TIMEOUT = 408
 
-    /**
-     * The request could not be completed due to a conflict with the current state
-     * of the resource
-     */
-    constant HTTP_CONFLICT = 409
-    constant HTTP_GONE = 410
-    constant HTTP_LENGTH_REQUIRED = 411
-    constant HTTP_PRECONDITION_FAILED = 412
-    constant HTTP_REQUEST_ENTITY_TOO_LARGE = 413
-    constant HTTP_REQUEST_URI_TOO_LONG = 414
-    constant HTTP_UNSUPPORTED_MEDIA_TYPE = 415
-    constant HTTP_REQUESTED_RANGE_NOT_SATISFIABLE = 416
-    constant HTTP_EXPECTATION_FAILED = 417
-    constant HTTP_I_AM_A_TEAPOT = 418                                               // RFC2324
-    constant HTTP_UNPROCESSABLE_ENTITY = 422                                        // RFC4918
-    constant HTTP_LOCKED = 423                                                      // RFC4918
-    constant HTTP_FAILED_DEPENDENCY = 424                                           // RFC4918
-    constant HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL = 425   // RFC2817
-    constant HTTP_UPGRADE_REQUIRED = 426                                            // RFC2817
-    constant HTTP_PRECONDITION_REQUIRED = 428                                       // RFC6585
-    constant HTTP_TOO_MANY_REQUESTS = 429                                           // RFC6585
-    constant HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431                             // RFC6585
+/**
+ * The request could not be completed due to a conflict with the current state
+ * of the resource
+ */
+constant HTTP_CONFLICT = 409
+constant HTTP_GONE = 410
+constant HTTP_LENGTH_REQUIRED = 411
+constant HTTP_PRECONDITION_FAILED = 412
+constant HTTP_REQUEST_ENTITY_TOO_LARGE = 413
+constant HTTP_REQUEST_URI_TOO_LONG = 414
+constant HTTP_UNSUPPORTED_MEDIA_TYPE = 415
+constant HTTP_REQUESTED_RANGE_NOT_SATISFIABLE = 416
+constant HTTP_EXPECTATION_FAILED = 417
+constant HTTP_I_AM_A_TEAPOT = 418                                               // RFC2324
+constant HTTP_UNPROCESSABLE_ENTITY = 422                                        // RFC4918
+constant HTTP_LOCKED = 423                                                      // RFC4918
+constant HTTP_FAILED_DEPENDENCY = 424                                           // RFC4918
+constant HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL = 425   // RFC2817
+constant HTTP_UPGRADE_REQUIRED = 426                                            // RFC2817
+constant HTTP_PRECONDITION_REQUIRED = 428                                       // RFC6585
+constant HTTP_TOO_MANY_REQUESTS = 429                                           // RFC6585
+constant HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431                             // RFC6585
 
-    // Server Error
+// Server Error
 
-    /**
-     * The server encountered an unexpected error
-     *
-     * Note: This is a generic error message when no specific message
-     * is suitable
-     */
-    constant HTTP_INTERNAL_SERVER_ERROR = 500
+/**
+ * The server encountered an unexpected error
+ *
+ * Note: This is a generic error message when no specific message
+ * is suitable
+ */
+constant HTTP_INTERNAL_SERVER_ERROR = 500
 
-    /**
-     * The server does not recognise the request method
-     */
-    constant HTTP_NOT_IMPLEMENTED = 501
-    constant HTTP_BAD_GATEWAY = 502
-    constant HTTP_SERVICE_UNAVAILABLE = 503
-    constant HTTP_GATEWAY_TIMEOUT = 504
-    constant HTTP_VERSION_NOT_SUPPORTED = 505
-    constant HTTP_VARIANT_ALSO_NEGOTIATES_EXPERIMENTAL = 506                        // RFC2295
-    constant HTTP_INSUFFICIENT_STORAGE = 507                                        // RFC4918
-    constant HTTP_LOOP_DETECTED = 508                                               // RFC5842
-    constant HTTP_NOT_EXTENDED = 510                                                // RFC2774
-    constant HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511
+/**
+ * The server does not recognise the request method
+ */
+constant HTTP_NOT_IMPLEMENTED = 501
+constant HTTP_BAD_GATEWAY = 502
+constant HTTP_SERVICE_UNAVAILABLE = 503
+constant HTTP_GATEWAY_TIMEOUT = 504
+constant HTTP_VERSION_NOT_SUPPORTED = 505
+constant HTTP_VARIANT_ALSO_NEGOTIATES_EXPERIMENTAL = 506                        // RFC2295
+constant HTTP_INSUFFICIENT_STORAGE = 507                                        // RFC4918
+constant HTTP_LOOP_DETECTED = 508                                               // RFC5842
+constant HTTP_NOT_EXTENDED = 510                                                // RFC2774
+constant HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511
 
-    /**
-     * This defines the rest format
-     * Must be overridden it in a controller so that it is set
-     *
-     * @var string|NULL
-     */
-    sRestFormat = "";
+/**
+ * This defines the rest format
+ * Must be overridden it in a controller so that it is set
+ *
+ * @var string|NULL
+ */
+sRestFormat = "";
 
-    /**
-     * Defines the list of method properties such as limit, log and level
-     *
-     * @var array
-     */
-    ##protected $methods = [];
+/**
+ * Defines the list of method properties such as limit, log and level
+ *
+ * @var array
+ */
+##protected $methods = [];
 
-    /**
-     * List of allowed HTTP methods
-     *
-     * @var array
-     */
-    sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
+/**
+ * List of allowed HTTP methods
+ *
+ * @var array
+ */
+sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
 
-    /**
-     * Contains details about the request
-     * Fields: body, format, method, ssl
-     * Note: This is a dynamic object (stdClass)
-     *
-     * @var object
-     */
-    ##protected $request = NULL;
-    local sRequestA = []
+/**
+ * Contains details about the request
+ * Fields: body, format, method, ssl
+ * Note: This is a dynamic object (stdClass)
+ *
+ * @var object
+ */
+##protected $request = NULL;
+local sRequestA
 
-    /**
-     * Contains details about the response
-     * Fields: format, lang
-     * Note: This is a dynamic object (stdClass)
-     *
-     * @var object
-     */
-    ##protected $response = NULL;
-    local sResponseA = []
+/**
+ * Contains details about the response
+ * Fields: format, lang
+ * Note: This is a dynamic object (stdClass)
+ *
+ * @var object
+ */
+##protected $response = NULL;
+local sResponseA
 
-    /**
-     * Contains details about the REST API
-     * Fields: db, ignore_limits, key, level, user_id
-     * Note: This is a dynamic object (stdClass)
-     *
-     * @var object
-     */
-    ##protected $rest = NULL;
-    local sRestA = []
+/**
+ * Contains details about the REST API
+ * Fields: db, ignore_limits, key, level, user_id
+ * Note: This is a dynamic object (stdClass)
+ *
+ * @var object
+ */
+##protected $rest = NULL;
+local sRestA
 
-    /**
-     * The arguments for the GET request method
-     *
-     * @var array
-     */
-    local sGetArgsA = []
+/**
+ * The arguments for the GET request method
+ *
+ * @var array
+ */
+local sGetArgsA
 
-    /**
-     * The arguments for the POST request method
-     *
-     * @var array
-     */
-    ##protected $_post_args = [];
+/**
+ * The arguments for the POST request method
+ *
+ * @var array
+ */
+##protected $_post_args = [];
+local sPostArgsA
 
-    /**
-     * The arguments for the PUT request method
-     *
-     * @var array
-     */
-    local sPutArgsA = []
+/**
+ * The arguments for the PUT request method
+ *
+ * @var array
+ */
+local sPutArgsA
 
-    /**
-     * The arguments for the DELETE request method
-     *
-     * @var array
-     */
-    local sDeleteArgsA = []
+/**
+ * The arguments for the DELETE request method
+ *
+ * @var array
+ */
+local sDeleteArgsA
 
-    /**
-     * The arguments for the PATCH request method
-     *
-     * @var array
-     */
-    local sPatchArgsA = []
+/**
+ * The arguments for the PATCH request method
+ *
+ * @var array
+ */
+local sPatchArgsA
 
-    /**
-     * The arguments for the HEAD request method
-     *
-     * @var array
-     */
-    local sHeadArgsA  = []
+/**
+ * The arguments for the HEAD request method
+ *
+ * @var array
+ */
+local sHeadArgsA
 
-    /**
-     * The arguments for the OPTIONS request method
-     *
-     * @var array
-     */
-    local sOptionsArgsA = []
+/**
+ * The arguments for the OPTIONS request method
+ *
+ * @var array
+ */
+local sOptionsArgsA
 
-    /**
-     * The arguments for the query parameters
-     *
-     * @var array
-     */
-    local sQueryArgsA = []
+/**
+ * The arguments for the query parameters
+ *
+ * @var array
+ */
+local sQueryArgsA
 
-    /**
-     * The arguments from GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods combined
-     *
-     * @var array
-     */
-    local sArgsA = []
+/**
+ * The arguments from GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods combined
+ *
+ * @var array
+ */
+local sArgsA
 
-    /**
-     * The insert_id of the log entry (if we have one)
-     *
-     * @var string
-     */
-    local sInsertId = ""
+/**
+ * The insert_id of the log entry (if we have one)
+ *
+ * @var string
+ */
+local sInsertId = ""
 
-    /**
-     * If the request is allowed based on the API key provided
-     *
-     * @var bool
-     */
-    local sAllow = true
+/**
+ * If the request is allowed based on the API key provided
+ *
+ * @var bool
+ */
+local sAllow = true
 
-    /**
-     * The LDAP Distinguished Name of the User post authentication
-     *
-     * @var string
-     */
-    local sUserLdapDn = ""
+/**
+ * The LDAP Distinguished Name of the User post authentication
+ *
+ * @var string
+ */
+local sUserLdapDn = ""
 
-    /**
-     * The start of the response time from the server
-     *
-     * @var string
-     */
-    local sStartRTime = ""
+/**
+ * The start of the response time from the server
+ *
+ * @var string
+ */
+local sStartRTime = ""
 
-    /**
-     * The end of the response time from the server
-     *
-     * @var string
-     */
-    local sEndRTime = ""
+/**
+ * The end of the response time from the server
+ *
+ * @var string
+ */
+local sEndRTime = ""
 
-    /**
-     * List all supported methods, the first will be the default format
-     *
-     * @var array
-     */
-     local sSupportedFormats = []
-     put "application/json" into sSupportedFormats["json"]
-     put "application/json" into sSupportedFormats["array"]
-     put "application/csv" into sSupportedFormats["csv"]
-     put "text/html" into sSupportedFormats["html"]
-     put "text/plain" into sSupportedFormats["lson"]
-     put "application/xml" into sSupportedFormats["xml"]
+/**
+ * List all supported methods, the first will be the default format
+ *
+ * @var array
+ */
+ local sSupportedFormats
+ put "application/json" into sSupportedFormats["json"]
+ put "application/json" into sSupportedFormats["array"]
+ put "application/csv" into sSupportedFormats["csv"]
+ put "text/html" into sSupportedFormats["html"]
+ put "text/plain" into sSupportedFormats["lson"]
+ put "application/xml" into sSupportedFormats["xml"]
 
-    /**
-     * Information about the current API user
-     *
-     * @var object
-     */
-    local sApiUser
+/**
+ * Information about the current API user
+ *
+ * @var object
+ */
+local sApiUser
 
-    /**
-     * Whether or not to perform a CORS check and apply CORS headers to the request
-     *
-     * @var bool
-     */
-    local sCheckCors = ""
+/**
+ * Whether or not to perform a CORS check and apply CORS headers to the request
+ *
+ * @var bool
+ */
+local sCheckCors = ""
 
-    /**
-     * Enable XSS flag
-     * Determines whether the XSS filter is always active when
-     * GET, OPTIONS, HEAD, POST, PUT, DELETE and PATCH data is encountered
-     * Set automatically based on config setting
-     *
-     * @var bool
-     */
-    local sEnableXSS = false
+/**
+ * Enable XSS flag
+ * Determines whether the XSS filter is always active when
+ * GET, OPTIONS, HEAD, POST, PUT, DELETE and PATCH data is encountered
+ * Set automatically based on config setting
+ *
+ * @var bool
+ */
+local sEnableXSS = false
 
-    /**
-     * HTTP status codes and their respective description
-     * Note: Only the widely used HTTP status codes are used
-     *
-     * @var array
-     * @link http://www.restapitutorial.com/httpstatuscodes.html
-     */
-     put "OK" into sHttpStatusCodes[HTTP_OK]
-     put "CREATED" into sHttpStatusCodes[HTTP_CREATED]
-     put "NO CONTENT" into sHttpStatusCodes[HTTP_NO_CONTENT]
-     put "NOT MODIFIED" into sHttpStatusCodes[HTTP_NOT_MODIFIED]
-     put "BAD REQUEST" into sHttpStatusCodes[HTTP_BAD_REQUEST]
-     put "UNAUTHORIZED" into sHttpStatusCodes[HTTP_UNAUTHORIZED]
-     put "FORBIDDEN" into sHttpStatusCodes[HTTP_FORBIDDEN]
-     put "NOT FOUND" into sHttpStatusCodes[HTTP_NOT_FOUND]
-     put "METHOD NOT ALLOWED" into sHttpStatusCodes[HTTP_METHOD_NOT_ALLOWED]
-     put "NOT ACCEPTABLE" into sHttpStatusCodes[HTTP_NOT_ACCEPTABLE]
-     put "CONFLICT" into sHttpStatusCodes[HTTP_CONFLICT]
-     put "INTERNAL SERVER ERROR" into sHttpStatusCodes[HTTP_INTERNAL_SERVER_ERROR]
-     put "NOT IMPLEMENTED" into sHttpStatusCodes[HTTP_NOT_IMPLEMENTED]
+/**
+ * HTTP status codes and their respective description
+ * Note: Only the widely used HTTP status codes are used
+ *
+ * @var array
+ * @link http://www.restapitutorial.com/httpstatuscodes.html
+ */
+ put "OK" into sHttpStatusCodes[HTTP_OK]
+ put "CREATED" into sHttpStatusCodes[HTTP_CREATED]
+ put "NO CONTENT" into sHttpStatusCodes[HTTP_NO_CONTENT]
+ put "NOT MODIFIED" into sHttpStatusCodes[HTTP_NOT_MODIFIED]
+ put "BAD REQUEST" into sHttpStatusCodes[HTTP_BAD_REQUEST]
+ put "UNAUTHORIZED" into sHttpStatusCodes[HTTP_UNAUTHORIZED]
+ put "FORBIDDEN" into sHttpStatusCodes[HTTP_FORBIDDEN]
+ put "NOT FOUND" into sHttpStatusCodes[HTTP_NOT_FOUND]
+ put "METHOD NOT ALLOWED" into sHttpStatusCodes[HTTP_METHOD_NOT_ALLOWED]
+ put "NOT ACCEPTABLE" into sHttpStatusCodes[HTTP_NOT_ACCEPTABLE]
+ put "CONFLICT" into sHttpStatusCodes[HTTP_CONFLICT]
+ put "INTERNAL SERVER ERROR" into sHttpStatusCodes[HTTP_INTERNAL_SERVER_ERROR]
+ put "NOT IMPLEMENTED" into sHttpStatusCodes[HTTP_NOT_IMPLEMENTED]
 
-    /**
-     * Extend this function to apply additional checking early on in the process
-     *
-     * @access protected
-     * @return void
-     */
-    protected function early_checks()
-    {
-    }
 
-    /**
-     * Constructor for the REST API
-     *
-     * @access public
-     * @param string $config Configuration filename minus the file extension
-     * e.g: my_rest.php is passed as 'my_rest'
-     * @return void
-     */
-    public function __construct($config = 'rest')
-    {
-        parent::__construct();
+/**
+ * Extend this function to apply additional checking early on in the process
+ *
+ * @access protected
+ * @return void
+ */
+ /*
+protected function early_checks()
+{
+}
+*/
 
-        $this->preflight_checks();
+/**
+ * Constructor for the REST API
+ *
+ * @access public
+ * @param string $config Configuration filename minus the file extension
+ * e.g: my_rest.php is passed as 'my_rest'
+ * @return void
+ */
+
+/* preflight_checks();
 
         // Set the default value of global xss filtering. Same approach as CodeIgniter 3
         $this->_enable_xss = ($this->config->item('global_xss_filtering') === TRUE);
@@ -566,6 +567,8 @@ end if
             }
         }
     }
+*/
+
 
     /**
      * Deconstructor
@@ -574,6 +577,7 @@ end if
      * @access public
      * @return void
      */
+/*
     public function __destruct()
     {
         // Get the current timestamp
@@ -585,6 +589,7 @@ end if
             $this->_log_access_time();
         }
     }
+*/
 
     /**
      * Checks to see if we have everything we need to run this library.
@@ -592,6 +597,7 @@ end if
      * @access protected
      * @return Exception
      */
+/*
     protected function preflight_checks()
     {
         // Check to see if PHP is equal to or greater than 5.4.x
@@ -607,6 +613,7 @@ end if
             throw new Exception('REST Server requires CodeIgniter 3.x');
         }
     }
+*/
 
     /**
      * Requests are not made to methods directly, the request will be for
@@ -617,6 +624,7 @@ end if
      * @param string $object_called
      * @param array $arguments The arguments passed to the controller method
      */
+/*
     public function _remap($object_called, $arguments = [])
     {
         // Should we answer if not over SSL?
@@ -734,6 +742,7 @@ end if
                 ], self::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+*/
 
     /**
      * Takes mixed data and optionally a status code, then creates the response
@@ -744,6 +753,7 @@ end if
      * @param bool $continue TRUE to flush the response to the client and continue
      * running the script; otherwise, exit
      */
+/*
     public function response($data = NULL, $http_code = NULL, $continue = FALSE)
     {
         // If the HTTP status is not NULL, then cast as an integer
@@ -817,6 +827,7 @@ end if
 
         // Otherwise dump the output automatically
     }
+*/
 
     /**
      * Takes mixed data and optionally a status code, then creates the response
@@ -828,10 +839,12 @@ end if
      * @param array|NULL $data Data to output to the user
      * @param int|NULL $http_code HTTP status code
      */
+/*
     public function set_response($data = NULL, $http_code = NULL)
     {
         $this->response($data, $http_code, TRUE);
     }
+*/
 
     /**
      * Get the input format e.g. json or xml
@@ -839,6 +852,7 @@ end if
      * @access protected
      * @return string|NULL Supported input format; otherwise, NULL
      */
+/*
     protected function _detect_input_format()
     {
         // Get the CONTENT-TYPE value from the SERVER variable
@@ -866,6 +880,7 @@ end if
 
         return NULL;
     }
+*/
 
     /**
      * Gets the default format from the configuration. Fallbacks to 'json'
@@ -875,11 +890,13 @@ end if
      * @access protected
      * @return string The default supported input format
      */
+/*
     protected function _get_default_output_format()
     {
         $default_format = (string) $this->config->item('rest_default_format');
         return $default_format === '' ? 'json' : $default_format;
     }
+*/
 
     /**
      * Detect which format should be used to output the data
@@ -887,6 +904,7 @@ end if
      * @access protected
      * @return mixed|NULL|string Output format
      */
+/*
     protected function _detect_output_format()
     {
         // Concatenate formats to a regex pattern e.g. \.(csv|json|xml)
@@ -951,6 +969,7 @@ end if
         // Obtain the default format from the configuration
         return $this->_get_default_output_format();
     }
+*/
 
     /**
      * Get the HTTP request string e.g. get or post
@@ -958,6 +977,7 @@ end if
      * @access protected
      * @return string|NULL Supported request method as a lowercase string; otherwise, NULL if not supported
      */
+/*
     protected function _detect_method()
     {
         // Declare a variable to store the method
@@ -983,6 +1003,7 @@ end if
 
         return in_array($method, $this->allowed_http_methods) && method_exists($this, '_parse_' . $method) ? $method : 'get';
     }
+*/
 
     /**
      * See if the user has provided an API key
@@ -990,6 +1011,7 @@ end if
      * @access protected
      * @return bool
      */
+/*
     protected function _detect_api_key()
     {
         // Get the api key name variable set in the rest config file
@@ -1057,6 +1079,7 @@ end if
         // No key has been sent
         return FALSE;
     }
+*/
 
     /**
      * Preferred return language
@@ -1064,6 +1087,7 @@ end if
      * @access protected
      * @return string|NULL The language code
      */
+/*
     protected function _detect_lang()
     {
         $lang = $this->input->server('HTTP_ACCEPT_LANGUAGE');
@@ -1091,6 +1115,7 @@ end if
         // Otherwise simply return as a string
         return $lang;
     }
+*/
 
     /**
      * Add the request to the log table
@@ -1099,6 +1124,7 @@ end if
      * @param bool $authorized TRUE the user is authorized; otherwise, FALSE
      * @return bool TRUE the data was inserted; otherwise, FALSE
      */
+/*
     protected function _log_request($authorized = FALSE)
     {
         // Insert the request into the log table
@@ -1119,6 +1145,7 @@ end if
 
         return $is_inserted;
     }
+*/
 
     /**
      * Check if the requests to a controller method exceed a limit
@@ -1127,6 +1154,7 @@ end if
      * @param string $controller_method The method being called
      * @return bool TRUE the call limit is below the threshold; otherwise, FALSE
      */
+/*
     protected function _check_limit($controller_method)
     {
         // They are special, or it might not even have a limit
@@ -1225,6 +1253,7 @@ end if
 
         return TRUE;
     }
+*/
 
     /**
      * Check if there is a specific auth type set for the current class/method/HTTP-method being called
@@ -1232,6 +1261,7 @@ end if
      * @access protected
      * @return bool
      */
+/*
     protected function _auth_override_check()
     {
         // Assign the class/method auth type override array from the config
@@ -1417,6 +1447,7 @@ end if
         }
         return FALSE;
     }
+*/
 
     /**
      * Parse the GET request arguments
@@ -1424,11 +1455,13 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_get()
     {
         // Merge both the URI segments and query parameters
         $this->_get_args = array_merge($this->_get_args, $this->_query_args);
     }
+*/
 
     /**
      * Parse the POST request arguments
@@ -1436,6 +1469,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_post()
     {
         $this->_post_args = $_POST;
@@ -1445,6 +1479,7 @@ end if
             $this->request->body = $this->input->raw_input_stream;
         }
     }
+*/
 
     /**
      * Parse the PUT request arguments
@@ -1452,6 +1487,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_put()
     {
         if ($this->request->format)
@@ -1468,13 +1504,14 @@ end if
            $this->_put_args = $this->input->input_stream();
         }
     }
-
+*/
     /**
      * Parse the HEAD request arguments
      *
      * @access protected
      * @return void
      */
+/*
     protected function _parse_head()
     {
         // Parse the HEAD variables
@@ -1483,6 +1520,7 @@ end if
         // Merge both the URI segments and HEAD params
         $this->_head_args = array_merge($this->_head_args, $head);
     }
+*/
 
     /**
      * Parse the OPTIONS request arguments
@@ -1490,6 +1528,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_options()
     {
         // Parse the OPTIONS variables
@@ -1498,6 +1537,7 @@ end if
         // Merge both the URI segments and OPTIONS params
         $this->_options_args = array_merge($this->_options_args, $options);
     }
+*/
 
     /**
      * Parse the PATCH request arguments
@@ -1505,6 +1545,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_patch()
     {
         // It might be a HTTP body
@@ -1518,6 +1559,7 @@ end if
             $this->_patch_args = $this->input->input_stream();
         }
     }
+*/
 
     /**
      * Parse the DELETE request arguments
@@ -1525,6 +1567,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_delete()
     {
         // These should exist if a DELETE request
@@ -1533,6 +1576,7 @@ end if
             $this->_delete_args = $this->input->input_stream();
         }
     }
+*/
 
     /**
      * Parse the query parameters
@@ -1540,10 +1584,12 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _parse_query()
     {
         $this->_query_args = $this->input->get();
     }
+*/
 
     // INPUT FUNCTION --------------------------------------------------------------
 
@@ -1556,6 +1602,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the GET request; otherwise, NULL
      */
+/*
     public function get($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1565,6 +1612,7 @@ end if
 
         return isset($this->_get_args[$key]) ? $this->_xss_clean($this->_get_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from a OPTIONS request
@@ -1575,6 +1623,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the OPTIONS request; otherwise, NULL
      */
+/*
     public function options($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1584,6 +1633,7 @@ end if
 
         return isset($this->_options_args[$key]) ? $this->_xss_clean($this->_options_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from a HEAD request
@@ -1594,6 +1644,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the HEAD request; otherwise, NULL
      */
+/*
     public function head($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1603,6 +1654,7 @@ end if
 
         return isset($this->_head_args[$key]) ? $this->_xss_clean($this->_head_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from a POST request
@@ -1613,7 +1665,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the POST request; otherwise, NULL
      */
-    public function post($key = NULL, $xss_clean = NULL)
+/*    public function post($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
         {
@@ -1622,6 +1674,7 @@ end if
 
         return isset($this->_post_args[$key]) ? $this->_xss_clean($this->_post_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from a PUT request
@@ -1632,6 +1685,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the PUT request; otherwise, NULL
      */
+/*
     public function put($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1641,6 +1695,7 @@ end if
 
         return isset($this->_put_args[$key]) ? $this->_xss_clean($this->_put_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from a DELETE request
@@ -1651,6 +1706,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the DELETE request; otherwise, NULL
      */
+/*
     public function delete($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1660,6 +1716,7 @@ end if
 
         return isset($this->_delete_args[$key]) ? $this->_xss_clean($this->_delete_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from a PATCH request
@@ -1670,6 +1727,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the PATCH request; otherwise, NULL
      */
+/*
     public function patch($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1679,6 +1737,7 @@ end if
 
         return isset($this->_patch_args[$key]) ? $this->_xss_clean($this->_patch_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Retrieve a value from the query parameters
@@ -1689,6 +1748,7 @@ end if
      * @param NULL $xss_clean Whether to apply XSS filtering
      * @return array|string|NULL Value from the query parameters; otherwise, NULL
      */
+/*
     public function query($key = NULL, $xss_clean = NULL)
     {
         if ($key === NULL)
@@ -1698,6 +1758,7 @@ end if
 
         return isset($this->_query_args[$key]) ? $this->_xss_clean($this->_query_args[$key], $xss_clean) : NULL;
     }
+*/
 
     /**
      * Sanitizes data so that Cross Site Scripting Hacks can be
@@ -1708,12 +1769,14 @@ end if
      * @param bool $xss_clean Whether to apply XSS filtering
      * @return string
      */
+/*
     protected function _xss_clean($value, $xss_clean)
     {
         is_bool($xss_clean) || $xss_clean = $this->_enable_xss;
 
         return $xss_clean === TRUE ? $this->security->xss_clean($value) : $value;
     }
+*/
 
     /**
      * Retrieve the validation errors
@@ -1721,12 +1784,14 @@ end if
      * @access public
      * @return array
      */
+/*
     public function validation_errors()
     {
         $string = strip_tags($this->form_validation->error_string());
 
         return explode(PHP_EOL, trim($string, PHP_EOL));
     }
+*/
 
     // SECURITY FUNCTIONS ---------------------------------------------------------
 
@@ -1738,6 +1803,7 @@ end if
      * @param string $password The password to validate
      * @return bool
      */
+/*
     protected function _perform_ldap_auth($username = '', $password = NULL)
     {
         if (empty($username))
@@ -1824,6 +1890,7 @@ end if
 
         return TRUE;
     }
+*/
 
     /**
      * Perform Library Authentication - Override this function to change the way the library is called
@@ -1833,6 +1900,7 @@ end if
      * @param string $password The password to validate
      * @return bool
      */
+/*
     protected function _perform_library_auth($username = '', $password = NULL)
     {
         if (empty($username))
@@ -1863,6 +1931,7 @@ end if
 
         return $this->{$auth_library_class}->$auth_library_function($username, $password);
     }
+*/
 
     /**
      * Check if the user is logged in
@@ -1872,6 +1941,7 @@ end if
      * @param bool|string $password The user's password
      * @return bool
      */
+/*
     protected function _check_login($username = NULL, $password = FALSE)
     {
         if (empty($username))
@@ -1920,6 +1990,7 @@ end if
 
         return TRUE;
     }
+*/
 
     /**
      * Check to see if the user is logged in with a PHP session key
@@ -1927,6 +1998,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _check_php_session()
     {
         // Get the auth_source config item
@@ -1942,6 +2014,7 @@ end if
                 ], self::HTTP_UNAUTHORIZED);
         }
     }
+*/
 
     /**
      * Prepares for basic authentication
@@ -1949,6 +2022,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _prepare_basic_auth()
     {
         // If whitelist is enabled it has the first chance to kick them out
@@ -1983,6 +2057,7 @@ end if
             $this->_force_login();
         }
     }
+*/
 
     /**
      * Prepares for digest authentication
@@ -1990,6 +2065,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _prepare_digest_auth()
     {
         // If whitelist is enabled it has the first chance to kick them out
@@ -2040,6 +2116,7 @@ end if
                 ], self::HTTP_UNAUTHORIZED);
         }
     }
+*/
 
     /**
      * Checks if the client's ip is in the 'rest_ip_blacklist' config and generates a 401 response
@@ -2047,6 +2124,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _check_blacklist_auth()
     {
         // Match an ip address in a blacklist e.g. 127.0.0.0, 0.0.0.0
@@ -2062,6 +2140,7 @@ end if
                 ], self::HTTP_UNAUTHORIZED);
         }
     }
+*/
 
     /**
      * Check if the client's ip is in the 'rest_ip_whitelist' config and generates a 401 response
@@ -2069,6 +2148,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _check_whitelist_auth()
     {
         $whitelist = explode(',', $this->config->item('rest_ip_whitelist'));
@@ -2090,6 +2170,7 @@ end if
                 ], self::HTTP_UNAUTHORIZED);
         }
     }
+*/
 
     /**
      * Force logging in by setting the WWW-Authenticate header
@@ -2099,6 +2180,7 @@ end if
      * each time
      * @return void
      */
+/*
     protected function _force_login($nonce = '')
     {
         $rest_auth = $this->config->item('rest_auth');
@@ -2123,6 +2205,7 @@ end if
                 $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unauthorized')
             ], self::HTTP_UNAUTHORIZED);
     }
+*/
 
     /**
      * Updates the log table with the total access time
@@ -2131,6 +2214,7 @@ end if
      * @author Chris Kacerguis
      * @return bool TRUE log table updated; otherwise, FALSE
      */
+/*
     protected function _log_access_time()
     {
         $payload['rtime'] = $this->_end_rtime - $this->_start_rtime;
@@ -2140,6 +2224,7 @@ end if
                 'id' => $this->_insert_id
             ]);
     }
+*/
 
     /**
      * Updates the log table with HTTP response code
@@ -2149,6 +2234,7 @@ end if
      * @param $http_code int HTTP status code
      * @return bool TRUE log table updated; otherwise, FALSE
      */
+/*
     protected function _log_response_code($http_code)
     {
         $payload['response_code'] = $http_code;
@@ -2157,7 +2243,7 @@ end if
             $this->config->item('rest_logs_table'), $payload, [
             'id' => $this->_insert_id
         ]);
-    }
+*/
 
     /**
      * Check to see if the API key has access to the controller and methods
@@ -2165,6 +2251,8 @@ end if
      * @access protected
      * @return bool TRUE the API key has access; otherwise, FALSE
      */
+	  
+/*
     protected function _check_access()
     {
         // If we don't want to check access, just return TRUE
@@ -2200,6 +2288,7 @@ end if
             ->get($this->config->item('rest_access_table'))
             ->num_rows() > 0;
     }
+*/
 
     /**
      * Checks allowed domains, and adds appropriate headers for HTTP access control (CORS)
@@ -2207,6 +2296,7 @@ end if
      * @access protected
      * @return void
      */
+/*
     protected function _check_cors()
     {
         // Convert the config items into strings
@@ -2245,4 +2335,4 @@ end if
             exit;
         }
     }
-}
+*/
