@@ -388,6 +388,10 @@ protected function early_checks()
  * e.g: my_rest.php is passed as 'my_rest'
  * @return void
  */
+ function _restInitialize
+ 	preflightChecks
+ 
+ end _restInitialize
 
 /* preflight_checks();
 
@@ -598,29 +602,46 @@ protected function early_checks()
     }
 */
 
-    /**
-     * Checks to see if we have everything we need to run this library.
-     *
-     * @access protected
-     * @return Exception
-     */
-/*
-    protected function preflight_checks()
-    {
-        // Check to see if PHP is equal to or greater than 5.4.x
-        if (is_php('5.4') === FALSE)
-        {
-            // CodeIgniter 3 is recommended for v5.4 or above
-            throw new Exception('Using PHP v'.PHP_VERSION.', though PHP v5.4 or greater is required');
-        }
-
-        // Check to see if this is CI 3.x
-        if (explode('.', CI_VERSION, 2)[0] < 3)
-        {
-            throw new Exception('REST Server requires CodeIgniter 3.x');
-        }
-    }
+/**
+* Checks to see if we have everything we need to run this library.
+*
 */
+function preflight_checks
+	try
+		// Check to see if Livecode Server is greater then or equal to 8.1.x
+		//if (is_php('5.4') === FALSE)
+		if livecodeVersion("8.1.0") is false then
+   		// Rest Server library requires LC Server 8.1.X and later
+   		//throw new Exception('Using PHP v'.PHP_VERSION.', though PHP v5.4 or greater is required');
+			throw "Livecode Server Version 8.1.0 or greater is required"
+		end if
+        
+		// Check to see if Revigniter is greater than 1.9.4
+		if revigniterVersion("1.9.4") is false then
+   		throw "Revigniter Version 1.9.4 or greater is required"
+		end if
+		
+		// Check if com.livecode.library.json is installed
+		if libraryJson() is false then
+			throw "REST Server requires Extension com.livecode.library.json"
+		end if
+			
+		end if
+	catch tErrorText
+		put "RestController" & gEXT into tCurrentFile
+		put "preflight_checks" into tCurrentMethod
+
+		put _rigExceptionHandler(tErrorText) into tErrorData
+	
+		if rigConfigItem("logThreshold") > 1 then
+			put TRUE into tDisplayError
+		else
+			put FALSE into tDisplayError
+		end if
+		rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
+	end try
+	
+end preflight_checks
 
     /**
      * Requests are not made to methods directly, the request will be for
@@ -1048,10 +1069,10 @@ protected function early_checks()
 
             $this->_apiuser = $row;
 
-            /*
-             * If "is private key" is enabled, compare the ip address with the list
-             * of valid ip addresses stored in the database
-             */
+            //
+            // If "is private key" is enabled, compare the ip address with the list
+            // of valid ip addresses stored in the database
+            //
             if (empty($row->is_private_key) === FALSE)
             {
                 // Check for a list of valid ip addresses
@@ -2343,3 +2364,69 @@ protected function early_checks()
         }
     }
 */
+
+
+
+------------------------------------------------------------------------
+-- Check the version of Livecode Server running. Returns true if the
+-- current server version is GREATER THAN OR EQUAL to the passed
+-- in parameter
+------------------------------------------------------------------------
+ 
+function livecodeVersion pVersion
+	put the itemDelimiter into oldDelmin
+	set the itemDelimiter to "."
+	put the version into tLivecodeVersion
+	
+	if (item 1 of pVersion >= item 1 of tLivecodeVersion) and (item 2 of pVersion >= item 2 of tLivecodeVersion) and (item 3 of pVersion >= item 3 of tLivecodeVersion) then
+		put true into tResult
+	else
+		put false into tResult
+	end if
+	
+	set the itemDelimiter to oldDelim
+
+	return tResult
+end livecodeVersion
+
+
+------------------------------------------------------------------------
+-- Check the version of Revigniter. Returns true is greater or equal to
+-- the value passed in pVersion otherwise false.
+------------------------------------------------------------------------
+
+function revigniterVersion pVersion
+	//RIVERSION
+
+	return true
+end revigniterVersion
+
+
+------------------------------------------------------------------------
+-- Check if com.livecode.library.json is installed. Returns boolean true
+-- if installed othewise false
+------------------------------------------------------------------------
+
+function libraryJson
+	return true
+end libraryJson
+
+
+
+/*
+# CHECK IF FILE EXISTS
+set the itemDel to "/"
+put gAPPPATH & tModulePath & "config/" & item -1 of tConfigFileName & gEXT into tFilepath
+
+if there is a file tFilepath then
+else
+	if pFailGracefully is TRUE then
+		return FALSE
+	else
+		rigShowError "The configuration file" && item -1 of tConfigFileName & gEXT && "does not exist."
+	end if
+end if
+*/
+
+# CALL INITIAL HANDLERS
+_restInitialize
