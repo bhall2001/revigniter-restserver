@@ -2420,25 +2420,29 @@ end revigniterVersion
 ------------------------------------------------------------------------
 
 function libraryJson
+	/*
+	# CHECK IF FILE EXISTS
+	set the itemDel to "/"
+	put gAPPPATH & tModulePath & "config/" & item -1 of tConfigFileName & gEXT into tFilepath
+
+	if there is a file tFilepath then
+	else
+		if pFailGracefully is TRUE then
+			return FALSE
+		else
+			rigShowError "The configuration file" && item -1 of tConfigFileName & gEXT && "does not exist."
+		end if
+	end if
+	*/
+	
+	
+	
 	return true
 end libraryJson
 
 
 
-/*
-# CHECK IF FILE EXISTS
-set the itemDel to "/"
-put gAPPPATH & tModulePath & "config/" & item -1 of tConfigFileName & gEXT into tFilepath
 
-if there is a file tFilepath then
-else
-	if pFailGracefully is TRUE then
-		return FALSE
-	else
-		rigShowError "The configuration file" && item -1 of tConfigFileName & gEXT && "does not exist."
-	end if
-end if
-*/
 
 # CALL INITIAL HANDLERS
-_restInitialize
+_restInitialize()
