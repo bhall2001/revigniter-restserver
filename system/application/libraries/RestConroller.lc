@@ -157,7 +157,7 @@ constant HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511
  *
  * @var string|NULL
  */
-sRestFormat = "";
+local sRestFormat = "";
 
 /**
  * Defines the list of method properties such as limit, log and level
@@ -165,13 +165,14 @@ sRestFormat = "";
  * @var array
  */
 ##protected $methods = [];
+local sMethodsA
 
 /**
  * List of allowed HTTP methods
  *
  * @var array
  */
-sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
+local sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
 
 /**
  * Contains details about the request
