@@ -1,5 +1,4 @@
 <?rev
-
 put gBASEPATH into gBASEPATH
 
 if gBASEPATH is "gBASEPATH" then
@@ -12,7 +11,7 @@ require gAPPPATH . '/libraries/RestController.lc';
 
 // PUT ALL HANDLER NAMES WHICH ARE LIKELY TO SERVE AS URI SEGMENTS
 // INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
-put "users_get, user_post, user_delete" into gControllerHandlers
+put "users_get" into gControllerHandlers
 
 
 ------------------------------------------------------------------------
