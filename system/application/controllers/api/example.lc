@@ -1,66 +1,71 @@
-<?php
+<?rev
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+put gBASEPATH into gBASEPATH
 
-// This can be removed if you use __autoload() in config.php OR use Modular Extensions
-require APPPATH . '/libraries/REST_Controller.php';
+if gBASEPATH is "gBASEPATH" then
+	put "No direct script access allowed."
+	exit to top
+end if
 
-/**
- * This is an example of a few basic user interaction methods you could use
- * all done with a hardcoded array
- *
- * @package         CodeIgniter
- * @subpackage      Rest Server
- * @category        Controller
- * @author          Phil Sturgeon, Chris Kacerguis
- * @license         MIT
- * @link            https://github.com/chriskacerguis/codeigniter-restserver
- */
-class Example extends REST_Controller {
+// This can be removed if you use autoload in config.lc
+require gAPPPATH . '/libraries/RestController.lc';
 
-    function __construct()
-    {
-        // Construct the parent class
-        parent::__construct();
+// PUT ALL HANDLER NAMES WHICH ARE LIKELY TO SERVE AS URI SEGMENTS
+// INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
+put "users_get, user_post, user_delete" into gControllerHandlers
 
-        // Configure limits on our controller methods
-        // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
-        $this->methods['users_get']['limit'] = 500; // 500 requests per hour per user/key
-        $this->methods['users_post']['limit'] = 100; // 100 requests per hour per user/key
-        $this->methods['users_delete']['limit'] = 50; // 50 requests per hour per user/key
-    }
 
-    public function users_get()
-    {
+------------------------------------------------------------------------
+-- This is an example of a few basic user interaction methods you could use
+-- all done with a hardcoded array
+--
+-- @package         revIgniter
+-- @subpackage      Rest Server
+-- @category        Controller
+-- @author          Bob Hall
+-- @license         APACHE 2.0
+-- @link            https://github.com/bhall2001/revigniter-restserver/
+ ------------------------------------------------------------------------
+
+// Configure limits on our controller methods
+// Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
+put 500 into sMethodsA["users_get"]["limit"]   // 500 requests per hour per user/key
+put 100 into sMethodsA["users_post"]["limit"]  // 100 requests per hour per user/key
+put 50 into sMethodsA["users_delete"]["limit"] // 50 requests per hour per user/key
+   
+function users_get
         // Users from a data store e.g. database
-        $users = [
-            ['id' => 1, 'name' => 'John', 'email' => 'john@example.com', 'fact' => 'Loves coding'],
-            ['id' => 2, 'name' => 'Jim', 'email' => 'jim@example.com', 'fact' => 'Developed on CodeIgniter'],
-            ['id' => 3, 'name' => 'Jane', 'email' => 'jane@example.com', 'fact' => 'Lives in the USA', ['hobbies' => ['guitar', 'cycling']]],
-        ];
+        // using a hard coded array for example
+        put "John" into tUsersA[1]["name"]
+        put "john@example.com" into tUsersA[1]["email"]
+        put "Loves coding" into tUsersA[1]["fact"]
+        
+        put "Jim" into tUsersA[2]["name"]
+        put "jim@example.com" into tUsersA[2]["email"]
+        put "Developed on Revigniter" into tUsersA[2]["fact"]
 
-        $id = $this->get('id');
+        put "Jane" into tUsersA[3]["name"]
+        put "jane@example.com" into tUsersA[3]["email"]
+        put "Lives in the USA" into tUsersA[3]["fact"]
+        
+        //$id = $this->get('id');
 
         // If the id parameter doesn't exist return all the users
 
-        if ($id === NULL)
-        {
+        if sGetA["id"] = "" then
             // Check if the users data store contains users (in case the database result returns NULL)
-            if ($users)
-            {
+            if tUsersA is an array then
                 // Set the response and exit
-                $this->response($users, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
-            }
+                restResponse(tUsersA, HTTP_OK); // OK (200) being the HTTP response code
             else
-            {
                 // Set the response and exit
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'No users were found'
-                ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
-            }
-        }
-
+                
+                put false into tResponseA["status"]
+                put "No users were found" into tResponseA["message"]
+                restResponse(tResponseA, HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            end if
+        else
+/*
         // Find and return a single record for a particular user.
 
         $id = (int) $id;
@@ -99,8 +104,11 @@ class Example extends REST_Controller {
                 'message' => 'User could not be found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
-    }
+        */
+     end if
+end usersGet
 
+/*
     public function users_post()
     {
         // $this->some_model->update_user( ... );
@@ -134,4 +142,4 @@ class Example extends REST_Controller {
         $this->set_response($message, REST_Controller::HTTP_NO_CONTENT); // NO_CONTENT (204) being the HTTP response code
     }
 
-}
+*/
