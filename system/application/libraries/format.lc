@@ -440,19 +440,19 @@ private function _from_csv($data, $delimiter, $enclosure)
 end _from_csv
 *********/
 
-    /**
-     * @param $data Encoded json string
-     * @return mixed Decoded json string with leading and trailing whitespace removed
-     */
-    protected function _from_json($data)
-    {
-        return json_decode(trim($data));
-    }
+/**
+ * @param $data Encoded json string
+ * @return mixed Decoded json string with leading and trailing whitespace removed
+ */
+protected function _from_json(@pData)
+{
+  return jsonImport(pData)
+}
 
-    /**
-     * @param string Data to unserialized
-     * @return array Unserialized data in array form
-     */
-private function _from_lson(pData)
-   return unserialize(trim($data))
+/**
+ * @param string Data to unserialized
+ * @return array Unserialized data in array form
+ */
+private function _from_lson(@pData)
+   return arrayDecode(pData)
 end _from_lson
