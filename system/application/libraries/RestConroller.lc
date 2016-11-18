@@ -5,6 +5,8 @@ if gBASEPATH is "gBASEPATH" then
 	put "No direct script access allowed."
 	exit to top
 end if
+
+
 /**
  * revIgniter Rest Controller
  * A fully RESTful server implementation for revIgniter
@@ -17,6 +19,9 @@ end if
  * @link            https://github.com/bhall2001/revigniter-restserver
  * @version         0.0.1
  */
+
+// AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
+rigLoadExtension "com.livecode.library.json"
 
 // Note: Only the widely used HTTP status codes are documented
 
@@ -301,20 +306,20 @@ local sStartRTime = ""
  *
  * @var string
  */
-local sEndRTime = ""
+ local sEndRTime = ""
 
 /**
  * List all supported methods, the first will be the default format
  *
  * @var array
  */
- local sSupportedFormats
- put "application/json" into sSupportedFormats["json"]
- put "application/json" into sSupportedFormats["array"]
- put "application/csv" into sSupportedFormats["csv"]
- put "text/html" into sSupportedFormats["html"]
- put "text/plain" into sSupportedFormats["lson"]
- put "application/xml" into sSupportedFormats["xml"]
+local sSupportedFormats
+put "application/json" into sSupportedFormats["json"]
+put "application/json" into sSupportedFormats["array"]
+put "application/csv" into sSupportedFormats["csv"]
+put "text/html" into sSupportedFormats["html"]
+put "text/plain" into sSupportedFormats["lson"]
+put "application/xml" into sSupportedFormats["xml"]
 
 /**
  * Information about the current API user
@@ -338,7 +343,7 @@ local sCheckCors = ""
  *
  * @var bool
  */
-local sEnableXSS = false
+ local sEnableXSS = false
 
 /**
  * HTTP status codes and their respective description
@@ -347,19 +352,20 @@ local sEnableXSS = false
  * @var array
  * @link http://www.restapitutorial.com/httpstatuscodes.html
  */
- put "OK" into sHttpStatusCodes[HTTP_OK]
- put "CREATED" into sHttpStatusCodes[HTTP_CREATED]
- put "NO CONTENT" into sHttpStatusCodes[HTTP_NO_CONTENT]
- put "NOT MODIFIED" into sHttpStatusCodes[HTTP_NOT_MODIFIED]
- put "BAD REQUEST" into sHttpStatusCodes[HTTP_BAD_REQUEST]
- put "UNAUTHORIZED" into sHttpStatusCodes[HTTP_UNAUTHORIZED]
- put "FORBIDDEN" into sHttpStatusCodes[HTTP_FORBIDDEN]
- put "NOT FOUND" into sHttpStatusCodes[HTTP_NOT_FOUND]
- put "METHOD NOT ALLOWED" into sHttpStatusCodes[HTTP_METHOD_NOT_ALLOWED]
- put "NOT ACCEPTABLE" into sHttpStatusCodes[HTTP_NOT_ACCEPTABLE]
- put "CONFLICT" into sHttpStatusCodes[HTTP_CONFLICT]
- put "INTERNAL SERVER ERROR" into sHttpStatusCodes[HTTP_INTERNAL_SERVER_ERROR]
- put "NOT IMPLEMENTED" into sHttpStatusCodes[HTTP_NOT_IMPLEMENTED]
+ 
+put "OK" into sHttpStatusCodes[HTTP_OK]
+put "CREATED" into sHttpStatusCodes[HTTP_CREATED]
+put "NO CONTENT" into sHttpStatusCodes[HTTP_NO_CONTENT]
+put "NOT MODIFIED" into sHttpStatusCodes[HTTP_NOT_MODIFIED]
+put "BAD REQUEST" into sHttpStatusCodes[HTTP_BAD_REQUEST]
+put "UNAUTHORIZED" into sHttpStatusCodes[HTTP_UNAUTHORIZED]
+put "FORBIDDEN" into sHttpStatusCodes[HTTP_FORBIDDEN]
+put "NOT FOUND" into sHttpStatusCodes[HTTP_NOT_FOUND]
+put "METHOD NOT ALLOWED" into sHttpStatusCodes[HTTP_METHOD_NOT_ALLOWED]
+put "NOT ACCEPTABLE" into sHttpStatusCodes[HTTP_NOT_ACCEPTABLE]
+put "CONFLICT" into sHttpStatusCodes[HTTP_CONFLICT]
+put "INTERNAL SERVER ERROR" into sHttpStatusCodes[HTTP_INTERNAL_SERVER_ERROR]
+put "NOT IMPLEMENTED" into sHttpStatusCodes[HTTP_NOT_IMPLEMENTED]
 
 
 /**
