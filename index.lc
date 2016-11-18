@@ -1,0 +1,153 @@
+<?rev
+
+	global gEXT, gFCPATH, gSELF, gBASEPATH, gAPPPATH, gErrorData, gDatabaseID, gDocTypes, gAdvancedUnicode
+
+##
+#---------------------------------------------------------------
+# SYSTEM FOLDER NAME
+#---------------------------------------------------------------
+#
+# This variable must contain the name of your "system" folder.
+# Include the path if the folder is not in the same  directory
+# as this file.
+#
+# NO TRAILING SLASH!
+# PATH MUST USE UNIX STYLE DIRECTORY SEPARATORS
+#
+##
+	global gSystemFolder
+	put "system" into gSystemFolder
+	
+
+
+##
+#---------------------------------------------------------------
+# APPLICATION FOLDER NAME
+#---------------------------------------------------------------
+#
+# If you want this front controller to use a different "application"
+# folder then the default one you can set its name here. The folder 
+# can also be renamed or relocated anywhere on your server.
+# For more info please see the user guide:
+# http://www.revigniter.com/userGuide/general/managing_apps.html
+#
+#
+# NO TRAILING SLASH!
+# PATH MUST USE UNIX STYLE DIRECTORY SEPARATORS
+#
+##
+	global gApplicationFolder
+	put "application" into gApplicationFolder
+
+
+##
+#===============================================================
+# END OF USER CONFIGURABLE SETTINGS
+#===============================================================
+##
+
+##
+#---------------------------------------------------------------
+# SET THE SERVER PATH
+#---------------------------------------------------------------
+#
+# Let's attempt to determine the full-server path to the "system"
+# folder in order to reduce the possibility of path problems.
+# Note: We only attempt this if the user hasn't specified a 
+# full server path.
+#
+##
+
+	put $_Server["PATH_TRANSLATED"] into sTempPath
+
+  put (the platform is "Win32") into sIsWin
+  if sIsWin is TRUE then
+    replace "\" with "/" in sTempPath
+  end if
+  
+  set the itemdel to "/"
+  
+  if ((sIsWin is FALSE) and (char 1 of gSystemFolder is not "/")) or ((sIsWin is TRUE) and (char 2 of gSystemFolder is not ":")) then
+    put item 1 to -2 of sTempPath & "/" & gSystemFolder into gSystemFolder
+  end if
+
+##
+#---------------------------------------------------------------
+# DEFINE APPLICATION (CONSTANTS) GLOBALS
+#---------------------------------------------------------------
+#
+# SHOULD BE CONSTANTS, BUT AS VALUES MUST BE LITERAL STRINGS
+# AND THE VALUES ARE VARIABLES WE DECLARE GLOBALS
+# TO USE MERGE IS NO SOLUTION AS THIS DOES NOT WORK WITH iRev
+# EXT		- The file extension.  Typically ".lc"
+# FCPATH	- The full server path to THIS file
+# SELF		- The name of THIS file (typically "index.lc")
+# BASEPATH	- The full server path to the "system" folder
+# APPPATH	- The full server path to the "application" folder
+#
+##
+
+	put item -1 of sTempPath into sTempFileName
+	set the itemdel to "."
+	--constant EXT = "." & item -1 of sTempFileName
+	--constant FCPATH = sTempPath
+	--constant SELF = sTempFileName
+	--constant BASEPATH = gSystemFolder & "/"
+
+	--constant EXT = "[[" & quote & "." & quote && "item -1 of sTempFileName]]"
+	--constant FCPATH = "[[sTempPath]]"
+	--constant SELF = "[[sTempFileName]]"
+	--constant BASEPATH = "[[gSystemFolder" && quote & "/" & quote & "]]"
+
+	put "." & item -1 of sTempFileName into gEXT
+	
+	put sTempPath into gFCPATH
+	put sTempFileName into gSELF
+	put gSystemFolder & "/" into gBASEPATH
+
+	if char 1 of gApplicationFolder is "/" then
+		# Absolute path
+		-- constant APPPATH = gApplicationFolder & "/"
+		put gApplicationFolder & "/" into gAPPPATH
+	else
+		# Relative path
+		if gApplicationFolder is "" then put "application" into gApplicationFolder
+		
+		set the itemDel to slash
+		# look for app folder relative to the index folder
+		if there is a folder (item 1 to -2 of sTempPath & "/" & gApplicationFolder) then
+			-- constant APPPATH = index folder & "/" & gApplicationFolder & "/"
+			put item 1 to -2 of sTempPath & "/" & gApplicationFolder & "/" into gAPPPATH
+		else
+			# app folder must me relative to system folder
+			-- constant APPPATH = BASEPATH & gApplicationFolder & "/"
+			put gBASEPATH & gApplicationFolder & "/" into gAPPPATH
+		end if
+	end if
+
+  # Global gAdvancedUnicode needed to address differences
+  # between engine version ≥ 7 and prior versions.
+  set the itemDel to "."
+  if (item 1 of the version < 7) then
+    put FALSE into gAdvancedUnicode
+  else
+    put TRUE into gAdvancedUnicode
+  end if
+
+	set the itemDel to comma
+
+##
+#---------------------------------------------------------------
+# LOAD THE FRONT CONTROLLER
+#---------------------------------------------------------------
+#
+# And away we go...
+#
+##
+
+	include gBASEPATH & "revigniter/RevIgniter" & gEXT
+
+
+--| END OF index.lc
+--| Location: ./index.lc
+----------------------------------------------------------------------
