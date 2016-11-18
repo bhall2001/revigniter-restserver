@@ -46,7 +46,7 @@ end book_delete
 
 RestController also supports PUT and DELETE methods, allowing you to support a truly RESTful interface.
 
-RestController supports a bunch of different request/response formats, including XML, JSON, LSON, CSV and HTML. By default, the library checks the URL and looks for a format either as an extension or as a separate segment.
+RestController supports a many request/response formats, including XML, JSON, LSON, CSV and HTML. By default, the library checks the URL and looks for a format either as an extension or as a separate segment.
 
 This means your URLs can look like this:
 
