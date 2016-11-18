@@ -24,22 +24,22 @@ The RestController library requires the Livecode 8 JSON Livecode Builder Library
 
 ## Handling Requests
 
-Making an HTTP GET call to index.lc/book, for instance, calls the book_get function in the book.lc controller.
+Making an HTTP GET call to index.lc/books, for instance, calls the books_get function in the books.lc controller.
 
 This allows you to implement a RESTful interface easily:
 
-In the book.lc controller file you add functions for for HTML Request verbs that are handled...
+In the books.lc controller file, you add functions for for HTML Request verbs that are handled...
 
 ```
-function book_get
+function books_get
     // Display all books or a single book if an id is provided
 end book_get
 
-function book_post
+function books_post
     // Create a new book
 end book_post
 
-function book_delete
+function books_delete
     // Delete a book
 end book_delete
 ```
@@ -51,12 +51,12 @@ RestController supports a bunch of different request/response formats, including
 This means your URLs can look like this:
 
 ```
-http://example.com/index.lc/example-api/books.json
-http://example.com/index.lc/example-api/book/id/1/format/lson
-http://example.com/index.lc/books?format=json
+http://example.com/index.lc/v1/books.json
+http://example.com/index.lc/v1/books/id/1/format/lson
+http://example.com/index.lc/v1/books?format=xml
 ```
+(default format if none specified is JSON)
 
-(the default format used if none is specified is JSON)
 
 The recommend approach is using the HTTP Accept header:
 
@@ -97,7 +97,7 @@ put "123.456.666.0, 987.654.93.1" into gConfig["rest_ip_blacklist"]
 
 In addition to the authentication methods above, the REST_Controller class also supports the use of API keys. Enabling API keys is easy. Turn it on in your config/rest.php file:
 ```
-put TRUE into gConfig["rest_enable_keys"]
+put true into gConfig["rest_enable_keys"]
 ```
 You'll need to create a new database table to store and access the keys. RestController REQUIRES you have a table that looks like this when using API keys:
 ```
