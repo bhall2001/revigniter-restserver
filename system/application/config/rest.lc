@@ -7,581 +7,581 @@ if gBASEPATH is "gBASEPATH" then
 end if
 
 
-/*
-|--------------------------------------------------------------------------
-| HTTP protocol
-|--------------------------------------------------------------------------
-|
-| Set to force the use of HTTPS for REST API calls
-|
-*/
+
+------------------------------------------------------------------------
+-- HTTP protocol
+------------------------------------------------------------------------
+--
+-- Set to force the use of HTTPS for REST API calls
+--
+
 put false into gConfig["forceHTTPS"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Output Format
-|--------------------------------------------------------------------------
-|
-| The default format of the response
-|
-| 'csv':        NOT IMPLEMENTED Comma separated file
-| 'json':       Uses LC8 jsonExport
-| 'html'        NOT IMPLEMENTED HTML using the table library in revIgniter
-| 'lson':       Uses arrayEncode
-| 'xml':        NOT IMPLEMENTED
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Output Format
+------------------------------------------------------------------------
+--
+-- The default format of the response
+--
+-- 'csv':        NOT IMPLEMENTED Comma separated file
+-- 'json':       Uses LC8 jsonExport
+-- 'html'        NOT IMPLEMENTED HTML using the table library in revIgniter
+-- 'lson':       Uses arrayEncode
+-- 'xml':        NOT IMPLEMENTED
+--
+
 put "json" into gConfig["restDefaultFormat"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Supported Output Formats
-|--------------------------------------------------------------------------
-|
-| The following setting contains a list of the supported/allowed formats.
-| You may remove those formats that you don't want to use.
-| If the default format gConfig["restDefaultFormat"] is missing within
-| gConfig["restSupportedFormats"], json will be used.
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Supported Output Formats
+------------------------------------------------------------------------
+--
+-- The following setting contains a list of the supported/allowed formats.
+-- You may remove those formats that you don't want to use.
+-- If the default format gConfig["restDefaultFormat"] is missing within
+-- gConfig["restSupportedFormats"], json will be used.
+--
+
 //put "json, lson, csv, html, xml" into gConfig["restSupportedFormats"]
 put "json, lson" into gConfig["restSupportedFormats"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Status Field Name
-|--------------------------------------------------------------------------
-|
-| The field name for the status inside the response
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Status Field Name
+------------------------------------------------------------------------
+--
+-- The field name for the status inside the response
+--
+
 put "status" into gConfig["restStatusFieldName"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Message Field Name
-|--------------------------------------------------------------------------
-|
-| The field name for the message inside the response
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Message Field Name
+------------------------------------------------------------------------
+--
+-- The field name for the message inside the response
+--
+
 put "error" into gConfig["restMessageFieldName"]
 
-/*
-|--------------------------------------------------------------------------
-| Enable Emulate Request
-|--------------------------------------------------------------------------
-|
-| Should we enable emulation of the request (e.g. used in Mootools request)
-|
-*/
+
+------------------------------------------------------------------------
+-- Enable Emulate Request
+------------------------------------------------------------------------
+--
+-- Should we enable emulation of the request (e.g. used in Mootools request)
+--
+
 put true into gConfig["enableEmulateRequest"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Realm
-|--------------------------------------------------------------------------
-|
-| Name of the password protected REST API displayed on login dialogs
-|
-| e.g: My Secret REST API
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Realm
+------------------------------------------------------------------------
+--
+-- Name of the password protected REST API displayed on login dialogs
+--
+-- e.g: My Secret REST API
+--
+
 put "REST API" into gConfig["restRealm"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Login
-|--------------------------------------------------------------------------
-|
-| Set to specify the REST API requires to be logged in
-|
-| FALSE     No login required
-| 'basic'   Unsecure login
-| 'digest'  More secure login
-| 'session' Check for a PHP session variable. See 'authSource' to set the
-|           authorization key
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Login
+------------------------------------------------------------------------
+--
+-- Set to specify the REST API requires to be logged in
+--
+-- FALSE     No login required
+-- 'basic'   Unsecure login
+-- 'digest'  More secure login
+-- 'session' Check for a PHP session variable. See 'authSource' to set the
+--           authorization key
+--
+
 put false into gConfig["restAuth"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Login Source
-|--------------------------------------------------------------------------
-|
-| Is login required and if so, the user store to use
-|
-| ""        Use config based users or wildcard testing
-| "ldap"    Use LDAP authentication
-| "library" Use a authentication library
-|
-| Note: If 'restAuth' is set to 'session' then change 'authSource' to 
-| the name of the session variable
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Login Source
+------------------------------------------------------------------------
+--
+-- Is login required and if so, the user store to use
+--
+-- ""        Use config based users or wildcard testing
+-- "ldap"    Use LDAP authentication
+-- "library" Use a authentication library
+--
+-- Note: If 'restAuth' is set to 'session' then change 'authSource' to 
+-- the name of the session variable
+--
+
 put "ldap" into gConfig["authSource"]
 
-/*
-|--------------------------------------------------------------------------
-| Allow Authentication and API Keys
-|--------------------------------------------------------------------------
-|
-| Where you wish to have Basic, Digest or Session login, but also want 
-| to use API Keys (for limiting requests etc), set to TRUE;
-|
-*/
+
+------------------------------------------------------------------------
+-- Allow Authentication and API Keys
+------------------------------------------------------------------------
+--
+-- Where you wish to have Basic, Digest or Session login, but also want 
+-- to use API Keys (for limiting requests etc), set to TRUE;
+--
+
 put true into gConfig["allowAuthAndKeys"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Login Class and Function
-|--------------------------------------------------------------------------
-|
-| If library authentication is used define the class and function name
-|
-| The function should accept two parameters: class->function($username, $password)
-| In other cases override the function PerformLibraryAuth in your controller
-|
-| For digest authentication the library function should return already a stored
-| md5(username:restrealm:password) for that username
-|
-| e.g: md5('admin:REST API:1234') = '1e957ebc35631ab22d5bd6526bd14ea2'
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Login Class and Function
+------------------------------------------------------------------------
+--
+-- If library authentication is used define the class and function name
+--
+-- The function should accept two parameters: class->function($username, $password)
+-- In other cases override the function PerformLibraryAuth in your controller
+--
+-- For digest authentication the library function should return already a stored
+-- md5(username:restrealm:password) for that username
+--
+-- e.g: md5('admin:REST API:1234') = '1e957ebc35631ab22d5bd6526bd14ea2'
+--
+
 ##$config['authLibraryClass'] = '';
 ##$config['authLibraryFunction'] = '';
 
-/*
-|--------------------------------------------------------------------------
-| Override auth types for specific class/method
-|--------------------------------------------------------------------------
-|
-| Set specific authentication types for methods within a class (controller)
-|
-| Set as many config entries as needed.  Any methods not set will use the 
-| default 'restAuth' config value.
-|
-| e.g:
-|
-|     put "none" into gConfig["authOverrideClassMethod"]["deals"]["view"]
-|     put "digest" into gConfig["authOverrideClassMethod"]["deals"]["insert"]
-|     put "basic" into gConfig["authOverrideClassMethod"]["accounts"]["user"]
-|     put "none|digest|basic" into gConfig["authOverrideClassMethod"]["dashboard"]["*"]
-|
-| Here "deals", "accounts" and "dashboard" are controller names, "view", "insert" and "user"
-| are methods within. An asterisk may also be used to specify an authentication method for an
-| entire classes methods.
-|
-| Ex: put "basic" into gConfig["authOverrideClassMethod"]["dashboard"]["*"]
-| (NOTE: leave off the "Get" or "Post" from the end of the method name)
-|
-| Acceptable values are; "none", "digest" and "basic".
-|
-*/
+
+------------------------------------------------------------------------
+-- Override auth types for specific class/method
+------------------------------------------------------------------------
+--
+-- Set specific authentication types for methods within a class (controller)
+--
+-- Set as many config entries as needed.  Any methods not set will use the 
+-- default 'restAuth' config value.
+--
+-- e.g:
+--
+--     put "none" into gConfig["authOverrideClassMethod"]["deals"]["view"]
+--     put "digest" into gConfig["authOverrideClassMethod"]["deals"]["insert"]
+--     put "basic" into gConfig["authOverrideClassMethod"]["accounts"]["user"]
+--     put "none--digest--basic" into gConfig["authOverrideClassMethod"]["dashboard"]["*"]
+--
+-- Here "deals", "accounts" and "dashboard" are controller names, "view", "insert" and "user"
+-- are methods within. An asterisk may also be used to specify an authentication method for an
+-- entire classes methods.
+--
+-- Ex: put "basic" into gConfig["authOverrideClassMethod"]["dashboard"]["*"]
+-- (NOTE: leave off the "Get" or "Post" from the end of the method name)
+--
+-- Acceptable values are; "none", "digest" and "basic".
+--
+
 //put "none" into gConfig["authOverrideClassMethod"]["deals"]["view"]
 //put "digest" into gConfig["authOverrideClassMethod"]["deals"]["insert"]
 //put "basic" into gConfig["authOverrideClassMethod"]["accounts"]["user"]
-//put "none|digest|basic" into gConfig["authOverrideClassMethod"]["dashboard"]["*"]
+//put "none--digest--basic" into gConfig["authOverrideClassMethod"]["dashboard"]["*"]
 
 
 // ---Uncomment list line for the wildard unit test
 // put "basic" into gConfig["authOverrideClassMethod"]["wildcardTestCases"]["*"]
 
-/*
-|--------------------------------------------------------------------------
-| Override auth types for specfic 'class/method/HTTP method'
-|--------------------------------------------------------------------------
-|
-| example:
-|
-|        put "none" into gConfig["authOverrideClassMethodHTTP"]["deals"]["view"]["get"]
-|        put "none" into gConfig["authOverrideClassMethodHTTP"]["deals"]["insert"]["post"]
-|        put "none" into gConfig["authOverrideClassMethodHTTP"]["deals"]["*"]["options"]
-*/
+
+------------------------------------------------------------------------
+-- Override auth types for specfic 'class/method/HTTP method'
+------------------------------------------------------------------------
+--
+-- example:
+--
+--        put "none" into gConfig["authOverrideClassMethodHTTP"]["deals"]["view"]["get"]
+--        put "none" into gConfig["authOverrideClassMethodHTTP"]["deals"]["insert"]["post"]
+--        put "none" into gConfig["authOverrideClassMethodHTTP"]["deals"]["*"]["options"]
+
 
 // ---Uncomment list line for the wildard unit test
 // put "basic" into gConfig["authOverrideClassMethodHTTP"]["deals"]["*"]["options"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Login Usernames
-|--------------------------------------------------------------------------
-|
-| Array of usernames and passwords for login, if ldap is configured this is ignored
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Login Usernames
+------------------------------------------------------------------------
+--
+-- Array of usernames and passwords for login, if ldap is configured this is ignored
+--
+
 //put "ABCD" into gConfig["restValidLogins"]["user1"]
 put "1234" into gConfig["restValidLogins"]["admin"]
 
-/*
-|--------------------------------------------------------------------------
-| Global IP Whitelisting
-|--------------------------------------------------------------------------
-|
-| Limit connections to your REST server to whitelisted IP addresses
-|
-| Usage:
-| 1. Set to TRUE and select an auth option for extreme security (client's IP
-|    address must be in whitelist and they must also log in)
-| 2. Set to TRUE with auth set to FALSE to allow whitelisted IPs access with no login
-| 3. Set to FALSE but set "authOverrideClassMethod" to "whitelist" to
-|    restrict certain methods to IPs in your whitelist
-|
-*/
+
+------------------------------------------------------------------------
+-- Global IP Whitelisting
+------------------------------------------------------------------------
+--
+-- Limit connections to your REST server to whitelisted IP addresses
+--
+-- Usage:
+-- 1. Set to TRUE and select an auth option for extreme security (client's IP
+--    address must be in whitelist and they must also log in)
+-- 2. Set to TRUE with auth set to FALSE to allow whitelisted IPs access with no login
+-- 3. Set to FALSE but set "authOverrideClassMethod" to "whitelist" to
+--    restrict certain methods to IPs in your whitelist
+--
+
 put false into gConfig["restIpWhitelistEnabled"]
 
-/*
-|--------------------------------------------------------------------------
-| REST IP Whitelist
-|--------------------------------------------------------------------------
-|
-| Limit connections to your REST server with a comma separated
-| list of IP addresses
-|
-| e.g: "123.456.789.0, 987.654.32.1"
-|
-| 127.0.0.1 and 0.0.0.0 are allowed by default
-|
-*/
+
+------------------------------------------------------------------------
+-- REST IP Whitelist
+------------------------------------------------------------------------
+--
+-- Limit connections to your REST server with a comma separated
+-- list of IP addresses
+--
+-- e.g: "123.456.789.0, 987.654.32.1"
+--
+-- 127.0.0.1 and 0.0.0.0 are allowed by default
+--
+
 put "" into gConfig["restIpWhitelist"]
 
-/*
-|--------------------------------------------------------------------------
-| Global IP Blacklisting
-|--------------------------------------------------------------------------
-|
-| Prevent connections to the REST server from blacklisted IP addresses
-|
-| Usage:
-| 1. Set to TRUE and add any IP address to "restIpBlacklist"
-|
-*/
+
+------------------------------------------------------------------------
+-- Global IP Blacklisting
+------------------------------------------------------------------------
+--
+-- Prevent connections to the REST server from blacklisted IP addresses
+--
+-- Usage:
+-- 1. Set to TRUE and add any IP address to "restIpBlacklist"
+--
+
 put false into gConfig["restIpBlacklistEnabled"]
 
-/*
-|--------------------------------------------------------------------------
-| REST IP Blacklist
-|--------------------------------------------------------------------------
-|
-| Prevent connections from the following IP addresses
-|
-| e.g: "123.456.789.0, 987.654.32.1"
-|
-*/
+
+------------------------------------------------------------------------
+-- REST IP Blacklist
+------------------------------------------------------------------------
+--
+-- Prevent connections from the following IP addresses
+--
+-- e.g: "123.456.789.0, 987.654.32.1"
+--
+
 put "" into gConfig["restIpBlacklist"]
 
 
-/*
-|--------------------------------------------------------------------------
-| REST Database Group
-|--------------------------------------------------------------------------
-|
-| Connect to a database group for keys, logging, etc. It will only connect
-| if you have any of these features enabled
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Database Group
+------------------------------------------------------------------------
+--
+-- Connect to a database group for keys, logging, etc. It will only connect
+-- if you have any of these features enabled
+--
+
 put "default" into gConfig["restDatabaseGroup"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Keys Table Name
-|--------------------------------------------------------------------------
-|
-| The table name in your database that stores API keys
-|
-*/
+
+------------------------------------------------------------------------
+-- REST API Keys Table Name
+------------------------------------------------------------------------
+--
+-- The table name in your database that stores API keys
+--
+
 put "keys" into gConfig["restKeysTable"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Enable Keys
-|--------------------------------------------------------------------------
-|
-| When set to TRUE, the REST API will look for a column name called 'key'.
-| If no key is provided, the request will result in an error. To override the
-| column name see "restKeyColumn"
-|
-| Default table schema:
-|   CREATE TABLE `keys` (
-|       `id` INT(11) NOT NULL AUTOINCREMENT,
-|       `userId` INT(11) NOT NULL,
-|       `key` VARCHAR(40) NOT NULL,
-|       `level` INT(2) NOT NULL,
-|       `ignoreLimits` TINYINT(1) NOT NULL DEFAULT '0',
-|       `isPrivateKey` TINYINT(1)  NOT NULL DEFAULT '0',
-|       `ipAddresses` TEXT NULL DEFAULT NULL,
-|       `dateCreated` INT(11) NOT NULL,
-|       PRIMARY KEY (`id`)
-|   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Enable Keys
+------------------------------------------------------------------------
+--
+-- When set to TRUE, the REST API will look for a column name called 'key'.
+-- If no key is provided, the request will result in an error. To override the
+-- column name see "restKeyColumn"
+--
+-- Default table schema:
+--   CREATE TABLE `keys` (
+--       `id` INT(11) NOT NULL AUTOINCREMENT,
+--       `userId` INT(11) NOT NULL,
+--       `key` VARCHAR(40) NOT NULL,
+--       `level` INT(2) NOT NULL,
+--       `ignoreLimits` TINYINT(1) NOT NULL DEFAULT '0',
+--       `isPrivateKey` TINYINT(1)  NOT NULL DEFAULT '0',
+--       `ipAddresses` TEXT NULL DEFAULT NULL,
+--       `dateCreated` INT(11) NOT NULL,
+--       PRIMARY KEY (`id`)
+--   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+
 put false into gConfig["restEnableKeys"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Table Key Column Name
-|--------------------------------------------------------------------------
-|
-| If not using the default table schema in "restEnableKeys", specify the
-| column name to match e.g. myKey
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Table Key Column Name
+------------------------------------------------------------------------
+--
+-- If not using the default table schema in "restEnableKeys", specify the
+-- column name to match e.g. myKey
+--
+
 put "key" into gConfig["restKeyColumn"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Limits method
-|--------------------------------------------------------------------------
-|
-| Specify the method used to limit the API calls
-|
-| Available methods are :
-| IPADDRESS -- Put a limit per ip address
-| APIKEY -- Put a limit per api key
-| METHODNAME -- Put a limit on method calls
-| ROUTED_URL' -- Put a limit on the routed URL
-|
-*/
+
+------------------------------------------------------------------------
+-- REST API Limits method
+------------------------------------------------------------------------
+--
+-- Specify the method used to limit the API calls
+--
+-- Available methods are :
+-- IPADDRESS -- Put a limit per ip address
+-- APIKEY -- Put a limit per api key
+-- METHODNAME -- Put a limit on method calls
+-- ROUTED_URL' -- Put a limit on the routed URL
+--
+
 put "ROUTED_URL" into gConfig["restLimitsMethod"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Key Length
-|--------------------------------------------------------------------------
-|
-| Length of the created keys. Check your default database schema on the
-| maximum length allowed
-|
-| Note: The maximum length is 40
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Key Length
+------------------------------------------------------------------------
+--
+-- Length of the created keys. Check your default database schema on the
+-- maximum length allowed
+--
+-- Note: The maximum length is 40
+--
+
 put 40 into gConfig["restKeyLength"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Key Variable
-|--------------------------------------------------------------------------
-|
-| Custom header to specify the API key
 
-| Note: Custom headers with the X- prefix are deprecated as of
-| 2012/06/12. See RFC 6648 specification for more details
-|
-*/
+------------------------------------------------------------------------
+-- REST API Key Variable
+------------------------------------------------------------------------
+--
+-- Custom header to specify the API key
+
+-- Note: Custom headers with the X- prefix are deprecated as of
+-- 2012/06/12. See RFC 6648 specification for more details
+--
+
 put "X-API-KEY" into gConfig["restKeyName"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Enable Logging
-|--------------------------------------------------------------------------
-|
-| When set to TRUE, the REST API will log actions based on the column names 'key', 'date',
-| 'time' and 'ipAddress'. This is a general rule that can be overridden in the
-| $this->method array for each controller
-|
-| Default table schema:
-|   CREATE TABLE `logs` (
-|       `id` INT(11) NOT NULL AUTOINCREMENT,
-|       `uri` VARCHAR(255) NOT NULL,
-|       `method` VARCHAR(6) NOT NULL,
-|       `params` TEXT DEFAULT NULL,
-|       `apiKey` VARCHAR(40) NOT NULL,
-|       `ipAddress` VARCHAR(45) NOT NULL,
-|       `time` INT(11) NOT NULL,
-|       `rtime` FLOAT DEFAULT NULL,
-|       `authorized` VARCHAR(1) NOT NULL,
-|       `responseCode` smallint(3) DEFAULT '0',
-|       PRIMARY KEY (`id`)
-|   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Enable Logging
+------------------------------------------------------------------------
+--
+-- When set to TRUE, the REST API will log actions based on the column names 'key', 'date',
+-- 'time' and 'ipAddress'. This is a general rule that can be overridden in the
+-- $this->method array for each controller
+--
+-- Default table schema:
+--   CREATE TABLE `logs` (
+--       `id` INT(11) NOT NULL AUTOINCREMENT,
+--       `uri` VARCHAR(255) NOT NULL,
+--       `method` VARCHAR(6) NOT NULL,
+--       `params` TEXT DEFAULT NULL,
+--       `apiKey` VARCHAR(40) NOT NULL,
+--       `ipAddress` VARCHAR(45) NOT NULL,
+--       `time` INT(11) NOT NULL,
+--       `rtime` FLOAT DEFAULT NULL,
+--       `authorized` VARCHAR(1) NOT NULL,
+--       `responseCode` smallint(3) DEFAULT '0',
+--       PRIMARY KEY (`id`)
+--   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+
 put false into gConfig["restEnableLogging"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Logs Table Name
-|--------------------------------------------------------------------------
-|
-| If not using the default table schema in "restEnableLogging", specify the
-| table name to match e.g. myLogs
-|
-*/
+
+------------------------------------------------------------------------
+-- REST API Logs Table Name
+------------------------------------------------------------------------
+--
+-- If not using the default table schema in "restEnableLogging", specify the
+-- table name to match e.g. myLogs
+--
+
 put "logs" into gConfig["restLogsTable"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Method Access Control
-|--------------------------------------------------------------------------
-| When set to TRUE, the REST API will check the access table to see if
-| the API key can access that controller. "restEnableKeys" must be enabled
-| to use this
-|
-| Default table schema:
-|   CREATE TABLE `access` (
-|       `id` INT(11) unsigned NOT NULL AUTOINCREMENT,
-|       `key` VARCHAR(40) NOT NULL DEFAULT '',
-|       `allAccess` TINYINT(1) NOT NULL DEFAULT '0',
-|       `controller` VARCHAR(50) NOT NULL DEFAULT '',
-|       `dateCreated` DATETIME DEFAULT NULL,
-|       `dateModified` TIMESTAMP NOT NULL DEFAULT CURRENTTIMESTAMP ON UPDATE CURRENTTIMESTAMP,
-|       PRIMARY KEY (`id`)
-|    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Method Access Control
+------------------------------------------------------------------------
+-- When set to TRUE, the REST API will check the access table to see if
+-- the API key can access that controller. "restEnableKeys" must be enabled
+-- to use this
+--
+-- Default table schema:
+--   CREATE TABLE `access` (
+--       `id` INT(11) unsigned NOT NULL AUTOINCREMENT,
+--       `key` VARCHAR(40) NOT NULL DEFAULT '',
+--       `allAccess` TINYINT(1) NOT NULL DEFAULT '0',
+--       `controller` VARCHAR(50) NOT NULL DEFAULT '',
+--       `dateCreated` DATETIME DEFAULT NULL,
+--       `dateModified` TIMESTAMP NOT NULL DEFAULT CURRENTTIMESTAMP ON UPDATE CURRENTTIMESTAMP,
+--       PRIMARY KEY (`id`)
+--    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+
 put false into gConfig["restEnableAccess"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Access Table Name
-|--------------------------------------------------------------------------
-|
-| If not using the default table schema in "restEnableAccess", specify the
-| table name to match e.g. myAccess
-|
-*/
+
+------------------------------------------------------------------------
+-- REST API Access Table Name
+------------------------------------------------------------------------
+--
+-- If not using the default table schema in "restEnableAccess", specify the
+-- table name to match e.g. myAccess
+--
+
 put "access" into gConfig["restAccessTable"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Param Log Format
-|--------------------------------------------------------------------------
-|
-| When set to TRUE, the REST API log parameters will be stored in the database as JSON
-| Set to FALSE to log as LSON <--UP FOR DEBATE
-|
-*/
+
+------------------------------------------------------------------------
+-- REST API Param Log Format
+------------------------------------------------------------------------
+--
+-- When set to TRUE, the REST API log parameters will be stored in the database as JSON
+-- Set to FALSE to log as LSON <--UP FOR DEBATE
+--
+
 put false into gConfig["restLogsJsonParams"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Enable Limits
-|--------------------------------------------------------------------------
-|
-| When set to TRUE, the REST API will count the number of uses of each method
-| by an API key each hour. This is a general rule that can be overridden in the
-| $this->method array in each controller
-|
-| Default table schema:
-|   CREATE TABLE `limits` (
-|       `id` INT(11) NOT NULL AUTOINCREMENT,
-|       `uri` VARCHAR(255) NOT NULL,
-|       `count` INT(10) NOT NULL,
-|       `hourStarted` INT(11) NOT NULL,
-|       `apiKey` VARCHAR(40) NOT NULL,
-|       PRIMARY KEY (`id`)
-|   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-|
-| To specify the limits within a controller, add per-method
-| limits with:
-|
-|      put [NUMREQUESTSPERHOUR] into gConfig["METHODNAME"]["limit"]
-|
-| See application/controllers/api/example.lc for examples
-*/
+
+------------------------------------------------------------------------
+-- REST Enable Limits
+------------------------------------------------------------------------
+--
+-- When set to TRUE, the REST API will count the number of uses of each method
+-- by an API key each hour. This is a general rule that can be overridden in the
+-- $this->method array in each controller
+--
+-- Default table schema:
+--   CREATE TABLE `limits` (
+--       `id` INT(11) NOT NULL AUTOINCREMENT,
+--       `uri` VARCHAR(255) NOT NULL,
+--       `count` INT(10) NOT NULL,
+--       `hourStarted` INT(11) NOT NULL,
+--       `apiKey` VARCHAR(40) NOT NULL,
+--       PRIMARY KEY (`id`)
+--   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+-- To specify the limits within a controller, add per-method
+-- limits with:
+--
+--      put [NUMREQUESTSPERHOUR] into gConfig["METHODNAME"]["limit"]
+--
+-- See application/controllers/api/example.lc for examples
+
 put false into gConfig["restEnableLimits"]
 
-/*
-|--------------------------------------------------------------------------
-| REST API Limits Table Name
-|--------------------------------------------------------------------------
-|
-| If not using the default table schema in "restEnableLimits", specify the
-| table name to match e.g. myLimits
-|
-*/
+
+------------------------------------------------------------------------
+-- REST API Limits Table Name
+------------------------------------------------------------------------
+--
+-- If not using the default table schema in "restEnableLimits", specify the
+-- table name to match e.g. myLimits
+--
+
 put "limits" into gConfig["restLimitsTable"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Ignore HTTP Accept
-|--------------------------------------------------------------------------
-|
-| Set to TRUE to ignore the HTTP Accept and speed up each request a little.
-| Only do this if you are using the $this->restFormat or /format/xml in URLs
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Ignore HTTP Accept
+------------------------------------------------------------------------
+--
+-- Set to TRUE to ignore the HTTP Accept and speed up each request a little.
+-- Only do this if you are using the $this->restFormat or /format/xml in URLs
+--
+
 put false into gConfig["restIgnoreHTTPAccept"]
 
-/*
-|--------------------------------------------------------------------------
-| REST AJAX Only
-|--------------------------------------------------------------------------
-|
-| Set to TRUE to allow AJAX requests only. Set to FALSE to accept HTTP requests
-|
-| Note: If set to TRUE and the request is not AJAX, a 505 response with the
-| error message 'Only AJAX requests are accepted.' will be returned.
-|
-| Hint: This is good for production environments
-|
-*/
+
+------------------------------------------------------------------------
+-- REST AJAX Only
+------------------------------------------------------------------------
+--
+-- Set to TRUE to allow AJAX requests only. Set to FALSE to accept HTTP requests
+--
+-- Note: If set to TRUE and the request is not AJAX, a 505 response with the
+-- error message 'Only AJAX requests are accepted.' will be returned.
+--
+-- Hint: This is good for production environments
+--
+
 put false into gConfig["restAjaxOnly"]
 
-/*
-|--------------------------------------------------------------------------
-| REST Language File
-|--------------------------------------------------------------------------
-|
-| Language file to load from the language directory
-|
-*/
+
+------------------------------------------------------------------------
+-- REST Language File
+------------------------------------------------------------------------
+--
+-- Language file to load from the language directory
+--
+
 put "english" into gConfig["restLanguage"]
 
-/*
-|--------------------------------------------------------------------------
-| CORS Check
-|--------------------------------------------------------------------------
-|
-| Set to TRUE to enable Cross-Origin Resource Sharing (CORS). Useful if you
-| are hosting your API on a different domain from the application that
-| will access it through a browser
-|
-*/
+
+------------------------------------------------------------------------
+-- CORS Check
+------------------------------------------------------------------------
+--
+-- Set to TRUE to enable Cross-Origin Resource Sharing (CORS). Useful if you
+-- are hosting your API on a different domain from the application that
+-- will access it through a browser
+--
+
 put false into gConfig["checkCors"]
 
-/*
-|--------------------------------------------------------------------------
-| CORS Allowable Headers
-|--------------------------------------------------------------------------
-|
-| If using CORS checks, set the allowable headers here
-|
-*/
+
+------------------------------------------------------------------------
+-- CORS Allowable Headers
+------------------------------------------------------------------------
+--
+-- If using CORS checks, set the allowable headers here
+--
+
 put "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method" into gConfig["allowedCorsHeaders"]
 
-/*
-|--------------------------------------------------------------------------
-| CORS Allowable Methods
-|--------------------------------------------------------------------------
-|
-| If using CORS checks, you can set the methods you want to be allowed
-|
-*/
+
+------------------------------------------------------------------------
+-- CORS Allowable Methods
+------------------------------------------------------------------------
+--
+-- If using CORS checks, you can set the methods you want to be allowed
+--
+
 put "GET, POST, OPTIONS, PUT, PATCH, DELETE" into gConfig["allowedCorsMethods"]
 
-/*
-|--------------------------------------------------------------------------
-| CORS Allow Any Domain
-|--------------------------------------------------------------------------
-|
-| Set to TRUE to enable Cross-Origin Resource Sharing (CORS) from any
-| source domain
-|
-*/
+
+------------------------------------------------------------------------
+-- CORS Allow Any Domain
+------------------------------------------------------------------------
+--
+-- Set to TRUE to enable Cross-Origin Resource Sharing (CORS) from any
+-- source domain
+--
+
 put false into gConfig["allowAnyCorsDomain"]
 
-/*
-|--------------------------------------------------------------------------
-| CORS Allowable Domains
-|--------------------------------------------------------------------------
-|
-| Used if gConfig["checkCors"] is set to TRUE and gConfig["allowAnyCorsDomain"]
-| is set to FALSE. Set all the allowable domains within the array as follows:
-|
-| e.g. 
-|
-|      put "http" into gConfig["allowedOrigins"]["www.example.com"]
-|      put "https" into gConfig["allowedOrigins"]["spa.example.com"]
-*/
+
+------------------------------------------------------------------------
+-- CORS Allowable Domains
+------------------------------------------------------------------------
+--
+-- Used if gConfig["checkCors"] is set to TRUE and gConfig["allowAnyCorsDomain"]
+-- is set to FALSE. Set all the allowable domains within the array as follows:
+--
+-- e.g. 
+--
+--      put "http" into gConfig["allowedOrigins"]["www.example.com"]
+--      put "https" into gConfig["allowedOrigins"]["spa.example.com"]
+
 put "" into gConfig["allowedCorsOrigins"]
