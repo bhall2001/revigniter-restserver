@@ -15,7 +15,8 @@ end if
 -- @subpackage      Libraries
 -- @category        Libraries
 -- @author          Bob Hall
--- @license         Apache 2.0
+-- @copyright	     Copyright (c) 2016, Robert D. Hall
+-- @license         https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
 -- @link            https://github.com/bhall2001/revigniter-restserver
 -- @version         0.0.1
  ------------------------------------------------------------------------

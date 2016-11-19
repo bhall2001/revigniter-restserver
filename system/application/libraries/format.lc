@@ -6,13 +6,12 @@ if gBASEPATH is "gBASEPATH" then
 	exit to top
 end if
 
-/**
- * Format class
- * Help convert between various formats such as LSON, JSON, XML, CSV, etc.
- *
- * @author    Phil Sturgeon, Chris Kacerguis, @softwarespot
- * @license   http://www.dbad-license.org/
- */
+ -- Format class
+ -- Help convert between various formats such as LSON, JSON, XML, CSV, etc.
+ --
+ -- @author      Bob Hall
+ -- @copyright	  Copyright (c) 2016, Robert D. Hall
+ -- @license     https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
 
 /**
 * Array output format
