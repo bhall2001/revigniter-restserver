@@ -524,7 +524,12 @@ set the itemDelimiter to tOldDelim
 
 // Load the language file
 //$this->lang->load('rest_controller', $language);
+put rigConfigItem("restLanguage") into tLanguage
+if tLanguage = "" then put "english" into tLanguage
 
+rigLoadLanguage "restControllerLang", tLanguage
+
+/*
 	        // Initialise the response, request and rest objects
 	        $this->request = new stdClass();
 	        $this->response = new stdClass();
