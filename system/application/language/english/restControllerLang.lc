@@ -1,0 +1,41 @@
+<?rev
+
+------------------------------------------------------------------------
+-- English language
+------------------------------------------------------------------------
+##$lang['textRestInvalidApiKey'] = 'Invalid API key %s'; // %s is the REST API key
+put "Invalid API key %s" into gLang["textRestInvalidApiKey"]
+
+##$lang['textRestInvalidCredentials'] = 'Invalid credentials';
+put "Invalid credentials" into gLang["textRestInvalidCredentials"]
+
+##$lang['textRestIpDenied'] = 'IP denied';
+put "IP denied" into gLang["textRestIpDenied"]
+
+##$lang['textRestIpUnauthorized'] = 'IP unauthorized';
+put "IP unauthorized" into gLang["textRestIpUnauthorized"]
+
+##$lang['textRestUnauthorized'] = 'Unauthorized';
+put "Unauthorized" into gLang["textRestUnauthorized"]
+
+##$lang['textRestAjaxOnly'] = 'Only AJAX requests are allowed';
+put "Only AJAX requests are allowed" into gLang["textRestAjaxOnly"]
+
+##$lang['textRestApiKeyUnauthorized'] = 'This API key does not have access to the requested controller';
+put "This API key does not have access to the requested controller" into gLang["textRestApiKeyUnauthorized"]
+
+##$lang['textRestApiKeyPermissions'] = 'This API key does not have enough permissions';
+put "This API key does not have enough permissions" into gLang["textRestApiKeyPermissions"]
+
+##$lang['textRestApiKeyTimeLimit'] = 'This API key has reached the time limit for this method';
+put "This API key has reached the time limit for this method" into gLang["textRestApiKeyTimeLimit"]
+
+##$lang['textRestIpAddressTimeLimit'] = 'This IP Address has reached the time limit for this method';
+put "This IP Address has reached the time limit for this method" into gLang["textRestIpAddressTimeLimit"]
+
+##$lang['textRestUnknownMethod'] = 'Unknown method';
+put "Unknown method" into gLang["textRestUnknownMethod"]
+
+##$lang['textRestUnsupported'] = 'Unsupported protocol';
+put "Unsupported protocol" into gLang["textRestUnsupported"]
+

@@ -305,7 +305,7 @@ local sStartRTime = ""
 --
 -- @var string
 ------------------------------------------------------------------------
- local sEndRTime = ""
+local sEndRTime = ""
 
 ------------------------------------------------------------------------
 -- List all supported methods, the first will be the default format
@@ -415,10 +415,12 @@ protected function early_checks()
     }
 */
 
-/**
-* Checks to see if we have everything we need to run this library.
-*
-*/
+------------------------------------------------------------------------
+--
+-- Checks to see if we have everything we need to run this library.
+--
+------------------------------------------------------------------------
+// preflight_checks();
 function preflightChecks
 	try
 		// Check to see if Livecode Server is greater then or equal to 8.1.x
@@ -454,60 +456,74 @@ function preflightChecks
 		rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
 	end try
 	
-	
-	
-	
-	/* preflight_checks();
+// Set the default value of global xss filtering. Same approach as Revigniter
+//$this->_enable_xss = ($this->config->item('global_xss_filtering') === TRUE);
+put rigConfigItem("globalXssFlitering") into sEnableXSS
 
-	        // Set the default value of global xss filtering. Same approach as CodeIgniter 3
-	        $this->_enable_xss = ($this->config->item('global_xss_filtering') === TRUE);
+// Don't try to parse template variables like {elapsed_time} and {memory_usage}
+// when output is displayed for not damaging data accidentally
+//$this->output->parse_exec_vars = FALSE;
+## NOT SURE IF I NEED TO DO THIS???
 
-	        // Don't try to parse template variables like {elapsed_time} and {memory_usage}
-	        // when output is displayed for not damaging data accidentally
-	        $this->output->parse_exec_vars = FALSE;
+// Start the timer for how long the request takes
+//$this->_start_rtime = microtime(TRUE);
+## SKIPPING THIS
 
-	        // Start the timer for how long the request takes
-	        $this->_start_rtime = microtime(TRUE);
+// Load the rest.php configuration file
+//$this->load->config($config);
+rigLoadConfig "rest"
 
-	        // Load the rest.php configuration file
-	        $this->load->config($config);
+// At present the library is bundled with REST_Controller 2.5+, but will eventually be part of CodeIgniter (no citation)
+//$this->load->library('format');
+rigLoaderLoadLibrary "format"
 
-	        // At present the library is bundled with REST_Controller 2.5+, but will eventually be part of CodeIgniter (no citation)
-	        $this->load->library('format');
+// Determine supported output formats from configuration
+//$supported_formats = $this->config->item('rest_supported_formats');
+put rigConfigItem("restSupportedFormats") into sSupportedFormats
 
-	        // Determine supported output formats from configuration
-	        $supported_formats = $this->config->item('rest_supported_formats');
+## DON'T NEED THIS
+// Validate the configuration setting output formats
+//if (empty($supported_formats))
+//{
+	//$supported_formats = [];
+//}
+//
+//if ( ! is_array($supported_formats))
+//{
+	//$supported_formats = [$supported_formats];
+//}
 
-	        // Validate the configuration setting output formats
-	        if (empty($supported_formats))
-	        {
-	            $supported_formats = [];
-	        }
+// Add silently the default output format if it is missing
+//$default_format = $this->_get_default_output_format();
+//if (!in_array($default_format, $supported_formats))
+//{
+//	$supported_formats[] = $default_format;
+//}
+// Now update $this->_supported_formats
+//$this->_supported_formats = array_intersect_key($this->_supported_formats, array_flip($supported_formats));
 
-	        if ( ! is_array($supported_formats))
-	        {
-	            $supported_formats = [$supported_formats];
-	        }
+put _getDefaultOutputFormat() into sDefaultFormat
 
-	        // Add silently the default output format if it is missing
-	        $default_format = $this->_get_default_output_format();
-	        if (!in_array($default_format, $supported_formats))
-	        {
-	            $supported_formats[] = $default_format;
-	        }
+put the itemDelimiter into tOldDelim
+set the itemDelimiter to ","
+if sDefaultFormat is not among the items of sSupportedFormats then
+	put sDefaultFormat & ", " before sSupportedFormats
+	repeat until char -1 of sSupportedFormats is not in " ,"
+		delete char -1 of sSupportedFormats
+	end repeat
+end if
+set the itemDelimiter to tOldDelim
 
-	        // Now update $this->_supported_formats
-	        $this->_supported_formats = array_intersect_key($this->_supported_formats, array_flip($supported_formats));
 
-	        // Get the language
-	        $language = $this->config->item('rest_language');
-	        if ($language === NULL)
-	        {
-	            $language = 'english';
-	        }
+// Get the language
+//$language = $this->config->item('rest_language');
+//if ($language === NULL)
+//{
+//    $language = 'english';
+//}
 
-	        // Load the language file
-	        $this->lang->load('rest_controller', $language);
+// Load the language file
+//$this->lang->load('rest_controller', $language);
 
 	        // Initialise the response, request and rest objects
 	        $this->request = new stdClass();
@@ -643,11 +659,6 @@ function preflightChecks
 	        }
 	    }
 	*/
-	
-	
-	
-	
-	
 	
 end preflightChecks
 
@@ -918,21 +929,25 @@ end preflightChecks
     }
 */
 
-    /**
-     * Gets the default format from the configuration. Fallbacks to 'json'
-     * if the corresponding configuration option $config['rest_default_format']
-     * is missing or is empty
-     *
-     * @access protected
-     * @return string The default supported input format
-     */
-/*
-    protected function _get_default_output_format()
-    {
-        $default_format = (string) $this->config->item('rest_default_format');
-        return $default_format === '' ? 'json' : $default_format;
-    }
-*/
+------------------------------------------------------------------------
+-- Gets the default format from the configuration. Fallbacks to 'json'
+-- if the corresponding configuration option $config['rest_default_format']
+-- is missing or is empty
+--
+-- @access protected
+-- @return string The default supported input format
+------------------------------------------------------------------------
+
+function _getDefaultOutputFormat
+    //$default_format = (string) $this->config->item('rest_default_format');
+    //return $default_format === '' ? 'json' : $default_format;
+	 
+	 put rigConfigItem("restDefaultFormat") into tDefaultFormat
+	 if tDefualtFormat = "" then put "json" into tDefaultFormat
+	 
+	 return tDefaultFormat
+end _getDefaultOutputFormat
+
 
     /**
      * Detect which format should be used to output the data
