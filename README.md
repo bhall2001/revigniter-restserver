@@ -57,7 +57,6 @@ This means your URLs can look like this:
 ```
 http://example.com/index.lc/v1/books.json
 http://example.com/index.lc/v1/books/id/1/format/lson
-http://example.com/index.lc/v1/books?format=xml
 ```
 (default format if none specified is JSON)
 
