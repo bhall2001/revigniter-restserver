@@ -24,24 +24,20 @@ The RestController library requires the Livecode 8 JSON Livecode Builder Library
 
 ## Handling Requests
 
-Making an HTTP GET call to index.lc/books, for instance, calls the books_get function in the books.lc controller.
+Making an HTTP GET call to index.lc/books, for instance, calls the index_get function in the books.lc controller.
 
 This allows you to implement a RESTful interface easily:
 
 In the books.lc controller file, you add functions for for HTML Request verbs that are handled...
 
 ```
-function books_get
+function index_get
     // Display all books or a single book if an id is provided
-end book_get
+end index_get
 
-function books_post
+function index_post
     // Create a new book
-end book_post
-
-function books_delete
-    // Delete a book
-end book_delete
+end index_post
 ```
 
 RestController also supports PUT and DELETE methods, allowing you to support a truly RESTful interface.
@@ -125,11 +121,11 @@ NetTuts: Working with RESTful Services in CodeIgniter (explains the CodeIngniter
 
 ## Contributions
 
-This project is based on the Codeigniter restserver originally written by Phil Sturgeon and now maintained by Chris Kacerguis.
+This project is based on the [Codeigniter restserver](https://github.com/chriskacerguis/codeigniter-restserver) originally written by Phil Sturgeon and now maintained by Chris Kacerguis.
 
-Please help if you can using pull requests on Github. The project is located at https://github.com/bhall2001/revigniter-restserver
+PLEASE HELP if you can using pull requests on [Github](https://github.com/bhall2001/revigniter-restserver).
 
-Agile project management provided by overv.io. Check it out at https://overv.io/bhall2001/revigniter-restserver/
+[Agile project management provided by overv.io](https://overv.io/bhall2001/revigniter-restserver/).
 
 GitHub license
 TBD
