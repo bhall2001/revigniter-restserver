@@ -72,7 +72,7 @@ The RestController Library also provides rudimentary support for HTTP basic auth
 You can enable basic authentication by setting the gConfig["restAuth"] to "basic". The gConfig["restValidLogins"] directive is used to set the usernames and passwords that are able to log in to your system. The Library will automatically send all the correct headers to trigger the authentication dialogue:
 ```
 put "password" into gConfig["restValidLogins"]["username"]
-put "secure123" into gConfig["restValidLogins"]["otherPerson"]
+put "secure123" into gConfig["restValidLogins"]["john123"]
 ```
 Enabling digest auth is similarly easy. Configure your desired logins in the config file like above, and set gConfig["restAuth"] to "digest". The Library will automatically send out the headers to enable digest auth.
 
