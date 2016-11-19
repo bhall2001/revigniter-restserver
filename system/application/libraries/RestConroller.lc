@@ -444,7 +444,7 @@ function preflightChecks
 		end if
 	catch tErrorText
 		put "RestController" & gEXT into tCurrentFile
-		put "preflight_checks" into tCurrentMethod
+		put "preflightChecks" into tCurrentMethod
 
 		put _rigExceptionHandler(tErrorText) into tErrorData
 	
