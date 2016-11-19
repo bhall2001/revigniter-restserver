@@ -20,7 +20,7 @@ Cloning this repository gives you a complete revIgniter installation. You can pu
 
 ## Dependencies
 
-The RestController library requires the Livecode 8 JSON Livecode Builder Library to be installed.
+The RestController Library requires the Livecode 8 JSON Livecode Builder Library to be installed.
 
 ## Handling Requests
 
@@ -42,7 +42,7 @@ end index_post
 
 RestController also supports PUT and DELETE methods, allowing you to support a truly RESTful interface.
 
-RestController supports a many request/response formats, including XML, JSON, LSON, CSV and HTML. By default, the library checks the URL and looks for a format either as an extension or as a separate segment.
+RestController supports many request/response formats, including XML, JSON, LSON, CSV and HTML. By default, the library checks the URL and looks for a format either as an extension or as a separate segment.
 
 This means your URLs can look like this:
 
@@ -63,37 +63,37 @@ Any responses you make from the function (see responses for more on this) are re
 
 ## Responses
 
-Stay Tuned...
+Coming Soon...
 
 ## Authentication
 
 The RestController Library also provides rudimentary support for HTTP basic authentication and/or the securer HTTP digest access authentication.
 
-You can enable basic authentication by setting the gConfig["rest_auth"] to "basic". The gConfig["rest_valid_logins"] directive is used to set the usernames and passwords that are able to log in to your system. The Library will automatically send all the correct headers to trigger the authentication dialogue:
+You can enable basic authentication by setting the gConfig["restAuth"] to "basic". The gConfig["restValidLogins"] directive is used to set the usernames and passwords that are able to log in to your system. The Library will automatically send all the correct headers to trigger the authentication dialogue:
 ```
-put "password" into gConfig["rest_valid_logins"]["username"]
-put "secure123" into gConfig["rest_valid_logins"]["other_person"]
+put "password" into gConfig["restValidLogins"]["username"]
+put "secure123" into gConfig["restValidLogins"]["otherPerson"]
 ```
-Enabling digest auth is similarly easy. Configure your desired logins in the config file like above, and set gConfig["rest_auth"] to "digest". The class will automatically send out the headers to enable digest auth.
+Enabling digest auth is similarly easy. Configure your desired logins in the config file like above, and set gConfig["restAuth"] to "digest". The Library will automatically send out the headers to enable digest auth.
 
-All methods of authentication can be secured further by using an IP whitelist. If you enable gConfig["rest_ip_whitelist_enabled"] in your config file, you can then set a list of allowed IPs.
+All methods of authentication can be secured further by using an IP whitelist. If you enable gConfig["restIpWhitelistEnabled"] in your config file, you can then set a list of allowed IPs.
 
 Any client connecting to your API will be checked against the whitelisted IP list. If they're on the list, they'll be allowed access. If not, they will not be able to access the API. The whitelist is a comma-separated string:
 ```
-put "123.456.789.0, 987.654.32.1" into gConfig["rest_ip_whitelist"]
+put "123.456.789.0, 987.654.32.1" into gConfig["restIpWhitelist"]
 ```
 Your localhost IPs (127.0.0.1 and 0.0.0.0) are allowed by default.
 
 Any client connecting to your API will be checked against the blacklisted IP list. If they're on the list, they will NOT be allowed access to the API. The blacklist is a comma-separated string:
 ```
-put "123.456.666.0, 987.654.93.1" into gConfig["rest_ip_blacklist"]
+put "123.456.666.0, 987.654.93.1" into gConfig["restIpBlacklist"]
 ```
 
 ## API Keys
 
-In addition to the authentication methods above, the REST_Controller class also supports the use of API keys. Enabling API keys is easy. Turn it on in your config/rest.php file:
+In addition to the authentication methods above, the RestController Library also supports the use of API keys. Enabling API keys is easy. Turn it on in your config/rest.php file:
 ```
-put true into gConfig["rest_enable_keys"]
+put true into gConfig["restEnableKeys"]
 ```
 You'll need to create a new database table to store and access the keys. RestController REQUIRES you have a table that looks like this when using API keys:
 ```
