@@ -26,11 +26,14 @@ put "users_get" into gControllerHandlers
 -- @link            https://github.com/bhall2001/revigniter-restserver/
  ------------------------------------------------------------------------
 
-// Configure limits on our controller methods
-// Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
-put 500 into sMethodsA["users_get"]["limit"]   // 500 requests per hour per user/key
-put 100 into sMethodsA["users_post"]["limit"]  // 100 requests per hour per user/key
-put 50 into sMethodsA["users_delete"]["limit"] // 50 requests per hour per user/key
+ // Configure limits on our controller methods
+ // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
+ /*
+ $this->methods['users_get']['limit'] = 500; // 500 requests per hour per user/key
+ $this->methods['users_post']['limit'] = 100; // 100 requests per hour per user/key
+ $this->methods['users_delete']['limit'] = 50; // 50 requests per hour per user/key
+ */
+ ## NEED TO COME BACK TO THE ABOVE LATER ON...
    
 function users_get
         // Users from a data store e.g. database
