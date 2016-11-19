@@ -19,7 +19,9 @@ This is a very early development state at the moment. Github is being used to st
 
 ## Installation
 
-Copy the application/libraries/Format.lc and application/libraries/REST_Controller.lc files into your revIgniter application's directory. Additionally, copy the application/config/rest.lc file to your application's configuration directory.
+Copy the application/libraries/Format.lc and application/libraries/RestController.lc files into your revIgniter application's directory. Additionally, copy the application/config/rest.lc file to your application's configuration directory and application/language/english/restControllerLang.lc file to your application's language directory.
+
+OR
 
 Cloning this repository gives you a complete revIgniter installation. You can put this project in it's own sub directory for easy access.
 ```
