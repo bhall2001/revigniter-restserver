@@ -7,18 +7,18 @@ if gBASEPATH is "gBASEPATH" then
 end if
 
 
-/**
- * revIgniter Rest Controller
- * A fully RESTful server implementation for revIgniter
- *
- * @package         revIgniter
- * @subpackage      Libraries
- * @category        Libraries
- * @author          Bob Hall
- * @license         Apache 2.0
- * @link            https://github.com/bhall2001/revigniter-restserver
- * @version         0.0.1
- */
+------------------------------------------------------------------------
+-- revIgniter Rest Controller
+-- A fully RESTful server implementation for revIgniter
+--
+-- @package         revIgniter
+-- @subpackage      Libraries
+-- @category        Libraries
+-- @author          Bob Hall
+-- @license         Apache 2.0
+-- @link            https://github.com/bhall2001/revigniter-restserver
+-- @version         0.0.1
+ ------------------------------------------------------------------------
 
 
 // Note: Only the widely used HTTP status codes are documented
@@ -31,21 +31,21 @@ constant HTTP_PROCESSING = 102            // RFC2518
 
 // Success
 
-/**
- * The request has succeeded
- */
-constant HTTP_OK = 200
+------------------------------------------------------------------------
+-- The request has succeeded
+------------------------------------------------------------------------
+ constant HTTP_OK = 200
 
-/**
- * The server successfully created a new resource
- */
+------------------------------------------------------------------------
+-- The server successfully created a new resource
+------------------------------------------------------------------------
 constant HTTP_CREATED = 201
 constant HTTP_ACCEPTED = 202
 constant HTTP_NON_AUTHORITATIVE_INFORMATION = 203
 
-/**
- * The server successfully processed the request, though no content is returned
- */
+------------------------------------------------------------------------
+-- The server successfully processed the request, though no content is returned
+------------------------------------------------------------------------
 constant HTTP_NO_CONTENT = 204
 constant HTTP_RESET_CONTENT = 205
 constant HTTP_PARTIAL_CONTENT = 206
@@ -53,16 +53,17 @@ constant HTTP_MULTI_STATUS = 207          // RFC4918
 constant HTTP_ALREADY_REPORTED = 208      // RFC5842
 constant HTTP_IM_USED = 226               // RFC3229
 
-// Redirection
-
+------------------------------------------------------------------------
+-- Redirection
+------------------------------------------------------------------------
 constant HTTP_MULTIPLE_CHOICES = 300
 constant HTTP_MOVED_PERMANENTLY = 301
 constant HTTP_FOUND = 302
 constant HTTP_SEE_OTHER = 303
 
-/**
- * The resource has not been modified since the last request
- */
+------------------------------------------------------------------------
+-- The resource has not been modified since the last request
+------------------------------------------------------------------------
 constant HTTP_NOT_MODIFIED = 304
 constant HTTP_USE_PROXY = 305
 constant HTTP_RESERVED = 306
@@ -71,46 +72,46 @@ constant HTTP_PERMANENTLY_REDIRECT = 308  // RFC7238
 
 // Client Error
 
-/**
- * The request cannot be fulfilled due to multiple errors
- */
+------------------------------------------------------------------------
+-- The request cannot be fulfilled due to multiple errors
+------------------------------------------------------------------------
 constant HTTP_BAD_REQUEST = 400
 
-/**
- * The user is unauthorized to access the requested resource
- */
+------------------------------------------------------------------------
+-- The user is unauthorized to access the requested resource
+------------------------------------------------------------------------
 constant HTTP_UNAUTHORIZED = 401
 constant HTTP_PAYMENT_REQUIRED = 402
 
-/**
- * The requested resource is unavailable at this present time
- */
+------------------------------------------------------------------------
+-- The requested resource is unavailable at this present time
+------------------------------------------------------------------------
 constant HTTP_FORBIDDEN = 403
 
-/**
- * The requested resource could not be found
- *
- * Note: This is sometimes used to mask if there was an UNAUTHORIZED (401) or
- * FORBIDDEN (403) error, for security reasons
- */
+------------------------------------------------------------------------
+-- The requested resource could not be found
+--
+-- Note: This is sometimes used to mask if there was an UNAUTHORIZED (401) or
+-- FORBIDDEN (403) error, for security reasons
+------------------------------------------------------------------------
 constant HTTP_NOT_FOUND = 404
 
-/**
- * The request method is not supported by the following resource
- */
+------------------------------------------------------------------------
+-- The request method is not supported by the following resource
+------------------------------------------------------------------------
 constant HTTP_METHOD_NOT_ALLOWED = 405
 
-/**
- * The request was not acceptable
- */
+------------------------------------------------------------------------
+-- The request was not acceptable
+------------------------------------------------------------------------
 constant HTTP_NOT_ACCEPTABLE = 406
 constant HTTP_PROXY_AUTHENTICATION_REQUIRED = 407
 constant HTTP_REQUEST_TIMEOUT = 408
 
-/**
- * The request could not be completed due to a conflict with the current state
- * of the resource
- */
+------------------------------------------------------------------------
+-- The request could not be completed due to a conflict with the current state
+-- of the resource
+------------------------------------------------------------------------
 constant HTTP_CONFLICT = 409
 constant HTTP_GONE = 410
 constant HTTP_LENGTH_REQUIRED = 411
@@ -132,17 +133,17 @@ constant HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE = 431                             
 
 // Server Error
 
-/**
- * The server encountered an unexpected error
- *
- * Note: This is a generic error message when no specific message
- * is suitable
- */
+------------------------------------------------------------------------
+-- The server encountered an unexpected error
+--
+-- Note: This is a generic error message when no specific message
+-- is suitable
+------------------------------------------------------------------------
 constant HTTP_INTERNAL_SERVER_ERROR = 500
 
-/**
- * The server does not recognise the request method
- */
+------------------------------------------------------------------------
+-- The server does not recognise the request method
+------------------------------------------------------------------------
 constant HTTP_NOT_IMPLEMENTED = 501
 constant HTTP_BAD_GATEWAY = 502
 constant HTTP_SERVICE_UNAVAILABLE = 503
@@ -154,163 +155,163 @@ constant HTTP_LOOP_DETECTED = 508                                               
 constant HTTP_NOT_EXTENDED = 510                                                // RFC2774
 constant HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511
 
-/**
- * This defines the rest format
- * Must be overridden it in a controller so that it is set
- *
- * @var string|NULL
- */
+------------------------------------------------------------------------
+-- This defines the rest format
+-- Must be overridden it in a controller so that it is set
+--
+-- @var string|NULL
+------------------------------------------------------------------------
 local sRestFormat = "";
 
-/**
- * Defines the list of method properties such as limit, log and level
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- Defines the list of method properties such as limit, log and level
+--
+-- @var array
+------------------------------------------------------------------------
 ##protected $methods = [];
 local sMethodsA
 
-/**
- * List of allowed HTTP methods
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- List of allowed HTTP methods
+--
+-- @var array
+------------------------------------------------------------------------
 local sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
 
-/**
- * Contains details about the request
- * Fields: body, format, method, ssl
- * Note: This is a dynamic object (stdClass)
- *
- * @var object
- */
+------------------------------------------------------------------------
+-- Contains details about the request
+-- Fields: body, format, method, ssl
+-- Note: This is a dynamic object (stdClass)
+--
+-- @var object
+------------------------------------------------------------------------
 ##protected $request = NULL;
 local sRequestA
 
-/**
- * Contains details about the response
- * Fields: format, lang
- * Note: This is a dynamic object (stdClass)
- *
- * @var object
- */
+------------------------------------------------------------------------
+-- Contains details about the response
+-- Fields: format, lang
+-- Note: This is a dynamic object (stdClass)
+--
+-- @var object
+------------------------------------------------------------------------
 ##protected $response = NULL;
 local sResponseA
 
-/**
- * Contains details about the REST API
- * Fields: db, ignore_limits, key, level, user_id
- * Note: This is a dynamic object (stdClass)
- *
- * @var object
- */
+------------------------------------------------------------------------
+-- Contains details about the REST API
+-- Fields: db, ignore_limits, key, level, user_id
+-- Note: This is a dynamic object (stdClass)
+--
+-- @var object
+------------------------------------------------------------------------
 ##protected $rest = NULL;
 local sRestA
 
-/**
- * The arguments for the GET request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the GET request method
+--
+-- @var array
+------------------------------------------------------------------------
 local sGetArgsA
 
-/**
- * The arguments for the POST request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the POST request method
+--
+-- @var array
+------------------------------------------------------------------------
 ##protected $_post_args = [];
 local sPostArgsA
 
-/**
- * The arguments for the PUT request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the PUT request method
+--
+-- @var array
+------------------------------------------------------------------------
 local sPutArgsA
 
-/**
- * The arguments for the DELETE request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the DELETE request method
+--
+-- @var array
+------------------------------------------------------------------------
 local sDeleteArgsA
 
-/**
- * The arguments for the PATCH request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the PATCH request method
+--
+-- @var array
+------------------------------------------------------------------------
 local sPatchArgsA
 
-/**
- * The arguments for the HEAD request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the HEAD request method
+--
+-- @var array
+------------------------------------------------------------------------
 local sHeadArgsA
 
-/**
- * The arguments for the OPTIONS request method
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the OPTIONS request method
+--
+-- @var array
+------------------------------------------------------------------------
 local sOptionsArgsA
 
-/**
- * The arguments for the query parameters
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments for the query parameters
+--
+-- @var array
+------------------------------------------------------------------------
 local sQueryArgsA
 
-/**
- * The arguments from GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods combined
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- The arguments from GET, POST, PUT, DELETE, PATCH, HEAD and OPTIONS request methods combined
+--
+-- @var array
+------------------------------------------------------------------------
 local sArgsA
 
-/**
- * The insert_id of the log entry (if we have one)
- *
- * @var string
- */
+------------------------------------------------------------------------
+-- The insert_id of the log entry (if we have one)
+--
+-- @var string
+------------------------------------------------------------------------
 local sInsertId = ""
 
-/**
- * If the request is allowed based on the API key provided
- *
- * @var bool
- */
+------------------------------------------------------------------------
+-- If the request is allowed based on the API key provided
+--
+-- @var bool
+------------------------------------------------------------------------
 local sAllow = true
 
-/**
- * The LDAP Distinguished Name of the User post authentication
- *
- * @var string
- */
+------------------------------------------------------------------------
+-- The LDAP Distinguished Name of the User post authentication
+--
+-- @var string
+------------------------------------------------------------------------
 local sUserLdapDn = ""
 
-/**
- * The start of the response time from the server
- *
- * @var string
- */
+------------------------------------------------------------------------
+-- The start of the response time from the server
+--
+-- @var string
+------------------------------------------------------------------------
 local sStartRTime = ""
 
-/**
- * The end of the response time from the server
- *
- * @var string
- */
+------------------------------------------------------------------------
+-- The end of the response time from the server
+--
+-- @var string
+------------------------------------------------------------------------
  local sEndRTime = ""
 
-/**
- * List all supported methods, the first will be the default format
- *
- * @var array
- */
+------------------------------------------------------------------------
+-- List all supported methods, the first will be the default format
+--
+-- @var array
+------------------------------------------------------------------------
 local sSupportedFormats
 put "application/json" into sSupportedFormats["json"]
 put "application/json" into sSupportedFormats["array"]
@@ -319,37 +320,37 @@ put "text/html" into sSupportedFormats["html"]
 put "text/plain" into sSupportedFormats["lson"]
 put "application/xml" into sSupportedFormats["xml"]
 
-/**
- * Information about the current API user
- *
- * @var object
- */
+------------------------------------------------------------------------
+-- Information about the current API user
+--
+-- @var object
+------------------------------------------------------------------------
 local sApiUser
 
-/**
- * Whether or not to perform a CORS check and apply CORS headers to the request
- *
- * @var bool
- */
+------------------------------------------------------------------------
+-- Whether or not to perform a CORS check and apply CORS headers to the request
+--
+-- @var bool
+------------------------------------------------------------------------
 local sCheckCors = ""
 
-/**
- * Enable XSS flag
- * Determines whether the XSS filter is always active when
- * GET, OPTIONS, HEAD, POST, PUT, DELETE and PATCH data is encountered
- * Set automatically based on config setting
- *
- * @var bool
- */
- local sEnableXSS = false
+------------------------------------------------------------------------
+-- Enable XSS flag
+-- Determines whether the XSS filter is always active when
+-- GET, OPTIONS, HEAD, POST, PUT, DELETE and PATCH data is encountered
+-- Set automatically based on config setting
+--
+-- @var bool
+------------------------------------------------------------------------
+local sEnableXSS = false
 
-/**
- * HTTP status codes and their respective description
- * Note: Only the widely used HTTP status codes are used
- *
- * @var array
- * @link http://www.restapitutorial.com/httpstatuscodes.html
- */
+------------------------------------------------------------------------
+-- HTTP status codes and their respective description
+-- Note: Only the widely used HTTP status codes are used
+--
+-- @var array
+-- @link http://www.restapitutorial.com/httpstatuscodes.html
+------------------------------------------------------------------------
  
 put "OK" into sHttpStatusCodes[HTTP_OK]
 put "CREATED" into sHttpStatusCodes[HTTP_CREATED]
@@ -378,14 +379,9 @@ protected function early_checks()
 }
 */
 
-/**
- * Constructor for the REST API
- *
- * @access public
- * @param string $config Configuration filename minus the file extension
- * e.g: my_rest.php is passed as 'my_rest'
- * @return void
- */
+------------------------------------------------------------------------
+-- Initialize the REST server and process the request
+------------------------------------------------------------------------
  function _restInitialize
  	// Verify all the correct software versions are being used
  	preflightChecks
@@ -2384,7 +2380,6 @@ end preflightChecks
 -- current server version is GREATER THAN OR EQUAL to the passed
 -- in parameter
 ------------------------------------------------------------------------
- 
 function livecodeVersion pVersion
 	put the itemDelimiter into oldDelmin
 	set the itemDelimiter to "."
@@ -2406,7 +2401,6 @@ end livecodeVersion
 -- Check the version of Revigniter. Returns true is greater or equal to
 -- the value passed in pVersion otherwise false.
 ------------------------------------------------------------------------
-
 function revigniterVersion pVersion
 	//RIVERSION
 
@@ -2418,7 +2412,6 @@ end revigniterVersion
 -- Check if com.livecode.library.json is installed. Returns boolean true
 -- if installed othewise false
 ------------------------------------------------------------------------
-
 function libraryJson
 	/*
 	# CHECK IF FILE EXISTS
