@@ -929,21 +929,25 @@ end preflightChecks
     }
 */
 
-    /**
-     * Gets the default format from the configuration. Fallbacks to 'json'
-     * if the corresponding configuration option $config['rest_default_format']
-     * is missing or is empty
-     *
-     * @access protected
-     * @return string The default supported input format
-     */
-/*
-    protected function _get_default_output_format()
-    {
-        $default_format = (string) $this->config->item('rest_default_format');
-        return $default_format === '' ? 'json' : $default_format;
-    }
-*/
+------------------------------------------------------------------------
+-- Gets the default format from the configuration. Fallbacks to 'json'
+-- if the corresponding configuration option $config['rest_default_format']
+-- is missing or is empty
+--
+-- @access protected
+-- @return string The default supported input format
+------------------------------------------------------------------------
+
+function _getDefaultOutputFormat
+    //$default_format = (string) $this->config->item('rest_default_format');
+    //return $default_format === '' ? 'json' : $default_format;
+	 
+	 put rigConfigItem("restDefaultFormat") into tDefaultFormat
+	 if tDefualtFormat = "" then put "json" into tDefaultFormat
+	 
+	 return tDefaultFormat
+end _getDefaultOutputFormat
+
 
     /**
      * Detect which format should be used to output the data
