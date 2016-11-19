@@ -4,6 +4,14 @@ A RESTful Server for revIgniter.
 ## EARLY DEVELOPMENT STAGE - NON FUNCTIONAL (2016-11-19)
 This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
+### Completed
+- Github project created. Please use develop branch for Pushes.
+- project structure
+- rest.lc config file
+- restControllerLang.lc language file
+- new welcome.lc with link to samples page
+- new restServer.lc samples page (but no working samples)
+
 ## Requirements
   * Livecode Server 8.1.0 or above
   * revIgniter 1.9.4
