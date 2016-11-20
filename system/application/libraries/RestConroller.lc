@@ -19,7 +19,7 @@ end if
 -- @license         https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
 -- @link            https://github.com/bhall2001/revigniter-restserver
 -- @version         0.0.1
- ------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 
 // Note: Only the widely used HTTP status codes are documented
