@@ -1034,39 +1034,46 @@ end _getDefaultOutputFormat
     }
 */
 
-    /**
-     * Get the HTTP request string e.g. get or post
-     *
-     * @access protected
-     * @return string|NULL Supported request method as a lowercase string; otherwise, NULL if not supported
-     */
-/*
-    protected function _detect_method()
-    {
-        // Declare a variable to store the method
-        $method = NULL;
+/**
+Summary: Get the HTTP request string e.g. get or post
 
-        // Determine whether the 'enable_emulate_request' setting is enabled
-        if ($this->config->item('enable_emulate_request') === TRUE)
-        {
-            $method = $this->input->post('_method');
-            if ($method === NULL)
-            {
-                $method = $this->input->server('HTTP_X_HTTP_METHOD_OVERRIDE');
-            }
-
-            $method = strtolower($method);
-        }
-
-        if (empty($method))
-        {
-            // Get the request method as a lowercase string
-            $method = $this->input->method();
-        }
-
-        return in_array($method, $this->allowed_http_methods) && method_exists($this, '_parse_' . $method) ? $method : 'get';
-    }
+Returns: Supported request method as a lowercase string; otherwise, NULL if not supported
 */
+private function _detectMethod
+   
+   // Declare a variable to store the method
+   //$method = NULL;
+   local tRequestMethod = ""
+   
+   // Determine whether the 'enable_emulate_request' setting is enabled
+   /*        if ($this->config->item('enable_emulate_request') === TRUE)
+   {
+   $method = $this->input->post('_method');
+   if ($method === NULL)
+   {
+   $method = $this->input->server('HTTP_X_HTTP_METHOD_OVERRIDE');
+   }
+   
+   $method = strtolower($method);
+   }
+   */
+   //if (empty($method))
+   
+	// Get the request method as a lowercase string
+	if tRequestMethod = "" then
+      //$method = $this->input->method();
+      put toLower(rigServer("REQUEST_METHOD")) into tRequestMethod
+   end if
+   
+    //return in_array($method, $this->allowed_http_methods) && method_exists($this, '_parse_' . $method) ? $method : 'get';
+   if tRequestMethod is in sAllowedHttpMethods then
+      return tRequestMethod
+   else
+      return "get"
+   end if
+end _detectMethod
+
+
 
     /**
      * See if the user has provided an API key
