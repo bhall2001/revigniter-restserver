@@ -950,7 +950,7 @@ end preflightChecks
 -- @return string The default supported input format
 ------------------------------------------------------------------------
 
-function _getDefaultOutputFormat
+private function _getDefaultOutputFormat
     //$default_format = (string) $this->config->item('rest_default_format');
     //return $default_format === '' ? 'json' : $default_format;
 	 
