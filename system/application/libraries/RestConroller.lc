@@ -522,11 +522,11 @@ set the itemDelimiter to tOldDelim
 //{
 //    $language = 'english';
 //}
+put rigConfigItem("restLanguage") into tLanguage
+if tLanguage = "" then put "english" into tLanguage
 
 // Load the language file
 //$this->lang->load('rest_controller', $language);
-put rigConfigItem("restLanguage") into tLanguage
-if tLanguage = "" then put "english" into tLanguage
 
 rigLoadLanguage "restControllerLang", tLanguage
 
