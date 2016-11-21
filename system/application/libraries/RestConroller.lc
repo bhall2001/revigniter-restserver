@@ -7,19 +7,19 @@ if gBASEPATH is "gBASEPATH" then
 end if
 
 
-/*----------------------------------------------------------------------
- * revIgniter Rest Controller
- * A fully RESTful server implementation for revIgniter
- *
- * @package         revIgniter
- * @subpackage      Libraries
- * @category        Libraries
- * @author          Bob Hall
- * @copyright	     Copyright (c) 2016, Robert D. Hall
- * @license         https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
- * @link            https://github.com/bhall2001/revigniter-restserver
- * @version         0.0.1
-----------------------------------------------------------------------*/
+------------------------------------------------------------------------
+-- revIgniter Rest Controller
+-- A fully RESTful server implementation for revIgniter
+--
+-- @package         revIgniter
+-- @subpackage      Libraries
+-- @category        Libraries
+-- @author          Bob Hall
+-- @copyright	     Copyright (c) 2016, Robert D. Hall
+-- @license         https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
+-- @link            https://github.com/bhall2001/revigniter-restserver
+-- @version         0.0.1
+------------------------------------------------------------------------
 
 
 // Note: Only the widely used HTTP status codes are documented
@@ -416,11 +416,11 @@ protected function early_checks()
     }
 */
 
-/*----------------------------------------------------------------------
- *
- * Checks to see if we have everything we need to run this library.
- *
-----------------------------------------------------------------------*/
+------------------------------------------------------------------------
+--
+-- Checks to see if we have everything we need to run this library.
+--
+------------------------------------------------------------------------
 // preflight_checks();
 function preflightChecks
 	try
