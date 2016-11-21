@@ -416,11 +416,11 @@ protected function early_checks()
     }
 */
 
-------------------------------------------------------------------------
---
--- Checks to see if we have everything we need to run this library.
---
-------------------------------------------------------------------------
+/**
+
+ Checks to see if we have everything we need to run this library.
+
+*/
 // preflight_checks();
 function preflightChecks
 	try
