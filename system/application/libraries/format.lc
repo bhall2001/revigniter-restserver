@@ -2,16 +2,16 @@
 put gBASEPATH into gBASEPATH
 
 if gBASEPATH is "gBASEPATH" then
-	put "No direct script access allowed."
-	exit to top
+   put "No direct script access allowed."
+   exit to top
 end if
 
- -- Format class
- -- Help convert between various formats such as LSON, JSON, XML, CSV, etc.
- --
- -- @author      Bob Hall
- -- @copyright	  Copyright (c) 2016, Robert D. Hall
- -- @license     https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
+-- Format class
+-- Help convert between various formats such as LSON, JSON, XML, CSV, etc.
+--
+-- @author      Bob Hall
+-- @copyright	  Copyright (c) 2016, Robert D. Hall
+-- @license     https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
 
 /**
 * Array output format
@@ -21,32 +21,32 @@ constant ARRAY_FORMAT = "array"
 /**
 * Comma Separated Value (CSV) output format
 */
-constant CSV_FORMAT = "csv";
+constant CSV_FORMAT = "csv"
 
 /**
 * Json output format
 */
-constant JSON_FORMAT = "json";
+constant JSON_FORMAT = "json"
 
 /**
 * HTML output format
 */
-constant HTML_FORMAT = "html";
+constant HTML_FORMAT = "html"
 
 /**
 * Livecode output format
 */
-constant LC_FORMAT = "lc";
+constant LC_FORMAT = "lc"
 
 /**
 * Serialized output format
 */
-constant LSON_FORMAT = "lson";
+constant LSON_FORMAT = "lson"
 
 /**
 * XML output format
 */
-constant XML_FORMAT = "xml";
+constant XML_FORMAT = "xml"
 
 /**
 * Default format
@@ -54,23 +54,24 @@ constant XML_FORMAT = "xml";
 constant DEFAULT_FORMAT = "json" 
 
 
-function toArray(@pData, pFromType)
+function toArray @pData, pFromType
    switch pFromType
-   case "json"
-      return _from_json(pData)
-      break
-   case "lson"
-      return _from_lson(pData)
-      break
-//   case "csv"
-//      return _from_csv(pData)
-//      break
-//   case "xml"
-//      return _from_xml(pData)
-//      break
-   default
-      // we got an error if we get here
-end dataToArray
+      case "json"
+         return _from_json(pData)
+         break
+      case "lson"
+         return _from_lson(pData)
+         break
+         //   case "csv"
+         //      return _from_csv(pData)
+         //      break
+         //   case "xml"
+         //      return _from_xml(pData)
+         //      break
+      default
+         // we got an error if we get here
+   end switch
+end toArray
 
 
 
@@ -319,6 +320,7 @@ end dataToArray
      * to the constructor
      * @return string Json representation of a value
      */
+	  /*
     public function to_json($data = NULL)
     {
         // If no data is passed as a parameter, then use the data passed
@@ -349,6 +351,7 @@ end dataToArray
 
         return json_encode($data);
     }
+	 */
 
 /**
 * Encode data as a serialized array
@@ -357,21 +360,23 @@ end dataToArray
 * to the constructor
 * @return string Serialized data
 */
+/*
 function to_lson(pDataA)
         // If no data is passed as a parameter, then use the data passed
         // via the constructor
 
 
-       /* 
+       
        if ($data === NULL && func_num_args() === 0)
         {
             $data = $this->_data;
         }
-        */
+        
         
         
         return serialize($data);
 end to_lson
+*/
 
     /**
      * Format data using a PHP structure
@@ -443,15 +448,17 @@ end _from_csv
  * @param $data Encoded json string
  * @return mixed Decoded json string with leading and trailing whitespace removed
  */
-protected function _from_json(@pData)
-{
+private function _fromJSON @pData
   return jsonImport(pData)
-}
+end _fromJSON
 
 /**
  * @param string Data to unserialized
  * @return array Unserialized data in array form
  */
-private function _from_lson(@pData)
+private function _fromLSON @pData
    return arrayDecode(pData)
-end _from_lson
+end _fromLSON
+
+on rigRunInitialformatConfig
+end rigRunInitialformatConfig
