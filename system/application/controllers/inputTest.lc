@@ -15,10 +15,9 @@ command index
 	rigLoaderLoadLibrary "RestController"
 	
 	put "Input.lc Test Page" into gData["pageTitle"]
-	put 1 & return
 	
 	put rigRequestHeaders() into tHeaders
    put jsonExport(tHeaders) into gData["libURLLastRHHeaders"]
-	put 2 & return
+	
 	get rigLoadView("inputTest")
 end index
