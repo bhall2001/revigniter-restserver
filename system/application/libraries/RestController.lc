@@ -494,7 +494,194 @@ $this->_supported_formats = array_intersect_key($this->_supported_formats, array
 */
 
 put _getDefaultOutputFormat() into sDefaultFormat
+
+// if the default format is not a supported format, add it to the list
+put the itemDelimiter into tOldDelim
+set the itemDelimiter to ","
+if sDefaultFormat is not among the items of sSupportedFormats then
+	put sDefaultFormat & ", " before sSupportedFormats
+	repeat until char -1 of sSupportedFormats is not in " ,"
+		delete char -1 of sSupportedFormats
+	end repeat
+end if
+set the itemDelimiter to tOldDelim
+
+// Get the language
+//$language = $this->config->item('rest_language');
+//if ($language === NULL)
+//{
+//    $language = 'english';
+//}
+put rigConfigItem("restLanguage") into tLanguage
+if tLanguage = "" then put "english" into tLanguage
+
+// Load the language file
+//$this->lang->load('rest_controller', $language);
+
+rigLoadLanguage "restControllerLang", tLanguage
+
+/*
+	// Initialise the response, request and rest objects
+	$this->request = new stdClass();
+	$this->response = new stdClass();
+	$this->rest = new stdClass();
+
+	// Check to see if the current IP address is blacklisted
+	if ($this->config->item('rest_ip_blacklist_enabled') === TRUE)
+	{
+	   $this->_check_blacklist_auth();
+	}
+
+	// Determine whether the connection is HTTPS
+	$this->request->ssl = is_https();
+*/
+
+	// How is this request being made? GET, POST, PATCH, DELETE, INSERT, PUT, HEAD or OPTIONS
+	//$this->request->method = $this->_detect_method();
+	put _detectMethod() into tRequestMethod
+
+	/* SKIPPING FOR NOW
+	// Check for CORS access request
+	$check_cors = $this->config->item('check_cors');
+	if ($check_cors === TRUE)
+	{
+	   $this->_check_cors();
+	}
+	*/
+
+	/* NOT NEEDED (I think)
+	// Create an argument container if it doesn't exist e.g. _get_args
+	if (isset($this->{'_'.$this->request->method.'_args'}) === FALSE)
+	{
+	   $this->{'_'.$this->request->method.'_args'} = [];
+	}
+
+	// Set up the query parameters
+	$this->_parse_query();
+	*/
+			  
+	// Set up the GET variables
+	//$this->_get_args = array_merge($this->_get_args, $this->uri->ruri_to_assoc());
+	put rigUriToAssoc() into sGetArgsA
 	
+	// Try to find a format for the request (means we have a request body)
+//$this->request->format = $this->_detect_input_format();
+put _detectInputFormat() into tRequestFormat
+
+// Not all methods have a body attached with them
+//$this->request->body = NULL;
+put "" into tRequestBody
+
+/*
+$this->{'_parse_' . $this->request->method}();
+
+// Now we know all about our request, let's try and parse the body if it exists
+if ($this->request->format && $this->request->body)
+{
+	$this->request->body = $this->format->factory($this->request->body, $this->request->format)->to_array();
+	// Assign payload arguments to proper method container
+	$this->{'_'.$this->request->method.'_args'} = $this->request->body;
+}
+*/
+
+//get header vars
+//$this->_head_args = $this->input->request_headers();
+put rigRequestHeaders() into sHeadArgsA
+
+/*
+// Merge both for one mega-args variable
+$this->_args = array_merge(
+	$this->_get_args,
+	$this->_options_args,
+	$this->_patch_args,
+	$this->_head_args,
+	$this->_put_args,
+	$this->_post_args,
+	$this->_delete_args,
+	$this->{'_'.$this->request->method.'_args'}
+);
+*/
+
+
+/*
+// Which format should the data be returned in?
+$this->response->format = $this->_detect_output_format();
+
+// Which language should the data be returned in?
+$this->response->lang = $this->_detect_lang();
+
+// Extend this function to apply additional checking early on in the process
+$this->early_checks();
+*/
+
+
+/*
+// Load DB if its enabled
+if ($this->config->item('rest_database_group') && ($this->config->item('rest_enable_keys') || $this->config->item('rest_enable_logging')))
+{
+	$this->rest->db = $this->load->database($this->config->item('rest_database_group'), TRUE);
+}
+
+// Use whatever database is in use (isset returns FALSE)
+elseif (property_exists($this, 'db'))
+{
+	$this->rest->db = $this->db;
+}
+*/
+
+/*
+// Check if there is a specific auth type for the current class/method
+// _auth_override_check could exit so we need $this->rest->db initialized before
+$this->auth_override = $this->_auth_override_check();
+*/
+
+/*
+// Checking for keys? GET TO WorK!
+// Skip keys test for $config['auth_override_class_method']['class'['method'] = 'none'
+if ($this->config->item('rest_enable_keys') && $this->auth_override !== TRUE)
+{
+	$this->_allow = $this->_detect_api_key();
+}
+*/
+
+/*
+// Only allow ajax requests
+if ($this->input->is_ajax_request() === FALSE && $this->config->item('rest_ajax_only'))
+{
+	// Display an error response
+	$this->response([
+				$this->config->item('rest_status_field_name') => FALSE,
+				$this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ajax_only')
+		], self::HTTP_NOT_ACCEPTABLE);
+}
+*/
+
+/*
+// When there is no specific override for the current class/method, use the default auth value set in the config
+if ($this->auth_override === FALSE &&
+(! ($this->config->item('rest_enable_keys') && $this->_allow === TRUE) ||
+($this->config->item('allow_auth_and_keys') === TRUE && $this->_allow === TRUE)))
+{
+	$rest_auth = strtolower($this->config->item('rest_auth'));
+	switch ($rest_auth)
+	{
+			case 'basic':
+					$this->_prepare_basic_auth();
+					break;
+			case 'digest':
+					$this->_prepare_digest_auth();
+					break;
+			case 'session':
+					$this->_check_php_session();
+					break;
+	}
+	if ($this->config->item('rest_ip_whitelist_enabled') === TRUE)
+	{
+			$this->_check_whitelist_auth();
+	}
+}
+}
+*/
 end preflightChecks
 
     /**
@@ -741,7 +928,7 @@ end preflightChecks
 private function _detectInputFormat
    // Get the CONTENT-TYPE value from the SERVER variable
    //$content_type = $this->input->server('CONTENT_TYPE');
-   put rigServer("CONTENT_TYPE") into tContentType
+   put rigVarServer("CONTENT_TYPE") into tContentType
    
    //if (empty($content_type) === FALSE)
    if tContentType is not empty then
@@ -898,12 +1085,13 @@ private function _detectMethod
 	// Get the request method as a lowercase string
 	if tRequestMethod = "" then
       //$method = $this->input->method();
-      put toLower(rigServer("REQUEST_METHOD")) into tRequestMethod
+		put rigVarServer("REQUEST_METHOD") into tRequestMethod
+      put toLower(tRequestMethod) into tRequestMethod
    end if
    
     //return in_array($method, $this->allowed_http_methods) && method_exists($this, '_parse_' . $method) ? $method : 'get';
    if tRequestMethod is in sAllowedHttpMethods then
-      return tRequestMethod
+   	return tRequestMethod
    else
       return "get"
    end if
@@ -2318,14 +2506,14 @@ end libraryJson
     end if
     
     // If header is already defined, return it immediately
-    if REQUEST_HEADERS is not empty then return REQUEST_HEADERS
+    ##if REQUEST_HEADERS is not empty then return REQUEST_HEADERS
     	
     //$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
-    if sContentType is not empty then
-       put sContentType into REQUEST_HEADERS["Content-Type"]
-    else
+    ##if sContentType is not empty then
+       ##put sContentType into REQUEST_HEADERS["Content-Type"]
+    ##else
        put $_SERVER["CONTENT_TYPE"] into REQUEST_HEADERS["Content-Type"]
-    end if
+    ##end if
     	
     	
     /*foreach ($_SERVER as $key => $val)
@@ -2342,11 +2530,12 @@ end libraryJson
     */
     	
     repeat for each key aKey in $_SERVER
-       if $_SERVER[akey] contains "HTTP_" then
+       if "HTTP_" is in aKey then
+			 put aKey & ":"
           put _rigFetchFromArray($_SERVER, aKey, tXssClean) into REQUEST_HEADERS[aKey]
        end if
     end repeat
-    	
+	     	
     //return $this->headers;
     return REQUEST_HEADERS
  end rigRequestHeaders
