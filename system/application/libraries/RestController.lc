@@ -2509,11 +2509,11 @@ end libraryJson
     ##if REQUEST_HEADERS is not empty then return REQUEST_HEADERS
     	
     //$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
-    ##if sContentType is not empty then
-       ##put sContentType into REQUEST_HEADERS["Content-Type"]
-    ##else
+    if sContentType is not empty then
+       put sContentType into REQUEST_HEADERS["Content-Type"]
+    else
        put $_SERVER["CONTENT_TYPE"] into REQUEST_HEADERS["Content-Type"]
-    ##end if
+    end if
     	
     	
     /*foreach ($_SERVER as $key => $val)
