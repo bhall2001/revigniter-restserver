@@ -462,9 +462,6 @@ rigLoadConfig "rest"
 //$this->load->library('format');
 rigLoaderLoadLibrary "Format"
 
-// Load the Input override Library
-//rigLoaderLoadLibrary "Input"
-
 // Determine supported output formats from configuration
 //$supported_formats = $this->config->item('rest_supported_formats');
 put rigConfigItem("restSupportedFormats") into sSupportedFormats
