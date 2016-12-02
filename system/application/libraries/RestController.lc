@@ -21,9 +21,6 @@ end if
 -- @version         0.0.1
 ------------------------------------------------------------------------
 
-
-local REQUEST_HEADERS
-
 // Note: Only the widely used HTTP status codes are documented
 
 // Informational
@@ -464,6 +461,9 @@ rigLoadConfig "rest"
 // At present the library is bundled with REST_Controller 2.5+, but will eventually be part of CodeIgniter (no citation)
 //$this->load->library('format');
 rigLoaderLoadLibrary "Format"
+
+// Load the Input override Library
+//rigLoaderLoadLibrary "Input"
 
 // Determine supported output formats from configuration
 //$supported_formats = $this->config->item('rest_supported_formats');
@@ -2492,53 +2492,7 @@ function libraryJson
 end libraryJson
 
 
-/*
- * Request Headers
- *
- * @param	bool	$xss_clean	Whether to apply XSS filtering
- * @return	array
- */
- function rigRequestHeaders pXssClean
-    if pXSSclean is empty then
-       put FALSE into tXSSclean
-    else
-       put pXSSclean into tXSSclean
-    end if
-    
-    // If header is already defined, return it immediately
-    ##if REQUEST_HEADERS is not empty then return REQUEST_HEADERS
-    	
-    //$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
-    if sContentType is not empty then
-       put sContentType into REQUEST_HEADERS["Content-Type"]
-    else
-       put $_SERVER["CONTENT_TYPE"] into REQUEST_HEADERS["Content-Type"]
-    end if
-    	
-    	
-    /*foreach ($_SERVER as $key => $val)
-    {
-    if (sscanf($key, 'HTTP_%s', $header) === 1)
-    {
-    // take SOME_HEADER and turn it into Some-Header
-    $header = str_replace('_', ' ', strtolower($header));
-    $header = str_replace(' ', '-', ucwords($header));
-    
-    $this->headers[$header] = $this->_fetch_from_array($_SERVER, $key, $xss_clean);
-    }
-    }
-    */
-    	
-    repeat for each key aKey in $_SERVER
-       if "HTTP_" is in aKey then
-			 put aKey & ":"
-          put _rigFetchFromArray($_SERVER, aKey, tXssClean) into REQUEST_HEADERS[aKey]
-       end if
-    end repeat
-	     	
-    //return $this->headers;
-    return REQUEST_HEADERS
- end rigRequestHeaders
+
 
 
 
