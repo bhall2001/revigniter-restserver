@@ -45,7 +45,8 @@ put "json" into gConfig["restDefaultFormat"]
 --
 
 //put "json, lson, csv, html, xml" into gConfig["restSupportedFormats"]
-put "json, lson" into gConfig["restSupportedFormats"]
+put true into gConfig["restSupportedFormats"]["json"]
+put true into gConfig["restSupportedFormats"]["lson"]
 
 
 ------------------------------------------------------------------------
@@ -116,7 +117,7 @@ put false into gConfig["restAuth"]
 -- "ldap"    Use LDAP authentication
 -- "library" Use a authentication library
 --
--- Note: If 'restAuth' is set to 'session' then change 'authSource' to 
+-- Note: If 'restAuth' is set to 'session' then change 'authSource' to
 -- the name of the session variable
 --
 
@@ -127,7 +128,7 @@ put "ldap" into gConfig["authSource"]
 -- Allow Authentication and API Keys
 ------------------------------------------------------------------------
 --
--- Where you wish to have Basic, Digest or Session login, but also want 
+-- Where you wish to have Basic, Digest or Session login, but also want
 -- to use API Keys (for limiting requests etc), set to TRUE;
 --
 
@@ -159,7 +160,7 @@ put true into gConfig["allowAuthAndKeys"]
 --
 -- Set specific authentication types for methods within a class (controller)
 --
--- Set as many config entries as needed.  Any methods not set will use the 
+-- Set as many config entries as needed.  Any methods not set will use the
 -- default 'restAuth' config value.
 --
 -- e.g:
@@ -579,7 +580,7 @@ put false into gConfig["allowAnyCorsDomain"]
 -- Used if gConfig["checkCors"] is set to TRUE and gConfig["allowAnyCorsDomain"]
 -- is set to FALSE. Set all the allowable domains within the array as follows:
 --
--- e.g. 
+-- e.g.
 --
 --      put "http" into gConfig["allowedOrigins"]["www.example.com"]
 --      put "https" into gConfig["allowedOrigins"]["spa.example.com"]
