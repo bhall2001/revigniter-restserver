@@ -9,7 +9,7 @@ end if
 
 ------------------------------------------------------------------------
 -- revIgniter Input Library Extensions
--- 
+--
 -- A collection of useful functions that extend the Native Input
 -- Library of revIgniter
 --
@@ -36,18 +36,18 @@ function rigRequestHeaders pXssClean
     else
        put pXSSclean into tXSSclean
     end if
-    
+
     // If header is already defined, return it immediately
     ##if REQUEST_HEADERS is not empty then return REQUEST_HEADERS
-    	
+
     //$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
     if sContentType is not empty then
        put sContentType into REQUEST_HEADERS["Content-Type"]
     else
        put $_SERVER["CONTENT_TYPE"] into REQUEST_HEADERS["Content-Type"]
     end if
-    	
-    	
+
+
     /*foreach ($_SERVER as $key => $val)
     {
     if (sscanf($key, 'HTTP_%s', $header) === 1)
@@ -55,25 +55,54 @@ function rigRequestHeaders pXssClean
     // take SOME_HEADER and turn it into Some-Header
     $header = str_replace('_', ' ', strtolower($header));
     $header = str_replace(' ', '-', ucwords($header));
-    
+
     $this->headers[$header] = $this->_fetch_from_array($_SERVER, $key, $xss_clean);
     }
     }
     */
-    	
+
     repeat for each key aKey in $_SERVER
        if "HTTP_" is in aKey then
 			 put aKey & ":"
           put _rigFetchFromArray($_SERVER, aKey, tXssClean) into REQUEST_HEADERS[aKey]
        end if
     end repeat
-	     	
+
     //return $this->headers;
     return REQUEST_HEADERS
  end rigRequestHeaders
- 
+
  /*
   on rigRunInitialrestcontrollerConfig
      // do nothing
   end rigRunInitialrestcontrollerConfig
  */
+
+
+
+------------------------------------------------------------------------
+--    THIS SHOULD EVENTUALLY MOVED TO COMMONS.LC
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+-- Is HTTPS?
+--
+-- Determines if the application is accessed via an encrypted
+-- (HTTPS) connection.
+--
+-- return	boolean
+------------------------------------------------------------------------
+ function _rigIsHttps
+
+    if ($_SERVER["HTTPS"] is not empty) and (toLower($_SERVER["HTTPS"] is not "off")) then
+       return true
+    else if (toLower($_SERVER["HTTP_X_FORWARDED_PROTO"]) is "https") then
+       return true
+    else if ($_SERVER["HTTP_FRONT_END_HTTPS"] is not empty) and (toLower($_SERVER["HTTP_FRONT_END_HTTPS"]) is not "off") then
+       return true
+    end if
+
+    return false
+
+ end _rigIsHttps
