@@ -559,14 +559,20 @@ rigLoadLanguage "restControllerLang", tLanguage
 	{
 	   $this->{'_'.$this->request->method.'_args'} = [];
 	}
+*/
 
+/*
 	// Set up the query parameters
 	$this->_parse_query();
 	*/
+	##_parseQuery
 
 	// Set up the GET variables
 	//$this->_get_args = array_merge($this->_get_args, $this->uri->ruri_to_assoc());
 	put rigUriToAssoc() into sGetArgsA
+
+	##put "sGetArgsA" && decodeJson(sGetArgsA) into tTemp
+	##rigLogMessage "debug", tTemp
 
 	// Try to find a format for the request (means we have a request body)
 //$this->request->format = $this->_detect_input_format();
