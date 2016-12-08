@@ -2548,10 +2548,13 @@ end libraryJson
 -- Initialize the REST server and process the request
 ------------------------------------------------------------------------
  on rigRunInitialrestcontrollerConfig
- 	// Verify all the correct software versions are being used
+ 	// AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
+  	rigLoadExtension "com.livecode.library.json"
+
+	// Verify all the correct software versions are being used
  	preflightChecks
 
-	// AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
-   rigLoadExtension "com.livecode.library.json"
+
+	_remap
 
  end rigRunInitialrestcontrollerConfig
