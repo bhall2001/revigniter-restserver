@@ -63,10 +63,12 @@ function rigRequestHeaders pXssClean
 
     repeat for each key aKey in $_SERVER
        if "HTTP_" is in aKey then
-			 put aKey & ":"
           put _rigFetchFromArray($_SERVER, aKey, tXssClean) into REQUEST_HEADERS[aKey]
        end if
     end repeat
+
+	 put jsonExport(REQUEST_HEADERS) into tTemp
+	 rigLogMessage "debug", tTemp
 
     //return $this->headers;
     return REQUEST_HEADERS
