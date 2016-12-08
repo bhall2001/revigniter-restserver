@@ -1762,6 +1762,12 @@ end _detectMethod
         $this->_query_args = $this->input->get();
     }
 */
+command _parseQuery
+	rigLogMessage "debug", "in _parseQuery"
+	put $_GET into sQueryArgs
+	##put "sQueryArgs" && jsonExport(sQueryArgs) into tTemp
+	##rigLogMessage "debug", tTemp
+end _parseQuery
 
     // INPUT FUNCTION --------------------------------------------------------------
 
