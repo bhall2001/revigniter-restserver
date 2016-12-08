@@ -1065,7 +1065,7 @@ function _detectOutputFormat
                 return $format;
             }
         }
-		  
+
 put jsonExport(sGetArgsA)
 
 		 if sGetArgsA["format"] is not empty then
@@ -1082,7 +1082,7 @@ put jsonExport(sGetArgsA)
  		put rigVarServer("HTTP_ACCEPT") into tHttpAccept
 /*
         // Otherwise, check the HTTP_ACCEPT server variable
-        if ($this->config->item('rest_ignore_http_accept') === FALSE && $http_accept !== NULL)	  
+        if ($this->config->item('rest_ignore_http_accept') === FALSE && $http_accept !== NULL)
 
 		if (rigConfigItem("restIgnoreHttpAccept") is false) and (tHttpAccept is not empty) then
      {
@@ -1628,6 +1628,12 @@ end _detectMethod
         $this->_get_args = array_merge($this->_get_args, $this->_query_args);
     }
 */
+
+	function _parse_get
+
+	put ":_parse_get:"
+		put sQueryArgs into sGetArgs["queryArgs"]
+	end _parse_get
 
     /**
      * Parse the POST request arguments
