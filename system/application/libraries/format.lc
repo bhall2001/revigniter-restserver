@@ -412,7 +412,7 @@ end to_lson
 */
 
 /******** COMING BACK TO THIS
-private function _from_xml($data)
+function _from_xml($data)
         return $data ? (array) simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA) : [];
 end _from_xml
 *********/
@@ -427,7 +427,7 @@ end _from_xml
      * and the inner arrays the individual fields
      */
 /******** COMING BACK TO THIS
-private function _from_csv($data, $delimiter, $enclosure)
+function _from_csv($data, $delimiter, $enclosure)
         // If NULL, then set as the default delimiter
         if ($delimiter === NULL)
         {
@@ -448,7 +448,7 @@ end _from_csv
  * @param $data Encoded json string
  * @return mixed Decoded json string with leading and trailing whitespace removed
  */
-private function _fromJSON @pData
+function _fromJSON @pData
   return jsonImport(pData)
 end _fromJSON
 
@@ -456,7 +456,7 @@ end _fromJSON
  * @param string Data to unserialized
  * @return array Unserialized data in array form
  */
-private function _fromLSON @pData
+function _fromLSON @pData
    return arrayDecode(pData)
 end _fromLSON
 
