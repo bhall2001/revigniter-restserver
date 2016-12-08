@@ -20,11 +20,17 @@ command index
 end index
 
 command inputTest_get
-
-	put "Input.lc GET Request" into gData["pageTitle"]
-
+	// just a really simple example.
+	// if a GET request is made, return the request HTTP headers as JSON
+	//
 	put rigRequestHeaders() into tHeaders
    put jsonExport(tHeaders) into gData["libURLLastRHHeaders"]
 
 	put gData["libURLLastRHHeaders"]
 end inputTest_get
+
+command inputTest_post
+	// different data if it's a put request
+	put "POST RECIEVED"
+	
+end inputTest_post
