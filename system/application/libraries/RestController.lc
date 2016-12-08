@@ -842,6 +842,24 @@ command _remap
         }
     }
 */
+
+	try
+		rigLogMessage "debug", ("Calling:" && tControllerMethod)
+		call tControllerMethod
+	catch tErrorText
+		rigLogMessage "debug", (tControllerMethod && "NOT FOUND!")
+		put "RestController" & gEXT into tCurrentFile
+		put "_remap" into tCurrentMethod
+
+		put "REST Handler not found: " & tControllerMethod into tErrorData
+
+		if rigConfigItem("logThreshold") > 1 then
+			put TRUE into tDisplayError
+		else
+			put FALSE into tDisplayError
+		end if
+		rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
+	end try		
 end _remap
 
 
