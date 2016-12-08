@@ -6,18 +6,25 @@ if gBASEPATH is "gBASEPATH" then
 	exit to top
 end if
 
-
 // PUT ALL HANDLER NAMES WHICH ARE LIKELY TO SERVE AS URI SEGMENTS
 // INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
-put "index" into gControllerHandlers
+put "inputTest,index" into gControllerHandlers
+
+command inputTest
+	riglogMessage "debug", "In inputTest"
+	rigLoaderLoadLibrary "RestController"
+end inputTest
 
 command index
-	rigLoaderLoadLibrary "RestController"
-	
-	put "Input.lc Test Page" into gData["pageTitle"]
-	
+	-- do nothing
+end index
+
+command inputTest_get
+
+	put "Input.lc GET Request" into gData["pageTitle"]
+
 	put rigRequestHeaders() into tHeaders
    put jsonExport(tHeaders) into gData["libURLLastRHHeaders"]
-	
-	get rigLoadView("inputTest")
-end index
+
+	put gData["libURLLastRHHeaders"]
+end inputTest_get
