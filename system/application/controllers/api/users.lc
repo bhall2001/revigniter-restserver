@@ -7,12 +7,15 @@ if gBASEPATH is "gBASEPATH" then
 end if
 
 // This can be removed if you use autoload in config.lc
-require gAPPPATH . '/libraries/RestController.lc';
+require gAPPPATH & "libraries/RestController.lc"
 
 // PUT ALL HANDLER NAMES WHICH ARE LIKELY TO SERVE AS URI SEGMENTS
 // INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
-put "users_get" into gControllerHandlers
+put "index" into gControllerHandlers
 
+command index
+	-- required but leave blank
+end index
 
 ------------------------------------------------------------------------
 -- This is an example of a few basic user interaction methods you could use
@@ -35,38 +38,45 @@ put "users_get" into gControllerHandlers
  */
  ## NEED TO COME BACK TO THE ABOVE LATER ON...
    
-function users_get
+command users_get
+	
+		rigLogMessage "debug", "in users_get"
+	
         // Users from a data store e.g. database
         // using a hard coded array for example
         put "John" into tUsersA[1]["name"]
         put "john@example.com" into tUsersA[1]["email"]
         put "Loves coding" into tUsersA[1]["fact"]
-        
+		  
         put "Jim" into tUsersA[2]["name"]
-        put "jim@example.com" into tUsersA[2]["email"]
-        put "Developed on Revigniter" into tUsersA[2]["fact"]
+        put "jim@example.com" into tUsersA["2"]["email"]
+        put "Developed on Revigniter" into tUsersA["2"]["fact"]
 
         put "Jane" into tUsersA[3]["name"]
-        put "jane@example.com" into tUsersA[3]["email"]
-        put "Lives in the USA" into tUsersA[3]["fact"]
+        put "jane@example.com" into tUsersA["3"]["email"]
+        put "Lives in the USA" into tUsersA["3"]["fact"]
         
+		  
         //$id = $this->get('id');
 
-        // If the id parameter doesn't exist return all the users
+		  put getRequestArgs() into tArgsA
+		  rigLogMessage "debug", "***tArgsA: " & jsonExport(tArgsA)
 
-        if sGetA["id"] = "" then
+        // If the id parameter doesn't exist return all the users
+        if (tArgsA["getArgs"]["id"] is empty) then
+			  rigLogMessage "debug", "Returning ALL Users"
             // Check if the users data store contains users (in case the database result returns NULL)
             if tUsersA is an array then
-                // Set the response and exit
-                restResponse(tUsersA, HTTP_OK); // OK (200) being the HTTP response code
+	             // Set the response and exit
+                restResponse tUsersA, HTTP_OK // OK (200) being the HTTP response code
             else
-                // Set the response and exit
-                
+                // Set the response and exit                
                 put false into tResponseA["status"]
                 put "No users were found" into tResponseA["message"]
-                restResponse(tResponseA, HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+                restResponse tResponseA, HTTP_NOT_FOUND // NOT_FOUND (404) being the HTTP response code
             end if
         else
+			  rigLogMessage "debug", "Returning a specific user"
 /*
         // Find and return a single record for a particular user.
 
@@ -94,7 +104,17 @@ function users_get
                 }
             }
         }
+*/
+			put tArgsA["getArgs"]["id"] into tUserId
+			
+		  put tUsersA[tUserID] into tUserA
+		  if (tUserA is not empty) and (tUserA is an array) then
+			  restResponse tUserA, HTTP_OK // OK (200) being the HTTP response code
+		  end if
 
+			  
+		  
+		  /*
         if (!empty($user))
         {
             $this->set_response($user, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
@@ -107,8 +127,9 @@ function users_get
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
         */
-     end if
-end usersGet
+	  end if
+	  
+end users_get
 
 /*
     public function users_post()
