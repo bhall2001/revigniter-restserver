@@ -199,6 +199,7 @@ local sRequestA
 ------------------------------------------------------------------------
 ##protected $response = NULL;
 local sResponseA
+local sResponseFormat
 
 ------------------------------------------------------------------------
 -- Contains details about the REST API
