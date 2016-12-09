@@ -6,6 +6,8 @@ if gBASEPATH is "gBASEPATH" then
    exit to top
 end if
 
+rigLogMessage "debug", "In format.lc"
+
 -- Format class
 -- Help convert between various formats such as LSON, JSON, XML, CSV, etc.
 --
@@ -213,10 +215,10 @@ end toArray
 
         return $this->_CI->table->generate();
     }
-    
+
     */
-    
-   
+
+
 
     /**
      * @link http://www.metashock.de/2014/02/create-csv-file-in-memory-php/
