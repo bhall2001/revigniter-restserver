@@ -852,7 +852,7 @@ command _remap
 
 	try
 		rigLogMessage "debug", ("Calling:" && tControllerMethod)
-		call tControllerMethod
+		do tControllerMethod
 	catch tErrorText
 		rigLogMessage "debug", (tControllerMethod && "NOT FOUND!")
 		put "RestController" & gEXT into tCurrentFile
@@ -866,7 +866,7 @@ command _remap
 			put FALSE into tDisplayError
 		end if
 		rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
-	end try		
+	end try
 end _remap
 
 
