@@ -574,8 +574,7 @@ rigLoadLanguage "restControllerLang", tLanguage
 	//$this->_get_args = array_merge($this->_get_args, $this->uri->ruri_to_assoc());
 	put rigUriToAssoc() into sGetArgsA
 
-	##put "sGetArgsA" && decodeJson(sGetArgsA) into tTemp
-	##rigLogMessage "debug", tTemp
+	rigLogMessage "debug", "sGetArgsA: " & jsonExport(sGetArgsA)
 
 	// Try to find a format for the request (means we have a request body)
 //$this->request->format = $this->_detect_input_format();
@@ -707,6 +706,8 @@ if ($this->auth_override === FALSE &&
 }
 }
 */
+
+rigLogMessage "debug", "leaving preflightChecks"
 end preflightChecks
 
     /**
