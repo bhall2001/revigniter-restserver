@@ -883,13 +883,27 @@ end _remap
 /*
     public function response($data = NULL, $http_code = NULL, $continue = FALSE)
     {
-        // If the HTTP status is not NULL, then cast as an integer
-        if ($http_code !== NULL)
+	 */
+	 command restResponse pData, pHttpCode, pContinue
+	 rigLogMessage "debug", "In restResponse"
+
+	 // If pData is not empty and also is not an array, convert it to an array
+	 if (pData is not empty) and (pData is not an array) then
+		 put _rigStrToArray(pData, , TRUE, TRUE) into pData
+	 end if
+
+        // If the HTTP status is not NULL or an integer, then cast as an integer
+        /*if ($http_code !== NULL)
         {
             // So as to be safe later on in the process
             $http_code = (int) $http_code;
         }
-
+		  */
+		  if (pHttpCode is not empty) and (pHttpCode is not an integer) then
+		  		put merge(("[[" & pHttpCode & "]]")) into pHttpCode
+		  end if
+		  
+/*
         // Set the output as NULL by default
         $output = NULL;
 
@@ -898,13 +912,40 @@ end _remap
         {
             $http_code = self::HTTP_NOT_FOUND;
         }
+		  */
+
+		  if (pData is empty) and (pHttpCode is empty) then
+			  put merge("[[" & HTTP_NOT_FOUND & "]]") into pHttpCode
+
+		  /*
 
         // If data is not NULL and a HTTP status code provided, then continue
         elseif ($data !== NULL)
         {
+		  */
+
+	  else		  
+		  /*
             // If the format method exists, call and return the output in that format
             if (method_exists($this->format, 'to_' . $this->response->format))
             {
+				*/
+					rigLogMessage "debug", "sResponseFormat:" && sResponseFormat
+					
+					-- create handler call for desired Response Format					
+					put "to" & sResponseFormat && "pData" into tHandler
+					rigLogMessage "debug", "tHandler:" && tHandler
+					
+					-- Convert the reponse data to the desired format
+					try
+						do tHandler
+						put the result into tOutput
+					catch e
+					end try
+					
+					put tOutput
+
+				/*
                 // Set the format header
                 $this->output->set_content_type($this->_supported_formats[$this->response->format], strtolower($this->config->item('charset')));
                 $output = $this->format->factory($data)->{'to_' . $this->response->format}();
@@ -928,7 +969,9 @@ end _remap
                 $output = $data;
             }
         }
-
+*/
+	  end if
+	  /*
         // If not greater than zero, then set the HTTP status code as 200 by default
         // Though perhaps 500 should be set instead, for the developer not passing a
         // correct HTTP status code
