@@ -272,7 +272,7 @@ local sQueryArgsA
 --
 -- @var array
 ------------------------------------------------------------------------
-local sArgsA
+local sRequestArgsA
 
 ------------------------------------------------------------------------
 -- The insert_id of the log entry (if we have one)
@@ -374,6 +374,8 @@ put "NOT ACCEPTABLE" into sHttpStatusCodes[HTTP_NOT_ACCEPTABLE]
 put "CONFLICT" into sHttpStatusCodes[HTTP_CONFLICT]
 put "INTERNAL SERVER ERROR" into sHttpStatusCodes[HTTP_INTERNAL_SERVER_ERROR]
 put "NOT IMPLEMENTED" into sHttpStatusCodes[HTTP_NOT_IMPLEMENTED]
+
+
 
 
 /**
@@ -611,13 +613,16 @@ $this->_args = array_merge(
 	$this->{'_'.$this->request->method.'_args'}
 );
 */
-put sGetArgsA into sArgA["getArgs"]
-//put sOptionsArgsA into sArgA["optionArgs"]
-//put sPatchArgsA into sArgA["patchArgs"]
-put sHeadArgsA into sArgA["headArgs"]
-//put sPutArgsA into sArgA["putArgs"]
-//put sPostArgsA into sArgA["postArgs"]
-//put sDeleteArgsA into sArgA["deleteArgs"]
+put sGetArgsA into sRequestArgsA["getArgs"]
+//put sOptionsArgsA into sRequestArgsA["optionArgs"]
+//put sPatchArgsA into sRequestArgsA["patchArgs"]
+put sHeadArgsA into sRequestArgsA["headerArgs"]
+//put sPutArgsA into sRequestArgsA["putArgs"]
+//put sPostArgsA into sRequestArgsA["postArgs"]
+//put sDeleteArgsA into sRequestArgsA["deleteArgs"]
+
+riglogMessage "debug", "sArgA->" & jsonExport(sRequestArgsA)
+
 
 /*
 // Which format should the data be returned in?
@@ -2575,8 +2580,9 @@ function libraryJson
 	return true
 end libraryJson
 
-
-
+function getRequestArgs
+	return sRequestArgsA
+end getRequestArgs
 
 
 
