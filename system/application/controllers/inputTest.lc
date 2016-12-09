@@ -6,20 +6,19 @@ if gBASEPATH is "gBASEPATH" then
 	exit to top
 end if
 
+// This can be removed if you use autoload in config.lc
+require gAPPPATH & "/libraries/RestController.lc"
+
 // PUT ALL HANDLER NAMES WHICH ARE LIKELY TO SERVE AS URI SEGMENTS
 // INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
-put "inputTest,index" into gControllerHandlers
-
-command inputTest
-	riglogMessage "debug", "In inputTest"
-	rigLoaderLoadLibrary "RestController"
-end inputTest
+put "index" into gControllerHandlers
 
 command index
-	-- do nothing
+	-- required but leave blank
 end index
 
 command inputTest_get
+	rigLogMessage "debug", "In inputTest_get"
 	// just a really simple example.
 	// if a GET request is made, return the request HTTP headers as JSON
 	//
@@ -30,6 +29,8 @@ command inputTest_get
 end inputTest_get
 
 command inputTest_post
+	rigLogMessage "debug", "In inputTest_post"
+
 	// different data if it's a put request
 	put "POST RECIEVED"
 	
