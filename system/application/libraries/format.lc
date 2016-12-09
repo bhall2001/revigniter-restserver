@@ -311,9 +311,9 @@ end toArray
 
         return $csv;
     }
-    
+
     */
-    
+
 
     /**
      * Encode data as json
@@ -322,38 +322,57 @@ end toArray
      * to the constructor
      * @return string Json representation of a value
      */
-	  /*
+     /*
     public function to_json($data = NULL)
     {
-        // If no data is passed as a parameter, then use the data passed
-        // via the constructor
-        if ($data === NULL && func_num_args() === 0)
-        {
-            $data = $this->_data;
-        }
+    */
+    command toJson pDataA
+      rigLogMessage "debug", "In tojson"
 
-        // Get the callback parameter (if set)
-        $callback = $this->_CI->input->get('callback');
 
-        if (empty($callback) === TRUE)
-        {
-            return json_encode($data);
-        }
+          /*
+          	 // If no data is passed as a parameter, then use the data passed
+          	 // via the constructor
+          	 if ($data === NULL && func_num_args() === 0)
+          	 {
+          		  $data = $this->_data;
+          	 }
+          	 */
+          	 if pDataA is an array then
+                riglogMessage "debug", "Converting pData to JSON"
+          	    return jsonExport(pDataA)
+            end if
 
-        // We only honour a jsonp callback which are valid javascript identifiers
-        elseif (preg_match('/^[a-z_\$][a-z0-9\$_]*(\.[a-z_\$][a-z0-9\$_]*)*$/i', $callback))
-        {
-            // Return the data as encoded json with a callback
-            return $callback.'('.json_encode($data).');';
-        }
+            rigLogMessage "debug", "toJson pDataA is not an array"
 
-        // An invalid jsonp callback function provided.
-        // Though I don't believe this should be hardcoded here
-        $data['warning'] = 'INVALID JSONP CALLBACK: '.$callback;
+            return ""
+          /*
+          	 // Get the callback parameter (if set)
+          	 $callback = $this->_CI->input->get('callback');
 
-        return json_encode($data);
-    }
-	 */
+          	 if (empty($callback) === TRUE)
+          	 {
+          		  return json_encode($data);
+          	 }
+
+          	 // We only honour a jsonp callback which are valid javascript identifiers
+          	 elseif (preg_match('/^[a-z_\$][a-z0-9\$_]*(\.[a-z_\$][a-z0-9\$_]*)*$/i', $callback))
+          	 {
+          		  // Return the data as encoded json with a callback
+          		  return $callback.'('.json_encode($data).');';
+          	 }
+
+          	 // An invalid jsonp callback function provided.
+          	 // Though I don't believe this should be hardcoded here
+          	 $data['warning'] = 'INVALID JSONP CALLBACK: '.$callback;
+
+          	 return json_encode($data);
+          }
+          */
+
+
+    end toJson
+
 
 /**
 * Encode data as a serialized array
@@ -368,14 +387,14 @@ function to_lson(pDataA)
         // via the constructor
 
 
-       
+
        if ($data === NULL && func_num_args() === 0)
         {
             $data = $this->_data;
         }
-        
-        
-        
+
+
+
         return serialize($data);
 end to_lson
 */
