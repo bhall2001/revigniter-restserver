@@ -23,9 +23,10 @@ command inputTest_get
 	// if a GET request is made, return the request HTTP headers as JSON
 	//
 	put rigRequestHeaders() into tHeaders
-   put jsonExport(tHeaders) into gData["libURLLastRHHeaders"]
+   //put jsonExport(tHeaders) into gData["libURLLastRHHeaders"]
 
-	put gData["libURLLastRHHeaders"]
+	restResponse tHeaders, HTTP_OK
+	//put gData["libURLLastRHHeaders"]
 end inputTest_get
 
 command inputTest_post
@@ -33,5 +34,5 @@ command inputTest_post
 
 	// different data if it's a put request
 	put "POST RECIEVED"
-	
+
 end inputTest_post
