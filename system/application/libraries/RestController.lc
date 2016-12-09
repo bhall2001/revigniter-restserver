@@ -955,6 +955,8 @@ end _remap
         // Otherwise dump the output automatically
     }
 */
+	exit to top
+end restResponse
 
     /**
      * Takes mixed data and optionally a status code, then creates the response
