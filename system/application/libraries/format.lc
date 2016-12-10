@@ -397,7 +397,19 @@ function to_lson(pDataA)
 
         return serialize($data);
 end to_lson
+
 */
+command toLson pDataA
+   rigLogMessage "debug", "in toLson..."
+   
+   if pDataA is an array then
+      riglogMessage "debug", "Converting pData to LSON"
+      return arrayEncode(pDataA)
+   end if
+   
+   return ""
+end toLson
+
 
     /**
      * Format data using a PHP structure
