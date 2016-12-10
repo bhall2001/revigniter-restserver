@@ -573,12 +573,18 @@ rigLoadLanguage "restControllerLang", tLanguage
 	// Set up the GET variables
 	//$this->_get_args = array_merge($this->_get_args, $this->uri->ruri_to_assoc());
 	put rigUriToAssoc() into sGetArgsA
-
+	
 	rigLogMessage "debug", "sGetArgsA: " & jsonExport(sGetArgsA)
 
 	// Try to find a format for the request (means we have a request body)
 //$this->request->format = $this->_detect_input_format();
 put _detectInputFormat() into tRequestFormat
+
+/*
+// Which format should the data be returned in?
+$this->response->format = $this->_detect_output_format();
+*/
+put _detectOutputFormat() into sResponseFormat
 
 // Not all methods have a body attached with them
 //$this->request->body = NULL;
@@ -624,11 +630,6 @@ put sHeadArgsA into sRequestArgsA["headerArgs"]
 riglogMessage "debug", "sArgA->" & jsonExport(sRequestArgsA)
 
 
-/*
-// Which format should the data be returned in?
-$this->response->format = $this->_detect_output_format();
-*/
-put _detectOutputFormat() into sResponseFormat
 
 /*
 // Which language should the data be returned in?
@@ -1109,13 +1110,32 @@ function _detectOutputFormat
             return $matches[1];
         }
 */
-/*	repeat for each key tFormat in sSupportedFormatsA
-		if tURL contains ("." & tFormat) then
+
+/*
+repeat for each key aGetArg in sGetArgsA
+	repeat for each key tFormat in sSupportedFormatsA
+		-- check if the format is in the value of a Get Argument
+		if sGetArgsA[aGetArg] contains ("." & tFormat) then
+			-- replace the ".format" in the argument with ""
+			replace ("." & tFormat) with "" in sGetArgsA[aGetArg]
+							
+			-- return the format found
+			return tFormat
+		end if
+		
+	end repeat
+end repeat
+*/
+
+		
+		/*
+		if sGetArgs contains ("." & tFormat) then
 			rigLogMessage "debug", "Found ." & tFormat & " in URL"
 			return tFormat
 		end if
 	end repeat
-*/
+	*/
+
 	
 /*
 
