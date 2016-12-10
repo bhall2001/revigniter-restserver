@@ -2638,9 +2638,14 @@ function libraryJson
 	return true
 end libraryJson
 
-function getRequestArgs
+// returns Request Arguments Array
+function requestArgs
 	return sRequestArgsA
-end getRequestArgs
+end requestArgs
+
+
+
+
 
 
 
