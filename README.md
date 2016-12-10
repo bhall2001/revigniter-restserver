@@ -41,11 +41,11 @@ This allows you to implement a RESTful interface easily:
 In the books.lc controller file, you add functions for for HTML Request verbs that are handled...
 
 ```
-function index_get
+function books_get
     // Display all books or a single book if an id is provided
 end index_get
 
-function index_post
+function books_post
     // Create a new book
 end index_post
 ```
@@ -57,7 +57,8 @@ RestController supports many request/response formats, including XML, JSON, LSON
 This means your URLs can look like this:
 
 ```
-http://example.com/index.lc/v1/books.json
+http://example.com/index.lc/v1/books
+http://example.com/index.lc/v1/books/format/json
 http://example.com/index.lc/v1/books/id/1/format/lson
 ```
 (default format if none specified is JSON)
