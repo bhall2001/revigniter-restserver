@@ -2,7 +2,7 @@
 A RESTful Server for revIgniter.
 
 ## EARLY DEVELOPMENT STAGE
-The first part of this project now works. It is possible to send in a "GET" request being sent to the Controller's "get_<<controllerName>>" handler. There is a sample in the api directory (users.lc) which demonstrates how this works.
+The first part of this project now works. It is possible to send in a "GET" request being sent to the Controller's "get_controllerName" handler. There is a sample in the api directory (users.lc) which demonstrates how this works.
 
 This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
