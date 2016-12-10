@@ -1,7 +1,9 @@
 # revigniter-restserver
 A RESTful Server for revIgniter.
 
-## EARLY DEVELOPMENT STAGE - NON FUNCTIONAL (2016-11-19)
+## EARLY DEVELOPMENT STAGE
+The first part of this project now works. It is possible to send in a "GET" request being sent to the Controller's "get_<<controllerName>>" handler. There is a sample in the api directory (users.lc) which demonstrates how this works.
+
 This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
 ### Completed
@@ -10,7 +12,7 @@ This is a very early development state at the moment. Github is being used to st
 - rest.lc config file
 - restControllerLang.lc language file
 - new welcome.lc with link to samples page
-- new restServer.lc samples page (but no working samples)
+- new restServer.lc samples page (with 1 working sample)
 
 ## Requirements
   * Livecode Server 8.1.0 or above
@@ -30,11 +32,11 @@ Cloning this repository gives you a complete revIgniter installation. You can pu
 
 ## Dependencies
 
-The RestController Library requires the Livecode 8 JSON Livecode Builder Library to be installed.
+The RestController Library requires the Livecode 8 JSON Livecode Builder Library to be installed. This is included with correct configuration in the respository.
 
 ## Handling Requests
 
-Making an HTTP GET call to index.lc/books, for instance, calls the index_get function in the books.lc controller.
+Making an HTTP GET call to index.lc/books, for instance, calls the books_get function in the books.lc controller.
 
 This allows you to implement a RESTful interface easily:
 
