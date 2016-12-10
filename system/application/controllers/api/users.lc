@@ -59,7 +59,7 @@ command users_get
 		  
         //$id = $this->get('id');
 
-		  put getRequestArgs() into tArgsA
+		  put requestArgs() into tArgsA
 		  rigLogMessage "debug", "***tArgsA: " & jsonExport(tArgsA)
 
         // If the id parameter doesn't exist return all the users
