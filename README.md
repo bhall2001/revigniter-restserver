@@ -7,6 +7,8 @@ The first part of this project now works. It is possible to send in a "GET" requ
 This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
 ### Completed
+- GET Request works (mostly) including URI parameters (ie. users/id/1)
+- URI can contain /format/json or /format/lson for response formats.
 - Github project created. Please use develop branch for Pushes.
 - project structure
 - rest.lc config file
