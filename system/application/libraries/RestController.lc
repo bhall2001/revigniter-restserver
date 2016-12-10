@@ -1093,10 +1093,12 @@ end _getDefaultOutputFormat
 -- @return string Output format
 ------------------------------------------------------------------------
 function _detectOutputFormat
+	rigLogMessage "debug", "In _detectOutputFormat"
 
 /*
     protected function _detect_output_format()
     {
+	 
         // Concatenate formats to a regex pattern e.g. \.(csv|json|xml)
         $pattern = '/\.('.implode('|', array_keys($this->_supported_formats)).')($|\/)/';
         $matches = [];
@@ -1106,6 +1108,16 @@ function _detectOutputFormat
         {
             return $matches[1];
         }
+*/
+/*	repeat for each key tFormat in sSupportedFormatsA
+		if tURL contains ("." & tFormat) then
+			rigLogMessage "debug", "Found ." & tFormat & " in URL"
+			return tFormat
+		end if
+	end repeat
+*/
+	
+/*
 
         // Get the format parameter named as 'format'
         if (isset($this->_get_args['format']))
@@ -1117,17 +1129,18 @@ function _detectOutputFormat
                 return $format;
             }
         }
+*/
 
-put jsonExport(sGetArgsA)
 
 		 if sGetArgsA["format"] is not empty then
 			 put sGetArgsA["format"] into tFormat
-			 if sRestSupportedFormatsA[tFormat] then
+			 if sRestSupportedFormatsA[tFormat] is not empty then
+				 rigLogMessage "debug", "sGetArgsA[format]->" & tFormat
 				 return tFormat
 			 end if
 		 end if
 
-
+/*
         // Get the HTTP_ACCEPT server variable
         $http_accept = $this->input->server('HTTP_ACCEPT');
 */
@@ -1682,8 +1695,6 @@ end _detectMethod
 */
 
 	function _parse_get
-
-	put ":_parse_get:"
 		put sQueryArgs into sGetArgs["queryArgs"]
 	end _parse_get
 
