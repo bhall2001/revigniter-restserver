@@ -30,7 +30,13 @@ end if
 --
 -- return	array of the HTTP Headers
 ------------------------------------------------------------------------
+local sREQUEST_HEADERS
+
 function rigRequestHeaders pXssClean
+	rigLogMessage "debug", "In rigRequestHeaders"
+	
+	put "" into sREQUEST_HEADERS
+	
     if pXSSclean is empty then
        put FALSE into tXSSclean
     else
@@ -38,13 +44,13 @@ function rigRequestHeaders pXssClean
     end if
 
     // If header is already defined, return it immediately
-    ##if REQUEST_HEADERS is not empty then return REQUEST_HEADERS
+    if sREQUEST_HEADERS is an array then return sREQUEST_HEADERS
 
     //$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
     if sContentType is not empty then
-       put sContentType into REQUEST_HEADERS["Content-Type"]
+       put sContentType into sREQUEST_HEADERS["Content-Type"]
     else
-       put $_SERVER["CONTENT_TYPE"] into REQUEST_HEADERS["Content-Type"]
+       put $_SERVER["CONTENT_TYPE"] into sREQUEST_HEADERS["Content-Type"]
     end if
 
 
@@ -63,23 +69,79 @@ function rigRequestHeaders pXssClean
 
     repeat for each key aKey in $_SERVER
        if "HTTP_" is in aKey then
-          put _rigFetchFromArray($_SERVER, aKey, tXssClean) into REQUEST_HEADERS[aKey]
+          put _rigFetchFromArray($_SERVER, aKey, tXssClean) into tData
+			 
+			 // take SOME_HEADER and turn it into Some-Header
+			 put replaceText(aKey, "_", " " ) into tKey
+			 put ucWords(tKey) into tData
+			 put replaceText(tKey, " ", "-") into tKey
+			 put tData into sREQUEST_HEADERS[tKey]
+			 
+			 rigLogMessage "debug", tKey & ":" & sREQUEST_HEADERS[tKey]
        end if
     end repeat
 
-	 put jsonExport(REQUEST_HEADERS) into tTemp
-	 rigLogMessage "debug", tTemp
-
     //return $this->headers;
-    return REQUEST_HEADERS
+    return sREQUEST_HEADERS
  end rigRequestHeaders
+ 
+ ------------------------------------------------------------------------
+ --
+ -- Converts string of words to have uppercase first letter only
+ ------------------------------------------------------------------------
 
- /*
-  on rigRunInitialrestcontrollerConfig
-     // do nothing
-  end rigRunInitialrestcontrollerConfig
- */
+ function ucWords pData
+ 	-- convert the entire string to lower case
+ 	put toLower(pData) into tData
+	rigLogMessage "debug", "tData->" & tData
+	
+	-- for each word, capitalize the first letter
+	repeat for each word aWord in tData
+		put toUpper(char 1 of aWord) into char 1 of aWord
+		put aWord & " " after myResult
+	end repeat
+	
+	-- now delete the last space
+	delete char -1 of myResult
+	
+	-- return the result
+	return myResult
+ end ucWords
 
+
+
+
+ ----------------------------------------------------------------------
+ --| FUNCTION rigVarHttp
+ --|
+ --| Author: Bob Hall
+ --| Version:  1.0
+ --| Created: 2016-DEC-11
+ --| Last Mod: 2016-DEC-11
+ --| Requires: _rigFetchFromArray()
+ --|
+ --| Summary: Fetch an item from either the SERVER array.
+ --| 
+ --| Format:  rigVarHttp(param1, param2)
+ --|
+ --| Parameters: string <pIndex>, bool <pXSSclean>
+ --|
+ --| Return: string
+ ----------------------------------------------------------------------
+
+ function rigVarHttp pIndex pXSSclean
+ 	if pXSSclean is empty then
+ 		put FALSE into tXSSclean
+ 	else
+ 		put pXSSclean into tXSSclean
+ 	end if
+	
+	if sREQUEST_HEADERS is not an array then
+		rigRequestHeaders
+	end if
+
+ 	return _rigFetchFromArray(sREQUEST_HEADERS, pIndex, tXSSclean)
+ end rigVarHttp
 
 
 ------------------------------------------------------------------------
