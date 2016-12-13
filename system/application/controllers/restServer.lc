@@ -15,7 +15,7 @@ command index
    rigLoadHelper("url")
    put RIVERSION && RISTATE into gData["revIgniterVersion"]
    put rigASiteURL("") into gData["siteURL"]
-   put rigASiteURL("api/example/users") into gData["example1URL"]
+   put rigASiteURL("api/users") into gData["example1URL"]
    
    
 	get rigLoadView("restServer")
