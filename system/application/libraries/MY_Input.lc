@@ -73,7 +73,7 @@ function rigRequestHeaders pXssClean
 			 
 			 // take SOME_HEADER and turn it into Some-Header
 			 put replaceText(aKey, "_", " " ) into tKey
-			 put ucWords(tKey) into tData
+			 put ucWords(tKey) into tKey
 			 put replaceText(tKey, " ", "-") into tKey
 			 put tData into sREQUEST_HEADERS[tKey]
 			 
@@ -83,6 +83,7 @@ function rigRequestHeaders pXssClean
 
     //return $this->headers;
     return sREQUEST_HEADERS
+	 
  end rigRequestHeaders
  
  ------------------------------------------------------------------------
