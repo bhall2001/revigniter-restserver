@@ -275,6 +275,8 @@ local sQueryArgsA
 ------------------------------------------------------------------------
 local sRequestArgsA
 
+local sRequestBody
+
 ------------------------------------------------------------------------
 -- The insert_id of the log entry (if we have one)
 --
@@ -588,10 +590,14 @@ put _detectOutputFormat() into sResponseFormat
 
 // Not all methods have a body attached with them
 //$this->request->body = NULL;
-put "" into tRequestBody
+put "" into sRequestBody
 
 /*
 $this->{'_parse_' . $this->request->method}();
+*/
+
+
+/*
 
 // Now we know all about our request, let's try and parse the body if it exists
 if ($this->request->format && $this->request->body)
@@ -1714,9 +1720,9 @@ end _detectMethod
     }
 */
 
-	function _parse_get
+	command _parseGet
 		put sQueryArgs into sGetArgs["queryArgs"]
-	end _parse_get
+	end _parseGet
 
     /**
      * Parse the POST request arguments
@@ -1735,6 +1741,13 @@ end _detectMethod
         }
     }
 */
+	command _parsePost
+		put $_POST into sPostArgs
+		
+	//	if sRequestFormat is not empty then
+			put $_POST_RAW into sRequestBody
+		//end if
+	end _parsePost
 
     /**
      * Parse the PUT request arguments
