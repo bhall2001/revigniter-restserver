@@ -277,6 +277,8 @@ local sRequestArgsA
 
 local sRequestBody
 
+local sRequestFormat
+
 ------------------------------------------------------------------------
 -- The insert_id of the log entry (if we have one)
 --
