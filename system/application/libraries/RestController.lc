@@ -582,7 +582,7 @@ rigLoadLanguage "restControllerLang", tLanguage
 
 	// Try to find a format for the request (means we have a request body)
 //$this->request->format = $this->_detect_input_format();
-put _detectInputFormat() into tRequestFormat
+put _detectInputFormat() into sRequestFormat
 
 /*
 // Which format should the data be returned in?
@@ -1038,19 +1038,23 @@ end restResponse
 //protected function _detect_input_format()
 
 function _detectInputFormat
+	rigLogMessage "debug", "In _detectInputFormat"
+	
    // Get the CONTENT-TYPE value from the SERVER variable
    //$content_type = $this->input->server('CONTENT_TYPE');
    put rigVarServer("CONTENT_TYPE") into tContentType
+	rigLogMessage "debug", "tContentType->" & tContentType
 
    //if (empty($content_type) === FALSE)
    if tContentType is not empty then
       // If a semi-colon exists in the string, then explode by ; and get the value of where
       // the current array pointer resides. This will generally be the first element of the array
       //$content_type = (strpos($content_type, ';') !== FALSE ? current(explode(';', $content_type)) : $content_type);
-      put the itemDelimiter into tOldDelim
-      set the itemDelimiter to ";"
-      put item 1 of tContentType into tContentType
-      set the itemDelimiter to tOldDelim
+
+
+## REMOVED LIVECODE BELOW FOR NOW...
+      //set the itemDelimiter to ";"
+      //put item 1 of tContentType into tContentType
 
       // Check all formats against the CONTENT-TYPE header
       //foreach ($this->_supported_formats as $type => $mime)
@@ -1064,14 +1068,16 @@ function _detectInputFormat
       //return $type;
       //}
       //}
-      repeat for each key aType in sSupportedFormats
-         if tContentType = sSupportedFormats[aType] then
+      repeat for each key aType in sSupportedFormatsA
+         if tContentType = sSupportedFormatsA[aType] then
             return aType
          end if
       end repeat
 
-   end if
+	end if
 
+
+	// Did not find a supported format so return nothing...
    return ""
 end _detectInputFormat
 
