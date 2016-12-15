@@ -330,7 +330,7 @@ put "application/json" into sSupportedFormatsA["json"]
 --put "application/json" into sSupportedFormatsA["array"]
 --put "application/csv" into sSupportedFormatsA["csv"]
 --put "text/html" into sSupportedFormatsA["html"]
-put "text/plain" into sSupportedFormatsA["lson"]
+--put "text/plain" into sSupportedFormatsA["lson"]
 --put "application/xml" into sSupportedFormatsA["xml"]
 
 ------------------------------------------------------------------------
