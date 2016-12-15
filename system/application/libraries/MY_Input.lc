@@ -77,7 +77,7 @@ function rigRequestHeaders pXssClean
 			 put replaceText(tKey, " ", "-") into tKey
 			 put tData into sREQUEST_HEADERS[tKey]
 			 
-			 rigLogMessage "debug", tKey & ":" & sREQUEST_HEADERS[tKey]
+			 --rigLogMessage "debug", tKey & ":" & sREQUEST_HEADERS[tKey]
        end if
     end repeat
 
@@ -94,7 +94,6 @@ function rigRequestHeaders pXssClean
  function ucWords pData
  	-- convert the entire string to lower case
  	put toLower(pData) into tData
-	rigLogMessage "debug", "tData->" & tData
 	
 	-- for each word, capitalize the first letter
 	repeat for each word aWord in tData
