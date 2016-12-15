@@ -598,6 +598,7 @@ put "" into sRequestBody
 $this->{'_parse_' . $this->request->method}();
 */
 
+do merge("_parse[[sRequestMethod]]")
 
 /*
 
@@ -632,7 +633,7 @@ put sGetArgsA into sRequestArgsA["getArgs"]
 //put sPatchArgsA into sRequestArgsA["patchArgs"]
 put sHeadArgsA into sRequestArgsA["headerArgs"]
 //put sPutArgsA into sRequestArgsA["putArgs"]
-//put sPostArgsA into sRequestArgsA["postArgs"]
+put sPostArgsA into sRequestArgsA["postArgs"]
 //put sDeleteArgsA into sRequestArgsA["deleteArgs"]
 
 riglogMessage "debug", "sArgA->" & jsonExport(sRequestArgsA)
@@ -1729,6 +1730,7 @@ end _detectMethod
 */
 
 	command _parseGet
+		rigLogMessage "debug", "In _parseGet"
 		put sQueryArgs into sGetArgs["queryArgs"]
 	end _parseGet
 
@@ -1750,10 +1752,15 @@ end _detectMethod
     }
 */
 	command _parsePost
-		put $_POST into sPostArgs
+		rigLogMessage "debug", "In _parsePost"
+		rigLogMessage "debug", sRequestFormat
 		
-	//	if sRequestFormat is not empty then
-			put $_POST_RAW into sRequestBody
+		switch sRequestFormat
+			case "json"
+				put jsonImport($_POST_RAW) into sRequestBody
+				riglogMessage "debug", sRequestBody
+				break
+		end switch
 		//end if
 	end _parsePost
 
