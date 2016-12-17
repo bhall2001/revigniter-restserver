@@ -1004,11 +1004,18 @@ end _remap
             $this->output->_display();
             exit;
         }
+*/
+
+		if pContinue is not true then
+			put tOutput
+			exit to top
+		end if
+/*
 
         // Otherwise dump the output automatically
     }
 */
-	exit to top
+	
 end restResponse
 
     /**
