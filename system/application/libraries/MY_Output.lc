@@ -1,0 +1,83 @@
+<?rev
+put gBASEPATH into gBASEPATH
+
+if gBASEPATH is "gBASEPATH" then
+	put "No direct script access allowed."
+	exit to top
+end if
+
+
+------------------------------------------------------------------------
+-- revIgniter Output Library Extensions
+--
+-- A collection of useful functions that extend the Native Output
+-- Library of revIgniter
+--
+-- @package         revIgniter
+-- @subpackage      Libraries
+-- @category        Libraries
+-- @author          Bob Hall
+-- @copyright	     Copyright (c) 2016, Robert D. Hall
+-- @license         https://github.com/bhall2001/revigniter-restserver/blob/master/LICENSE
+-- @link            https://github.com/bhall2001/revigniter-restserver
+-- @version         0.0.1
+------------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------
+
+/**
+* Set Content-Type Header
+*
+* @param	string	$mime_type	Extension of the file we're outputting
+* @param	string	$charset	Character set (default: NULL)
+* @return	CI_Output
+*/
+
+function rigSetContentType pMimeType, pCharSet
+/*{
+   if (strpos($mime_type, '/') === FALSE)
+   {
+      $extension = ltrim($mime_type, '.');
+
+      // Is this extension supported?
+      if (isset($this->mimes[$extension]))
+      {
+         $mime_type =& $this->mimes[$extension];
+
+         if (is_array($mime_type))
+         {
+            $mime_type = current($mime_type);
+         }
+      }
+   }
+   
+   */
+   
+   
+   if not(pMimeType contains "/") then
+      put rigGetMimeByExtension(pMimeType) into tMimeType
+   end if
+   
+   rigLogMessage "debug", "tMimeType->" & tMimeType
+         
+         
+   /*
+
+   $this->mime_type = $mime_type;
+
+   if (empty($charset))
+   {
+      $charset = config_item('charset');
+   }
+
+   $header = 'Content-Type: '.$mime_type
+      .(empty($charset) ? '' : '; charset='.$charset);
+
+   $this->headers[] = array($header, TRUE);
+   return $this;
+}
+*/
+   return ""
+end rigSetContentType
+
