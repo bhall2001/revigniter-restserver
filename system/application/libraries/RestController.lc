@@ -934,26 +934,27 @@ end _remap
         {
 		  */
 
-	  else		  
+	  	  else if pData is not empty then
+				
 		  /*
             // If the format method exists, call and return the output in that format
             if (method_exists($this->format, 'to_' . $this->response->format))
             {
 				*/
-					rigLogMessage "debug", "sResponseFormat:" && sResponseFormat
+				rigLogMessage "debug", "sResponseFormat:" && sResponseFormat
 					
-					-- create handler call for desired Response Format					
-					put "to" & sResponseFormat && "pData" into tHandler
-					rigLogMessage "debug", "tHandler:" && tHandler
+				-- create handler call for desired Response Format					
+				put "to" & sResponseFormat && "pData" into tHandler
+				rigLogMessage "debug", "tHandler:" && tHandler
 					
-					-- Convert the reponse data to the desired format
-					try
-						do tHandler
-						put the result into tOutput
-					catch e
-					end try
+				-- Convert the reponse data to the desired format
+				try
+					do tHandler
+					put the result into tOutput
+				catch e
+				end try
 					
-					put tOutput
+				//put tOutput
 
 				/*
                 // Set the format header
@@ -967,6 +968,12 @@ end _remap
                     $output = $this->format->factory($output)->{'to_json'}();
                 }
             }
+				*/
+				
+			
+			
+				/*
+				
             else
             {
                 // If an array or object, then parse as a json, so as to be a 'string'
