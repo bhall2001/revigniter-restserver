@@ -754,8 +754,9 @@ command _remap
 
         $controller_method = $object_called.'_'.$this->request->method;
 */
+
 	put gController & "_" & sRequestMethod into tControllerMethod
-	rigLogMessage "debug", ("Making call to:" && tControllerMethod)
+	
 /*
         // Do we want to log this method (if allowed by config)?
         $log_method = ! (isset($this->methods[$controller_method]['log']) && $this->methods[$controller_method]['log'] === FALSE);
@@ -896,7 +897,8 @@ end _remap
 	 */
 	 command restResponse pData, pHttpCode, pContinue
 	 rigLogMessage "debug", "In restResponse"
-
+	 
+	
 	 // If pData is not empty and also is not an array, convert it to an array
 	 if (pData is not empty) and (pData is not an array) then
 		 put _rigStrToArray(pData, , TRUE, TRUE) into pData
