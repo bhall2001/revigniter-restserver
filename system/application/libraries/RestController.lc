@@ -178,7 +178,8 @@ local sMethodsA
 --
 -- @var array
 ------------------------------------------------------------------------
-local sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
+//local sAllowedHTTPMethods = "get, delete, post, put, options, patch, head"
+local sAllowedHTTPMethods = "get, post"
 
 ------------------------------------------------------------------------
 -- Contains details about the request
