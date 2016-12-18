@@ -2,8 +2,8 @@
 put gBASEPATH into gBASEPATH
 
 if gBASEPATH is "gBASEPATH" then
-	put "No direct script access allowed."
-	exit to top
+   put "No direct script access allowed."
+   exit to top
 end if
 
 
@@ -385,344 +385,344 @@ put "Not Implemented" into sHttpStatusCodes[501]
 
 
 /**
- * Extend this function to apply additional checking early on in the process
- *
- * @access protected
- * @return void
- */
- /*
+* Extend this function to apply additional checking early on in the process
+*
+* @access protected
+* @return void
+*/
+/*
 protected function early_checks()
 {
 }
 */
 
 
-    /**
-     * Deconstructor
-     *
-     * @author Chris Kacerguis
-     * @access public
-     * @return void
-     */
+/**
+* Deconstructor
+*
+* @author Chris Kacerguis
+* @access public
+* @return void
+*/
 /*
-    public function __destruct()
-    {
-        // Get the current timestamp
-        $this->_end_rtime = microtime(TRUE);
+public function __destruct()
+{
+// Get the current timestamp
+$this->_end_rtime = microtime(TRUE);
 
-        // Log the loading time to the log table
-        if ($this->config->item('rest_enable_logging') === TRUE)
-        {
-            $this->_log_access_time();
-        }
-    }
+// Log the loading time to the log table
+if ($this->config->item('rest_enable_logging') === TRUE)
+{
+$this->_log_access_time();
+}
+}
 */
 
 /**
 
- Checks to see if we have everything we need to run this library.
+Checks to see if we have everything we need to run this library.
 
 */
 // preflight_checks();
 command preflightChecks
-	rigLogMessage "debug", "in preflightChecks"
+   rigLogMessage "debug", "in preflightChecks"
 
-	try
-		// Check to see if Livecode Server is greater then or equal to 8.1.x
-		//if (is_php('5.4') === FALSE)
-		if livecodeVersion("8.1.0") is false then
-   		// Rest Server library requires LC Server 8.1.X and later
-   		//throw new Exception('Using PHP v'.PHP_VERSION.', though PHP v5.4 or greater is required');
-			throw "Livecode Server Version 8.1.0 or greater is required"
-		end if
+   try
+      // Check to see if Livecode Server is greater then or equal to 8.1.x
+      //if (is_php('5.4') === FALSE)
+      if livecodeVersion("8.1.0") is false then
+         // Rest Server library requires LC Server 8.1.X and later
+         //throw new Exception('Using PHP v'.PHP_VERSION.', though PHP v5.4 or greater is required');
+         throw "Livecode Server Version 8.1.0 or greater is required"
+      end if
 
-		// Check to see if Revigniter is greater than 1.9.4
-		if revigniterVersion("1.9.4") is false then
-   		throw "Revigniter Version 1.9.4 or greater is required"
-		end if
+      // Check to see if Revigniter is greater than 1.9.4
+      if revigniterVersion("1.9.4") is false then
+         throw "Revigniter Version 1.9.4 or greater is required"
+      end if
 
-		// Check if com.livecode.library.json is installed
-		if libraryJson() is false then
-			throw "REST Server requires Extension com.livecode.library.json"
-		end if
-	catch tErrorText
-		put "RestController" & gEXT into tCurrentFile
-		put "preflightChecks" into tCurrentMethod
+      // Check if com.livecode.library.json is installed
+      if libraryJson() is false then
+         throw "REST Server requires Extension com.livecode.library.json"
+      end if
+   catch tErrorText
+      put "RestController" & gEXT into tCurrentFile
+      put "preflightChecks" into tCurrentMethod
 
-		put _rigExceptionHandler(tErrorText) into tErrorData
+      put _rigExceptionHandler(tErrorText) into tErrorData
 
-		if rigConfigItem("logThreshold") > 1 then
-			put TRUE into tDisplayError
-		else
-			put FALSE into tDisplayError
-		end if
-		rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
-	end try
+      if rigConfigItem("logThreshold") > 1 then
+         put TRUE into tDisplayError
+      else
+         put FALSE into tDisplayError
+      end if
+      rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
+   end try
 
-	// Set the default value of global xss filtering. Same approach as Revigniter
-	//$this->_enable_xss = ($this->config->item('global_xss_filtering') === TRUE);
-	put rigConfigItem("globalXssFlitering") into sEnableXSS
+   // Set the default value of global xss filtering. Same approach as Revigniter
+   //$this->_enable_xss = ($this->config->item('global_xss_filtering') === TRUE);
+   put rigConfigItem("globalXssFlitering") into sEnableXSS
 
-	// Don't try to parse template variables like {elapsed_time} and {memory_usage}
-// when output is displayed for not damaging data accidentally
-//$this->output->parse_exec_vars = FALSE;
-## NOT SURE IF I NEED TO DO THIS???
+   // Don't try to parse template variables like {elapsed_time} and {memory_usage}
+   // when output is displayed for not damaging data accidentally
+   //$this->output->parse_exec_vars = FALSE;
+   ## NOT SURE IF I NEED TO DO THIS???
 
-// Start the timer for how long the request takes
-//$this->_start_rtime = microtime(TRUE);
-## SKIPPING THIS
+   // Start the timer for how long the request takes
+   //$this->_start_rtime = microtime(TRUE);
+   ## SKIPPING THIS
 
-// Load the rest.php configuration file
-//$this->load->config($config);
-rigLoadConfig "rest"
+   // Load the rest.php configuration file
+   //$this->load->config($config);
+   rigLoadConfig "rest"
 
-// At present the library is bundled with REST_Controller 2.5+, but will eventually be part of CodeIgniter (no citation)
-//$this->load->library('format');
-rigLoaderLoadLibrary "Format"
+   // At present the library is bundled with REST_Controller 2.5+, but will eventually be part of CodeIgniter (no citation)
+   //$this->load->library('format');
+   rigLoaderLoadLibrary "Format"
 
-// Load File Helper Library
-rigLoadHelper("file")
+   // Load File Helper Library
+   rigLoadHelper("file")
 
-// Determine supported output formats from configuration
-//$supported_formats = $this->config->item('rest_supported_formats');
-put rigConfigItem("restSupportedFormats") into sRestSupportedFormatsA
+   // Determine supported output formats from configuration
+   //$supported_formats = $this->config->item('rest_supported_formats');
+   put rigConfigItem("restSupportedFormats") into sRestSupportedFormatsA
 
-/* DON'T NEED THIS
-// Validate the configuration setting output formats
-if (empty($supported_formats))
-{
-	//$supported_formats = [];
-}
+   /* DON'T NEED THIS
+   // Validate the configuration setting output formats
+   if (empty($supported_formats))
+   {
+   //$supported_formats = [];
+   }
 
-if ( ! is_array($supported_formats))
-{
-	$supported_formats = [$supported_formats];
-}
-*/
+   if ( ! is_array($supported_formats))
+   {
+   $supported_formats = [$supported_formats];
+   }
+   */
 
-/*
-// Add silently the default output format if it is missing
-$default_format = $this->_get_default_output_format();
-if (!in_array($default_format, $supported_formats))
-{
-	$supported_formats[] = $default_format;
-}
-// Now update $this->_supported_formats
-$this->_supported_formats = array_intersect_key($this->_supported_formats, array_flip($supported_formats));
-*/
-put _getDefaultOutputFormat() into sDefaultFormat
-put "sDefaultFormat:" && sDefaultFormat into tTemp
-rigLogMessage "debug", tTemp
+   /*
+   // Add silently the default output format if it is missing
+   $default_format = $this->_get_default_output_format();
+   if (!in_array($default_format, $supported_formats))
+   {
+   $supported_formats[] = $default_format;
+   }
+   // Now update $this->_supported_formats
+   $this->_supported_formats = array_intersect_key($this->_supported_formats, array_flip($supported_formats));
+   */
+   put _getDefaultOutputFormat() into sDefaultFormat
+   put "sDefaultFormat:" && sDefaultFormat into tTemp
+   rigLogMessage "debug", tTemp
 
-// if the default format is not a supported format, add it to the list
-if sDefaultFormat is not among the keys of sRestSupportedFormatsA then
-	put true into sRestSupportedFormatsA[sDefaultFormat]
-end if
+   // if the default format is not a supported format, add it to the list
+   if sDefaultFormat is not among the keys of sRestSupportedFormatsA then
+      put true into sRestSupportedFormatsA[sDefaultFormat]
+   end if
 
-// Get the language
-//$language = $this->config->item('rest_language');
-//if ($language === NULL)
-//{
-//    $language = 'english';
-//}
-put rigConfigItem("restLanguage") into tLanguage
-if tLanguage = "" then put "english" into tLanguage
+   // Get the language
+   //$language = $this->config->item('rest_language');
+   //if ($language === NULL)
+   //{
+   //    $language = 'english';
+   //}
+   put rigConfigItem("restLanguage") into tLanguage
+   if tLanguage = "" then put "english" into tLanguage
 
-// Load the language file
-//$this->lang->load('rest_controller', $language);
+   // Load the language file
+   //$this->lang->load('rest_controller', $language);
 
-rigLoadLanguage "restControllerLang", tLanguage
+   rigLoadLanguage "restControllerLang", tLanguage
 
-/*
-	// Initialise the response, request and rest objects
-	$this->request = new stdClass();
-	$this->response = new stdClass();
-	$this->rest = new stdClass();
+   /*
+   // Initialise the response, request and rest objects
+   $this->request = new stdClass();
+   $this->response = new stdClass();
+   $this->rest = new stdClass();
 
-	// Check to see if the current IP address is blacklisted
-	if ($this->config->item('rest_ip_blacklist_enabled') === TRUE)
-	{
-	   $this->_check_blacklist_auth();
-	}
+   // Check to see if the current IP address is blacklisted
+   if ($this->config->item('rest_ip_blacklist_enabled') === TRUE)
+   {
+   $this->_check_blacklist_auth();
+   }
 
-	// Determine whether the connection is HTTPS
-	$this->request->ssl = is_https();
-*/
+   // Determine whether the connection is HTTPS
+   $this->request->ssl = is_https();
+   */
 
-	// How is this request being made? GET, POST, PATCH, DELETE, INSERT, PUT, HEAD or OPTIONS
-	//$this->request->method = $this->_detect_method();
-	put _detectMethod() into sRequestMethod
-	put "sRequestMethod: " & sRequestmethod into tTemp
-	rigLogMessage "debug", tTemp
+   // How is this request being made? GET, POST, PATCH, DELETE, INSERT, PUT, HEAD or OPTIONS
+   //$this->request->method = $this->_detect_method();
+   put _detectMethod() into sRequestMethod
+   put "sRequestMethod: " & sRequestmethod into tTemp
+   rigLogMessage "debug", tTemp
 
-	/* SKIPPING FOR NOW
-	// Check for CORS access request
-	$check_cors = $this->config->item('check_cors');
-	if ($check_cors === TRUE)
-	{
-	   $this->_check_cors();
-	}
-	*/
+   /* SKIPPING FOR NOW
+   // Check for CORS access request
+   $check_cors = $this->config->item('check_cors');
+   if ($check_cors === TRUE)
+   {
+   $this->_check_cors();
+   }
+   */
 
-	/* NOT NEEDED (I think)
-	// Create an argument container if it doesn't exist e.g. _get_args
-	if (isset($this->{'_'.$this->request->method.'_args'}) === FALSE)
-	{
-	   $this->{'_'.$this->request->method.'_args'} = [];
-	}
-*/
+   /* NOT NEEDED (I think)
+   // Create an argument container if it doesn't exist e.g. _get_args
+   if (isset($this->{'_'.$this->request->method.'_args'}) === FALSE)
+   {
+   $this->{'_'.$this->request->method.'_args'} = [];
+   }
+   */
 
-/*
-	// Set up the query parameters
-	$this->_parse_query();
-	*/
-	##_parseQuery
+   /*
+   // Set up the query parameters
+   $this->_parse_query();
+   */
+   ##_parseQuery
 
-	// Set up the GET variables
-	//$this->_get_args = array_merge($this->_get_args, $this->uri->ruri_to_assoc());
-	put rigUriToAssoc() into sGetArgsA
-	
-	rigLogMessage "debug", "sGetArgsA: " & jsonExport(sGetArgsA)
+   // Set up the GET variables
+   //$this->_get_args = array_merge($this->_get_args, $this->uri->ruri_to_assoc());
+   put rigUriToAssoc() into sGetArgsA
 
-	// Try to find a format for the request (means we have a request body)
-//$this->request->format = $this->_detect_input_format();
-put _detectInputFormat() into sRequestFormat
+   rigLogMessage "debug", "sGetArgsA: " & jsonExport(sGetArgsA)
 
-/*
-// Which format should the data be returned in?
-$this->response->format = $this->_detect_output_format();
-*/
-put _detectOutputFormat() into sResponseFormat
+   // Try to find a format for the request (means we have a request body)
+   //$this->request->format = $this->_detect_input_format();
+   put _detectInputFormat() into sRequestFormat
 
-// Not all methods have a body attached with them
-//$this->request->body = NULL;
-put "" into sRequestBody
+   /*
+   // Which format should the data be returned in?
+   $this->response->format = $this->_detect_output_format();
+   */
+   put _detectOutputFormat() into sResponseFormat
 
-/*
-$this->{'_parse_' . $this->request->method}();
-*/
+   // Not all methods have a body attached with them
+   //$this->request->body = NULL;
+   put "" into sRequestBody
 
-do merge("_parse[[sRequestMethod]]")
+   /*
+   $this->{'_parse_' . $this->request->method}();
+   */
 
-/*
+   do merge("_parse[[sRequestMethod]]")
 
-// Now we know all about our request, let's try and parse the body if it exists
-if ($this->request->format && $this->request->body)
-{
-	$this->request->body = $this->format->factory($this->request->body, $this->request->format)->to_array();
-	// Assign payload arguments to proper method container
-	$this->{'_'.$this->request->method.'_args'} = $this->request->body;
-}
-*/
+   /*
 
-//get header vars
-//$this->_head_args = $this->input->request_headers();
-put rigRequestHeaders() into sHeadArgsA
+   // Now we know all about our request, let's try and parse the body if it exists
+   if ($this->request->format && $this->request->body)
+   {
+   $this->request->body = $this->format->factory($this->request->body, $this->request->format)->to_array();
+   // Assign payload arguments to proper method container
+   $this->{'_'.$this->request->method.'_args'} = $this->request->body;
+   }
+   */
 
-/*
-// Merge both for one mega-args variable
-$this->_args = array_merge(
-	$this->_get_args,
-	$this->_options_args,
-	$this->_patch_args,
-	$this->_head_args,
-	$this->_put_args,
-	$this->_post_args,
-	$this->_delete_args,
-	$this->{'_'.$this->request->method.'_args'}
-);
-*/
-put sGetArgsA into sRequestArgsA["getArgs"]
-//put sOptionsArgsA into sRequestArgsA["optionArgs"]
-//put sPatchArgsA into sRequestArgsA["patchArgs"]
-put sHeadArgsA into sRequestArgsA["headerArgs"]
-//put sPutArgsA into sRequestArgsA["putArgs"]
-put sPostArgsA into sRequestArgsA["postArgs"]
-//put sDeleteArgsA into sRequestArgsA["deleteArgs"]
+   //get header vars
+   //$this->_head_args = $this->input->request_headers();
+   put rigRequestHeaders() into sHeadArgsA
 
-riglogMessage "debug", "sArgA->" & jsonExport(sRequestArgsA)
+   /*
+   // Merge both for one mega-args variable
+   $this->_args = array_merge(
+   $this->_get_args,
+   $this->_options_args,
+   $this->_patch_args,
+   $this->_head_args,
+   $this->_put_args,
+   $this->_post_args,
+   $this->_delete_args,
+   $this->{'_'.$this->request->method.'_args'}
+   );
+   */
+   put sGetArgsA into sRequestArgsA["getArgs"]
+   //put sOptionsArgsA into sRequestArgsA["optionArgs"]
+   //put sPatchArgsA into sRequestArgsA["patchArgs"]
+   put sHeadArgsA into sRequestArgsA["headerArgs"]
+   //put sPutArgsA into sRequestArgsA["putArgs"]
+   put sPostArgsA into sRequestArgsA["postArgs"]
+   //put sDeleteArgsA into sRequestArgsA["deleteArgs"]
 
-
-
-/*
-// Which language should the data be returned in?
-$this->response->lang = $this->_detect_lang();
-
-// Extend this function to apply additional checking early on in the process
-$this->early_checks();
-*/
+   riglogMessage "debug", "sArgA->" & jsonExport(sRequestArgsA)
 
 
-/*
-// Load DB if its enabled
-if ($this->config->item('rest_database_group') && ($this->config->item('rest_enable_keys') || $this->config->item('rest_enable_logging')))
-{
-	$this->rest->db = $this->load->database($this->config->item('rest_database_group'), TRUE);
-}
 
-// Use whatever database is in use (isset returns FALSE)
+   /*
+   // Which language should the data be returned in?
+   $this->response->lang = $this->_detect_lang();
+
+   // Extend this function to apply additional checking early on in the process
+   $this->early_checks();
+   */
+
+
+   /*
+   // Load DB if its enabled
+   if ($this->config->item('rest_database_group') && ($this->config->item('rest_enable_keys') || $this->config->item('rest_enable_logging')))
+   {
+   $this->rest->db = $this->load->database($this->config->item('rest_database_group'), TRUE);
+   }
+
+   // Use whatever database is in use (isset returns FALSE)
 elseif (property_exists($this, 'db'))
-{
-	$this->rest->db = $this->db;
-}
-*/
+   {
+   $this->rest->db = $this->db;
+   }
+   */
 
-/*
-// Check if there is a specific auth type for the current class/method
-// _auth_override_check could exit so we need $this->rest->db initialized before
-$this->auth_override = $this->_auth_override_check();
-*/
+   /*
+   // Check if there is a specific auth type for the current class/method
+   // _auth_override_check could exit so we need $this->rest->db initialized before
+   $this->auth_override = $this->_auth_override_check();
+   */
 
-/*
-// Checking for keys? GET TO WorK!
-// Skip keys test for $config['auth_override_class_method']['class'['method'] = 'none'
-if ($this->config->item('rest_enable_keys') && $this->auth_override !== TRUE)
-{
-	$this->_allow = $this->_detect_api_key();
-}
-*/
+   /*
+   // Checking for keys? GET TO WorK!
+   // Skip keys test for $config['auth_override_class_method']['class'['method'] = 'none'
+   if ($this->config->item('rest_enable_keys') && $this->auth_override !== TRUE)
+   {
+   $this->_allow = $this->_detect_api_key();
+   }
+   */
 
-/*
-// Only allow ajax requests
-if ($this->input->is_ajax_request() === FALSE && $this->config->item('rest_ajax_only'))
-{
-	// Display an error response
-	$this->response([
-				$this->config->item('rest_status_field_name') => FALSE,
-				$this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ajax_only')
-		], self::HTTP_NOT_ACCEPTABLE);
-}
-*/
+   /*
+   // Only allow ajax requests
+   if ($this->input->is_ajax_request() === FALSE && $this->config->item('rest_ajax_only'))
+   {
+   // Display an error response
+   $this->response([
+   $this->config->item('rest_status_field_name') => FALSE,
+   $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ajax_only')
+   ], self::HTTP_NOT_ACCEPTABLE);
+   }
+   */
 
-/*
-// When there is no specific override for the current class/method, use the default auth value set in the config
-if ($this->auth_override === FALSE &&
-(! ($this->config->item('rest_enable_keys') && $this->_allow === TRUE) ||
-($this->config->item('allow_auth_and_keys') === TRUE && $this->_allow === TRUE)))
-{
-	$rest_auth = strtolower($this->config->item('rest_auth'));
-	switch ($rest_auth)
-	{
-			case 'basic':
-					$this->_prepare_basic_auth();
-					break;
-			case 'digest':
-					$this->_prepare_digest_auth();
-					break;
-			case 'session':
-					$this->_check_php_session();
-					break;
-	}
-	if ($this->config->item('rest_ip_whitelist_enabled') === TRUE)
-	{
-			$this->_check_whitelist_auth();
-	}
-}
-}
-*/
+   /*
+   // When there is no specific override for the current class/method, use the default auth value set in the config
+   if ($this->auth_override === FALSE &&
+   (! ($this->config->item('rest_enable_keys') && $this->_allow === TRUE) ||
+   ($this->config->item('allow_auth_and_keys') === TRUE && $this->_allow === TRUE)))
+   {
+   $rest_auth = strtolower($this->config->item('rest_auth'));
+   switch ($rest_auth)
+      {
+   case 'basic':
+      $this->_prepare_basic_auth();
+      break;
+   case 'digest':
+      $this->_prepare_digest_auth();
+      break;
+   case 'session':
+      $this->_check_php_session();
+      break;
+      }
+      if ($this->config->item('rest_ip_whitelist_enabled') === TRUE)
+      {
+      $this->_check_whitelist_auth();
+      }
+      }
+      }
+      */
 
-rigLogMessage "debug", "leaving preflightChecks"
-end preflightChecks
+      rigLogMessage "debug", "leaving preflightChecks"
+   end preflightChecks
 
     /**
      * Requests are not made to methods directly, the request will be for
@@ -738,152 +738,152 @@ end preflightChecks
 
 command _remap
 
-	rigLogMessage "debug", "in _remap"
+   rigLogMessage "debug", "in _remap"
 
-/*
-        // Should we answer if not over SSL?
-        if ($this->config->item('force_https') && $this->request->ssl === FALSE)
-        {
-            $this->response([
-                    $this->config->item('rest_status_field_name') => FALSE,
-                    $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unsupported')
-                ], self::HTTP_FORBIDDEN);
-        }
+   /*
+   // Should we answer if not over SSL?
+   if ($this->config->item('force_https') && $this->request->ssl === FALSE)
+   {
+   $this->response([
+   $this->config->item('rest_status_field_name') => FALSE,
+   $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unsupported')
+   ], self::HTTP_FORBIDDEN);
+   }
 
-	if rigConfigItem("forceHTTPS") and
-
-
-        // Remove the supported format from the function name e.g. index.json => index
-        $object_called = preg_replace('/^(.*)\.(?:'.implode('|', array_keys($this->_supported_formats)).')$/', '$1', $object_called);
-
-        $controller_method = $object_called.'_'.$this->request->method;
-*/
+   if rigConfigItem("forceHTTPS") and
 
 
-	put gController & "_" & sRequestMethod into tControllerMethod
-	
-/*
-        // Do we want to log this method (if allowed by config)?
-        $log_method = ! (isset($this->methods[$controller_method]['log']) && $this->methods[$controller_method]['log'] === FALSE);
+   // Remove the supported format from the function name e.g. index.json => index
+   $object_called = preg_replace('/^(.*)\.(?:'.implode('|', array_keys($this->_supported_formats)).')$/', '$1', $object_called);
 
-        // Use keys for this method?
-        $use_key = ! (isset($this->methods[$controller_method]['key']) && $this->methods[$controller_method]['key'] === FALSE);
+   $controller_method = $object_called.'_'.$this->request->method;
+   */
 
-        // They provided a key, but it wasn't valid, so get them out of here
-        if ($this->config->item('rest_enable_keys') && $use_key && $this->_allow === FALSE)
-        {
-            if ($this->config->item('rest_enable_logging') && $log_method)
-            {
-                $this->_log_request();
-            }
 
-            $this->response([
-                    $this->config->item('rest_status_field_name') => FALSE,
-                    $this->config->item('rest_message_field_name') => sprintf($this->lang->line('text_rest_invalid_api_key'), $this->rest->key)
-                ], self::HTTP_FORBIDDEN);
-        }
+   put gController & "_" & sRequestMethod into tControllerMethod
 
-        // Check to see if this key has access to the requested controller
-        if ($this->config->item('rest_enable_keys') && $use_key && empty($this->rest->key) === FALSE && $this->_check_access() === FALSE)
-        {
-            if ($this->config->item('rest_enable_logging') && $log_method)
-            {
-                $this->_log_request();
-            }
+   /*
+   // Do we want to log this method (if allowed by config)?
+   $log_method = ! (isset($this->methods[$controller_method]['log']) && $this->methods[$controller_method]['log'] === FALSE);
 
-            $this->response([
-                    $this->config->item('rest_status_field_name') => FALSE,
-                    $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_unauthorized')
-                ], self::HTTP_UNAUTHORIZED);
-        }
+   // Use keys for this method?
+   $use_key = ! (isset($this->methods[$controller_method]['key']) && $this->methods[$controller_method]['key'] === FALSE);
 
-        // Sure it exists, but can they do anything with it?
-        if (! method_exists($this, $controller_method))
-        {
-            $this->response([
-                    $this->config->item('rest_status_field_name') => FALSE,
-                    $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unknown_method')
-                ], self::HTTP_METHOD_NOT_ALLOWED);
-        }
+   // They provided a key, but it wasn't valid, so get them out of here
+   if ($this->config->item('rest_enable_keys') && $use_key && $this->_allow === FALSE)
+   {
+   if ($this->config->item('rest_enable_logging') && $log_method)
+   {
+   $this->_log_request();
+   }
 
-        // Doing key related stuff? Can only do it if they have a key right?
-        if ($this->config->item('rest_enable_keys') && empty($this->rest->key) === FALSE)
-        {
-            // Check the limit
-            if ($this->config->item('rest_enable_limits') && $this->_check_limit($controller_method) === FALSE)
-            {
-                $response = [$this->config->item('rest_status_field_name') => FALSE, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_time_limit')];
-                $this->response($response, self::HTTP_UNAUTHORIZED);
-            }
+   $this->response([
+   $this->config->item('rest_status_field_name') => FALSE,
+   $this->config->item('rest_message_field_name') => sprintf($this->lang->line('text_rest_invalid_api_key'), $this->rest->key)
+   ], self::HTTP_FORBIDDEN);
+   }
 
-            // If no level is set use 0, they probably aren't using permissions
-            $level = isset($this->methods[$controller_method]['level']) ? $this->methods[$controller_method]['level'] : 0;
+   // Check to see if this key has access to the requested controller
+   if ($this->config->item('rest_enable_keys') && $use_key && empty($this->rest->key) === FALSE && $this->_check_access() === FALSE)
+   {
+   if ($this->config->item('rest_enable_logging') && $log_method)
+   {
+   $this->_log_request();
+   }
 
-            // If no level is set, or it is lower than/equal to the key's level
-            $authorized = $level <= $this->rest->level;
-            // IM TELLIN!
-            if ($this->config->item('rest_enable_logging') && $log_method)
-            {
-                $this->_log_request($authorized);
-            }
-            if($authorized === FALSE)
-            {
-                // They don't have good enough perms
-                $response = [$this->config->item('rest_status_field_name') => FALSE, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_permissions')];
-                $this->response($response, self::HTTP_UNAUTHORIZED);
-            }
-        }
+   $this->response([
+   $this->config->item('rest_status_field_name') => FALSE,
+   $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_unauthorized')
+   ], self::HTTP_UNAUTHORIZED);
+   }
 
-        //check request limit by ip without login
-        elseif ($this->config->item('rest_limits_method') == "IP_ADDRESS" && $this->config->item('rest_enable_limits') && $this->_check_limit($controller_method) === FALSE)
-        {
-            $response = [$this->config->item('rest_status_field_name') => FALSE, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ip_address_time_limit')];
-            $this->response($response, self::HTTP_UNAUTHORIZED);
-        }
+   // Sure it exists, but can they do anything with it?
+   if (! method_exists($this, $controller_method))
+   {
+   $this->response([
+   $this->config->item('rest_status_field_name') => FALSE,
+   $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_unknown_method')
+   ], self::HTTP_METHOD_NOT_ALLOWED);
+   }
 
-        // No key stuff, but record that stuff is happening
-        elseif ($this->config->item('rest_enable_logging') && $log_method)
-        {
-            $this->_log_request($authorized = TRUE);
-        }
+   // Doing key related stuff? Can only do it if they have a key right?
+   if ($this->config->item('rest_enable_keys') && empty($this->rest->key) === FALSE)
+   {
+   // Check the limit
+   if ($this->config->item('rest_enable_limits') && $this->_check_limit($controller_method) === FALSE)
+   {
+   $response = [$this->config->item('rest_status_field_name') => FALSE, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_time_limit')];
+   $this->response($response, self::HTTP_UNAUTHORIZED);
+   }
 
-        // Call the controller method and passed arguments
-        try
-        {
-            call_user_func_array([$this, $controller_method], $arguments);
-        }
-        catch (Exception $ex)
-        {
-            // If the method doesn't exist, then the error will be caught and an error response shown
-            $this->response([
-                    $this->config->item('rest_status_field_name') => FALSE,
-                    $this->config->item('rest_message_field_name') => [
-                        'classname' => get_class($ex),
-                        'message' => $ex->getMessage()
-                    ]
-                ], self::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-*/
+   // If no level is set use 0, they probably aren't using permissions
+   $level = isset($this->methods[$controller_method]['level']) ? $this->methods[$controller_method]['level'] : 0;
 
-	try
-		rigLogMessage "debug", ("Calling:" && tControllerMethod)
-		do tControllerMethod
-	catch tErrorText
-		rigLogMessage "debug", (tControllerMethod && "NOT FOUND!")
-		put "RestController" & gEXT into tCurrentFile
-		put "_remap" into tCurrentMethod
+   // If no level is set, or it is lower than/equal to the key's level
+   $authorized = $level <= $this->rest->level;
+   // IM TELLIN!
+   if ($this->config->item('rest_enable_logging') && $log_method)
+   {
+   $this->_log_request($authorized);
+   }
+   if($authorized === FALSE)
+   {
+   // They don't have good enough perms
+   $response = [$this->config->item('rest_status_field_name') => FALSE, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_api_key_permissions')];
+   $this->response($response, self::HTTP_UNAUTHORIZED);
+   }
+   }
 
-		put "REST Handler not found: " & tControllerMethod into tErrorData
+   //check request limit by ip without login
+elseif ($this->config->item('rest_limits_method') == "IP_ADDRESS" && $this->config->item('rest_enable_limits') && $this->_check_limit($controller_method) === FALSE)
+   {
+   $response = [$this->config->item('rest_status_field_name') => FALSE, $this->config->item('rest_message_field_name') => $this->lang->line('text_rest_ip_address_time_limit')];
+   $this->response($response, self::HTTP_UNAUTHORIZED);
+   }
 
-		if rigConfigItem("logThreshold") > 1 then
-			put TRUE into tDisplayError
-		else
-			put FALSE into tDisplayError
-		end if
-		rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
-	end try
-end _remap
+   // No key stuff, but record that stuff is happening
+elseif ($this->config->item('rest_enable_logging') && $log_method)
+   {
+   $this->_log_request($authorized = TRUE);
+   }
+
+   // Call the controller method and passed arguments
+   try
+      {
+      call_user_func_array([$this, $controller_method], $arguments);
+      }
+   catch (Exception $ex)
+      {
+      // If the method doesn't exist, then the error will be caught and an error response shown
+      $this->response([
+      $this->config->item('rest_status_field_name') => FALSE,
+      $this->config->item('rest_message_field_name') => [
+      'classname' => get_class($ex),
+      'message' => $ex->getMessage()
+      ]
+      ], self::HTTP_INTERNAL_SERVER_ERROR);
+      }
+      }
+      */
+
+      try
+         rigLogMessage "debug", ("Calling:" && tControllerMethod)
+         do tControllerMethod
+      catch tErrorText
+         rigLogMessage "debug", (tControllerMethod && "NOT FOUND!")
+         put "RestController" & gEXT into tCurrentFile
+         put "_remap" into tCurrentMethod
+
+         put "REST Handler not found: " & tControllerMethod into tErrorData
+
+         if rigConfigItem("logThreshold") > 1 then
+            put TRUE into tDisplayError
+         else
+            put FALSE into tDisplayError
+         end if
+         rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
+      end try
+   end _remap
 
 
 
@@ -900,183 +900,183 @@ end _remap
     public function response($data = NULL, $http_code = NULL, $continue = FALSE)
     {
 	 */
-	 command restResponse pData, pHttpCode, pContinue
-	 rigLogMessage "debug", "In restResponse"
-	 
-	
-	 // If pData is not empty and also is not an array, convert it to an array
-	 if (pData is not empty) and (pData is not an array) then
-		 put _rigStrToArray(pData, , TRUE, TRUE) into pData
-	 end if
+command restResponse pData, pHttpCode, pContinue
+   rigLogMessage "debug", "In restResponse"
 
-        // If the HTTP status is not NULL or an integer, then cast as an integer
-        /*if ($http_code !== NULL)
-        {
-            // So as to be safe later on in the process
-            $http_code = (int) $http_code;
-        }
-		  */
-		  if (pHttpCode is not empty) and (pHttpCode is not an integer) then
-		  		put merge(("[[" & pHttpCode & "]]")) into pHttpCode
-		  end if
-		  
-/*
-        // Set the output as NULL by default
-        $output = NULL;
 
-        // If data is NULL and no HTTP status code provided, then display, error and exit
-        if ($data === NULL && $http_code === NULL)
-        {
-            $http_code = self::HTTP_NOT_FOUND;
-        }
-		  */
+   // If pData is not empty and also is not an array, convert it to an array
+   if (pData is not empty) and (pData is not an array) then
+      put _rigStrToArray(pData, , TRUE, TRUE) into pData
+   end if
 
-		  if (pData is empty) and (pHttpCode is empty) then
-			  put merge("[[" & HTTP_NOT_FOUND & "]]") into pHttpCode
-			  put sHttpStatusCodes[pHttpCode] into pHttpCode
-			  
-		  /*
+   // If the HTTP status is not NULL or an integer, then cast as an integer
+   /*if ($http_code !== NULL)
+   {
+   // So as to be safe later on in the process
+   $http_code = (int) $http_code;
+   }
+   */
+   if (pHttpCode is not empty) and (pHttpCode is not an integer) then
+      put merge(("[[" & pHttpCode & "]]")) into pHttpCode
+   end if
 
-        // If data is not NULL and a HTTP status code provided, then continue
-        elseif ($data !== NULL)
-        {
-		  */
+   /*
+   // Set the output as NULL by default
+   $output = NULL;
 
-	  	  else if pData is not empty then
-				
-		  /*
-            // If the format method exists, call and return the output in that format
-            if (method_exists($this->format, 'to_' . $this->response->format))
-            {
-				*/
-				rigLogMessage "debug", "sResponseFormat:" && sResponseFormat
-					
-				-- create handler call for desired Response Format					
-				put "to" & sResponseFormat && "pData" into tHandler
-				rigLogMessage "debug", "tHandler:" && tHandler
-					
-				-- Convert the reponse data to the desired format
-				try
-					do tHandler
-					put the result into tOutput
-				catch e
-				end try
-					
-					
-				/*
-                // Set the format header
-                $this->output->set_content_type($this->_supported_formats[$this->response->format], strtolower($this->config->item('charset')));
-				*/
-			put rigFetchConfigItem("defaultCharset") into tCharSet
-			rigLogMessage "debug", "tcharSet->" & tCharSet
-				
-			put rigSetContentType("json", tCharSet) into sResponseA["headers"]["content-type"]
-				
-				/*
-                $output = $this->format->factory($data)->{'to_' . $this->response->format}();
+   // If data is NULL and no HTTP status code provided, then display, error and exit
+   if ($data === NULL && $http_code === NULL)
+   {
+   $http_code = self::HTTP_NOT_FOUND;
+   }
+   */
 
-                // An array must be parsed as a string, so as not to cause an array to string error
-                // Json is the most appropriate form for such a datatype
-                if ($this->response->format === 'array')
-                {
-                    $output = $this->format->factory($output)->{'to_json'}();
-                }
-            }
-				*/
-				
-				
-			
-			
-				/*
-				
-            else
-            {
-                // If an array or object, then parse as a json, so as to be a 'string'
-                if (is_array($data) || is_object($data))
-                {
-                    $data = $this->format->factory($data)->{'to_json'}();
-                }
+   if (pData is empty) and (pHttpCode is empty) then
+      put merge("[[" & HTTP_NOT_FOUND & "]]") into pHttpCode
+      put sHttpStatusCodes[pHttpCode] into pHttpCode
 
-                // Format is not supported, so output the raw data as a string
-                $output = $data;
-            }
-        }
-*/
-	  end if
-	  /*
-        // If not greater than zero, then set the HTTP status code as 200 by default
-        // Though perhaps 500 should be set instead, for the developer not passing a
-        // correct HTTP status code
-        $http_code > 0 || $http_code = self::HTTP_OK;
+      /*
 
-        $this->output->set_status_header($http_code);
+      // If data is not NULL and a HTTP status code provided, then continue
+   elseif ($data !== NULL)
+      {
+      */
 
-        // JC: Log response code only if rest logging enabled
-        if ($this->config->item('rest_enable_logging') === TRUE)
-        {
-            $this->_log_response_code($http_code);
-        }
+   else if pData is not empty then
 
-        // Output the data
-        $this->output->set_output($output);
+      /*
+      // If the format method exists, call and return the output in that format
+      if (method_exists($this->format, 'to_' . $this->response->format))
+      {
+      */
+      rigLogMessage "debug", "sResponseFormat:" && sResponseFormat
 
-        if ($continue === FALSE)
-        {
-            // Display the data and exit execution
-            $this->output->_display();
-            exit;
-        }
-*/
+      -- create handler call for desired Response Format
+      put "to" & sResponseFormat && "pData" into tHandler
+      rigLogMessage "debug", "tHandler:" && tHandler
 
-		if pContinue is not true then
-			put sHttpStatusCodes[pHttpCode] into tStatusMsg
-			rigLogMessage "debug", "HTTP Status:" & tStatusMsg
-			
-			put tOutput
-			exit to top
-		end if
-/*
+      -- Convert the reponse data to the desired format
+      try
+         do tHandler
+         put the result into tOutput
+      catch e
+      end try
 
-        // Otherwise dump the output automatically
-    }
-*/
-	
+
+      /*
+      // Set the format header
+      $this->output->set_content_type($this->_supported_formats[$this->response->format], strtolower($this->config->item('charset')));
+      */
+      put rigFetchConfigItem("defaultCharset") into tCharSet
+      rigLogMessage "debug", "tcharSet->" & tCharSet
+
+      put rigSetContentType("json", tCharSet) into sResponseA["headers"]["content-type"]
+
+      /*
+      $output = $this->format->factory($data)->{'to_' . $this->response->format}();
+
+      // An array must be parsed as a string, so as not to cause an array to string error
+      // Json is the most appropriate form for such a datatype
+      if ($this->response->format === 'array')
+      {
+      $output = $this->format->factory($output)->{'to_json'}();
+      }
+      }
+      */
+
+
+
+
+      /*
+
+   else
+      {
+      // If an array or object, then parse as a json, so as to be a 'string'
+      if (is_array($data) || is_object($data))
+      {
+      $data = $this->format->factory($data)->{'to_json'}();
+      }
+
+      // Format is not supported, so output the raw data as a string
+      $output = $data;
+      }
+      }
+      */
+   end if
+   /*
+   // If not greater than zero, then set the HTTP status code as 200 by default
+   // Though perhaps 500 should be set instead, for the developer not passing a
+   // correct HTTP status code
+   $http_code > 0 || $http_code = self::HTTP_OK;
+
+   $this->output->set_status_header($http_code);
+
+   // JC: Log response code only if rest logging enabled
+   if ($this->config->item('rest_enable_logging') === TRUE)
+   {
+   $this->_log_response_code($http_code);
+   }
+
+   // Output the data
+   $this->output->set_output($output);
+
+   if ($continue === FALSE)
+   {
+   // Display the data and exit execution
+   $this->output->_display();
+   exit;
+   }
+   */
+
+   if pContinue is not true then
+      put sHttpStatusCodes[pHttpCode] into tStatusMsg
+      rigLogMessage "debug", "HTTP Status:" & tStatusMsg
+
+      put tOutput
+      exit to top
+   end if
+   /*
+
+   // Otherwise dump the output automatically
+   }
+   */
+
 end restResponse
 
-    /**
-     * Takes mixed data and optionally a status code, then creates the response
-     * within the buffers of the Output class. The response is sent to the client
-     * lately by the framework, after the current controller's method termination.
-     * All the hooks after the controller's method termination are executable
-     *
-     * @access public
-     * @param array|NULL $data Data to output to the user
-     * @param int|NULL $http_code HTTP status code
-     */
+/**
+* Takes mixed data and optionally a status code, then creates the response
+* within the buffers of the Output class. The response is sent to the client
+* lately by the framework, after the current controller's method termination.
+* All the hooks after the controller's method termination are executable
+*
+* @access public
+* @param array|NULL $data Data to output to the user
+* @param int|NULL $http_code HTTP status code
+*/
 /*
-    public function set_response($data = NULL, $http_code = NULL)
-    {
-        $this->response($data, $http_code, TRUE);
-    }
+public function set_response($data = NULL, $http_code = NULL)
+{
+$this->response($data, $http_code, TRUE);
+}
 */
 
-    /**
-     * Get the input format e.g. json or xml
-     *
-     * @access protected
-     * @return string|NULL Supported input format; otherwise, NULL
-     */
+/**
+* Get the input format e.g. json or xml
+*
+* @access protected
+* @return string|NULL Supported input format; otherwise, NULL
+*/
 
 
 //protected function _detect_input_format()
 
 function _detectInputFormat
-	rigLogMessage "debug", "In _detectInputFormat"
-	
+   rigLogMessage "debug", "In _detectInputFormat"
+
    // Get the CONTENT-TYPE value from the SERVER variable
    //$content_type = $this->input->server('CONTENT_TYPE');
    put rigVarServer("CONTENT_TYPE") into tContentType
-	rigLogMessage "debug", "tContentType->" & tContentType
+   rigLogMessage "debug", "tContentType->" & tContentType
 
    //if (empty($content_type) === FALSE)
    if tContentType is not empty then
@@ -1085,7 +1085,7 @@ function _detectInputFormat
       //$content_type = (strpos($content_type, ';') !== FALSE ? current(explode(';', $content_type)) : $content_type);
 
 
-## REMOVED LIVECODE BELOW FOR NOW...
+      ## REMOVED LIVECODE BELOW FOR NOW...
       //set the itemDelimiter to ";"
       //put item 1 of tContentType into tContentType
 
@@ -1107,10 +1107,10 @@ function _detectInputFormat
          end if
       end repeat
 
-	end if
+   end if
 
 
-	// Did not find a supported format so return nothing...
+   // Did not find a supported format so return nothing...
    return ""
 end _detectInputFormat
 
@@ -1125,13 +1125,13 @@ end _detectInputFormat
 ------------------------------------------------------------------------
 
 function _getDefaultOutputFormat
-    //$default_format = (string) $this->config->item('rest_default_format');
-    //return $default_format === '' ? 'json' : $default_format;
+   //$default_format = (string) $this->config->item('rest_default_format');
+   //return $default_format === '' ? 'json' : $default_format;
 
-	 put rigConfigItem("restDefaultFormat") into tDefaultFormat
-	 if tDefualtFormat = "" then put "json" into tDefaultFormat
+   put rigConfigItem("restDefaultFormat") into tDefaultFormat
+   if tDefualtFormat = "" then put "json" into tDefaultFormat
 
-	 return tDefaultFormat
+   return tDefaultFormat
 end _getDefaultOutputFormat
 
 
@@ -1141,122 +1141,149 @@ end _getDefaultOutputFormat
 -- @return string Output format
 ------------------------------------------------------------------------
 function _detectOutputFormat
-	rigLogMessage "debug", "In _detectOutputFormat"
+   rigLogMessage "debug", "In _detectOutputFormat"
 
-/*
-    protected function _detect_output_format()
-    {
-	 
-        // Concatenate formats to a regex pattern e.g. \.(csv|json|xml)
-        $pattern = '/\.('.implode('|', array_keys($this->_supported_formats)).')($|\/)/';
-        $matches = [];
+   /*
+   protected function _detect_output_format()
+   {
 
-        // Check if a file extension is used e.g. http://example.com/api/index.json?param1=param2
-        if (preg_match($pattern, $this->uri->uri_string(), $matches))
-        {
-            return $matches[1];
-        }
-*/
+   // Concatenate formats to a regex pattern e.g. \.(csv|json|xml)
+   $pattern = '/\.('.implode('|', array_keys($this->_supported_formats)).')($|\/)/';
+   $matches = [];
 
-/*
-repeat for each key aGetArg in sGetArgsA
-	repeat for each key tFormat in sSupportedFormatsA
-		-- check if the format is in the value of a Get Argument
-		if sGetArgsA[aGetArg] contains ("." & tFormat) then
-			-- replace the ".format" in the argument with ""
-			replace ("." & tFormat) with "" in sGetArgsA[aGetArg]
-							
-			-- return the format found
-			return tFormat
-		end if
-		
-	end repeat
+   // Check if a file extension is used e.g. http://example.com/api/index.json?param1=param2
+   if (preg_match($pattern, $this->uri->uri_string(), $matches))
+   {
+   return $matches[1];
+   }
+   */
+
+   /*
+   repeat for each key aGetArg in sGetArgsA
+      repeat for each key tFormat in sSupportedFormatsA
+         -- check if the format is in the value of a Get Argument
+         if sGetArgsA[aGetArg] contains ("." & tFormat) then
+            -- replace the ".format" in the argument with ""
+            replace ("." & tFormat) with "" in sGetArgsA[aGetArg]
+
+            -- return the format found
+            return tFormat
+         end if
+
+      end repeat
+   end repeat
+   */
+
+
+   /*
+   if sGetArgs contains ("." & tFormat) then
+      rigLogMessage "debug", "Found ." & tFormat & " in URL"
+      return tFormat
+   end if
 end repeat
 */
 
-		
-		/*
-		if sGetArgs contains ("." & tFormat) then
-			rigLogMessage "debug", "Found ." & tFormat & " in URL"
-			return tFormat
-		end if
-	end repeat
+
+
+	// Get the format parameter named as 'format'
+/*	if (isset($this->_get_args['format']))
+	{
+		$format = strtolower($this->_get_args['format']);
+
+		if (isset($this->_supported_formats[$format]) === TRUE)
+		{
+			return $format;
+		}
+	}
+*/
+	if sGetArgsA["format"] is not empty then
+   	put sGetArgsA["format"] into tFormat
+   	if sRestSupportedFormatsA[tFormat] is not empty then
+      	rigLogMessage "debug", "sGetArgsA[format]->" & tFormat
+      	return tFormat
+   	end if
+	end if
+
+	/*
+	// Get the HTTP_ACCEPT server variable
+	$http_accept = $this->input->server('HTTP_ACCEPT');
+	*/
+	put rigVarServer("HTTP_ACCEPT") into tHttpAccept
+	/*
+	// Otherwise, check the HTTP_ACCEPT server variable
+	if ($this->config->item('rest_ignore_http_accept') === FALSE && $http_accept !== NULL)
 	*/
 
-	
-/*
+	if (rigFetchConfigItem("restIgnoreHttpAccept") is false) and (tHttpAccept is not empty) then
 
-        // Get the format parameter named as 'format'
-        if (isset($this->_get_args['format']))
-        {
-            $format = strtolower($this->_get_args['format']);
+		/*
+   	{
+   	// Check all formats against the HTTP_ACCEPT header
+   	foreach (array_keys($this->_supported_formats) as $format)
+   	{
+			*/
+		repeat for each key aFormat in sSupportedFormatsA
 
-            if (isset($this->_supported_formats[$format]) === TRUE)
-            {
-                return $format;
-            }
-        }
+			/*
+   		// Has this format been requested?
+   		if (strpos($http_accept, $format) !== FALSE)
+   		{
+			*/
+			if tHttpAccept = sSupportedFormatsA[aFormat] then
+				/*
+   			if ($format !== 'html' && $format !== 'xml')
+   			{
+				*/
+				if (aFormat is not "html") or (aFormat is not "xml") then
+					rigLogMessage "debugging", "Response Format->" & aFormat
+					return aFormat
+					/*
+   				// If not HTML or XML assume it's correct
+   				return $format;
+   			}
+				elseif ($format === 'html' && strpos($http_accept, 'xml') === FALSE)
+   			{
+				*/
+				else if (aFormat = "html") and not (tHttpAccept contains "xml") then
+					// HTML or XML have shown up as a match
+					// If it is truly HTML, it wont want any XML
+					return aFormat
+				/*
+   				return $format;
+   			}
+				else if ($format === 'xml' && strpos($http_accept, 'html') === FALSE)
 */
+				else if (aFormat = "xml") and not (tHttpAccept contains "html") then
+					// If it is truly XML, it wont want any HTML
+					return aFormat
 
+	/*			{
+					// If it is truly XML, it wont want any HTML
+					return $format;
+				}
+			}
 
-		 if sGetArgsA["format"] is not empty then
-			 put sGetArgsA["format"] into tFormat
-			 if sRestSupportedFormatsA[tFormat] is not empty then
-				 rigLogMessage "debug", "sGetArgsA[format]->" & tFormat
-				 return tFormat
-			 end if
-		 end if
+		}
+		*/
+				end if
+			end if
+		end repeat
+		/*
+		}
+		*/
+	end if
+	/*
 
-/*
-        // Get the HTTP_ACCEPT server variable
-        $http_accept = $this->input->server('HTTP_ACCEPT');
-*/
- 		put rigVarServer("HTTP_ACCEPT") into tHttpAccept
-/*
-        // Otherwise, check the HTTP_ACCEPT server variable
-        if ($this->config->item('rest_ignore_http_accept') === FALSE && $http_accept !== NULL)
+	// Check if the controller has a default format
+	if (empty($this->rest_format) === FALSE)
+	{
+	return $this->rest_format;
+	}
 
-		if (rigConfigItem("restIgnoreHttpAccept") is false) and (tHttpAccept is not empty) then
-     {
-            // Check all formats against the HTTP_ACCEPT header
-            foreach (array_keys($this->_supported_formats) as $format)
-            {
-                // Has this format been requested?
-                if (strpos($http_accept, $format) !== FALSE)
-                {
-                    if ($format !== 'html' && $format !== 'xml')
-                    {
-                        // If not HTML or XML assume it's correct
-                        return $format;
-                    }
-                    elseif ($format === 'html' && strpos($http_accept, 'xml') === FALSE)
-                    {
-                        // HTML or XML have shown up as a match
-                        // If it is truly HTML, it wont want any XML
-                        return $format;
-                    }
-                    else if ($format === 'xml' && strpos($http_accept, 'html') === FALSE)
-                    {
-                        // If it is truly XML, it wont want any HTML
-                        return $format;
-                    }
-                }
-            }
-        }
-
-	  end if
-
-
-        // Check if the controller has a default format
-        if (empty($this->rest_format) === FALSE)
-        {
-            return $this->rest_format;
-        }
-
-        // Obtain the default format from the configuration
-        return $this->_get_default_output_format();
-    }
-*/
+	// Obtain the default format from the configuration
+	return $this->_get_default_output_format();
+	}
+	*/
 	return _getDefaultOutputFormat()
 end _detectOutputFormat
 
@@ -1286,16 +1313,16 @@ function _detectMethod
    */
    //if (empty($method))
 
-	// Get the request method as a lowercase string
-	if tRequestMethod = "" then
+   // Get the request method as a lowercase string
+   if tRequestMethod = "" then
       //$method = $this->input->method();
-		put rigVarServer("REQUEST_METHOD") into tRequestMethod
+      put rigVarServer("REQUEST_METHOD") into tRequestMethod
       put toLower(tRequestMethod) into tRequestMethod
    end if
 
-    //return in_array($method, $this->allowed_http_methods) && method_exists($this, '_parse_' . $method) ? $method : 'get';
+   //return in_array($method, $this->allowed_http_methods) && method_exists($this, '_parse_' . $method) ? $method : 'get';
    if tRequestMethod is in sAllowedHttpMethods then
-   	return tRequestMethod
+      return tRequestMethod
    else
       return "get"
    end if
@@ -1303,468 +1330,468 @@ end _detectMethod
 
 
 
-    /**
-     * See if the user has provided an API key
-     *
-     * @access protected
-     * @return bool
-     */
-/*
-    protected function _detect_api_key()
-    {
-        // Get the api key name variable set in the rest config file
-        $api_key_variable = $this->config->item('rest_key_name');
-
-        // Work out the name of the SERVER entry based on config
-        $key_name = 'HTTP_' . strtoupper(str_replace('-', '_', $api_key_variable));
-
-        $this->rest->key = NULL;
-        $this->rest->level = NULL;
-        $this->rest->user_id = NULL;
-        $this->rest->ignore_limits = FALSE;
-
-        // Find the key from server or arguments
-        if (($key = isset($this->_args[$api_key_variable]) ? $this->_args[$api_key_variable] : $this->input->server($key_name)))
-        {
-            if ( ! ($row = $this->rest->db->where($this->config->item('rest_key_column'), $key)->get($this->config->item('rest_keys_table'))->row()))
-            {
-                return FALSE;
-            }
-
-            $this->rest->key = $row->{$this->config->item('rest_key_column')};
-
-            isset($row->user_id) && $this->rest->user_id = $row->user_id;
-            isset($row->level) && $this->rest->level = $row->level;
-            isset($row->ignore_limits) && $this->rest->ignore_limits = $row->ignore_limits;
-
-            $this->_apiuser = $row;
-
-            //
-            // If "is private key" is enabled, compare the ip address with the list
-            // of valid ip addresses stored in the database
-            //
-            if (empty($row->is_private_key) === FALSE)
-            {
-                // Check for a list of valid ip addresses
-                if (isset($row->ip_addresses))
-                {
-                    // multiple ip addresses must be separated using a comma, explode and loop
-                    $list_ip_addresses = explode(',', $row->ip_addresses);
-                    $found_address = FALSE;
-
-                    foreach ($list_ip_addresses as $ip_address)
-                    {
-                        if ($this->input->ip_address() === trim($ip_address))
-                        {
-                            // there is a match, set the the value to TRUE and break out of the loop
-                            $found_address = TRUE;
-                            break;
-                        }
-                    }
-
-                    return $found_address;
-                }
-                else
-                {
-                    // There should be at least one IP address for this private key
-                    return FALSE;
-                }
-            }
-
-            return TRUE;
-        }
-
-        // No key has been sent
-        return FALSE;
-    }
+/**
+* See if the user has provided an API key
+*
+* @access protected
+* @return bool
 */
-
-    /**
-     * Preferred return language
-     *
-     * @access protected
-     * @return string|NULL The language code
-     */
 /*
-    protected function _detect_lang()
-    {
-        $lang = $this->input->server('HTTP_ACCEPT_LANGUAGE');
-        if ($lang === NULL)
-        {
-            return NULL;
-        }
+protected function _detect_api_key()
+{
+// Get the api key name variable set in the rest config file
+$api_key_variable = $this->config->item('rest_key_name');
 
-        // It appears more than one language has been sent using a comma delimiter
-        if (strpos($lang, ',') !== FALSE)
-        {
-            $langs = explode(',', $lang);
+// Work out the name of the SERVER entry based on config
+$key_name = 'HTTP_' . strtoupper(str_replace('-', '_', $api_key_variable));
 
-            $return_langs = [];
-            foreach ($langs as $lang)
-            {
-                // Remove weight and trim leading and trailing whitespace
-                list($lang) = explode(';', $lang);
-                $return_langs[] = trim($lang);
-            }
+$this->rest->key = NULL;
+$this->rest->level = NULL;
+$this->rest->user_id = NULL;
+$this->rest->ignore_limits = FALSE;
 
-            return $return_langs;
-        }
+// Find the key from server or arguments
+if (($key = isset($this->_args[$api_key_variable]) ? $this->_args[$api_key_variable] : $this->input->server($key_name)))
+{
+if ( ! ($row = $this->rest->db->where($this->config->item('rest_key_column'), $key)->get($this->config->item('rest_keys_table'))->row()))
+{
+return FALSE;
+}
 
-        // Otherwise simply return as a string
-        return $lang;
-    }
-*/
+$this->rest->key = $row->{$this->config->item('rest_key_column')};
 
-    /**
-     * Add the request to the log table
-     *
-     * @access protected
-     * @param bool $authorized TRUE the user is authorized; otherwise, FALSE
-     * @return bool TRUE the data was inserted; otherwise, FALSE
-     */
-/*
-    protected function _log_request($authorized = FALSE)
-    {
-        // Insert the request into the log table
-        $is_inserted = $this->rest->db
-            ->insert(
-                $this->config->item('rest_logs_table'), [
-                'uri' => $this->uri->uri_string(),
-                'method' => $this->request->method,
-                'params' => $this->_args ? ($this->config->item('rest_logs_json_params') === TRUE ? json_encode($this->_args) : serialize($this->_args)) : NULL,
-                'api_key' => isset($this->rest->key) ? $this->rest->key : '',
-                'ip_address' => $this->input->ip_address(),
-                'time' => time(),
-                'authorized' => $authorized
-            ]);
+isset($row->user_id) && $this->rest->user_id = $row->user_id;
+isset($row->level) && $this->rest->level = $row->level;
+isset($row->ignore_limits) && $this->rest->ignore_limits = $row->ignore_limits;
 
-        // Get the last insert id to update at a later stage of the request
-        $this->_insert_id = $this->rest->db->insert_id();
+$this->_apiuser = $row;
 
-        return $is_inserted;
-    }
-*/
+//
+// If "is private key" is enabled, compare the ip address with the list
+// of valid ip addresses stored in the database
+//
+if (empty($row->is_private_key) === FALSE)
+{
+// Check for a list of valid ip addresses
+if (isset($row->ip_addresses))
+{
+// multiple ip addresses must be separated using a comma, explode and loop
+$list_ip_addresses = explode(',', $row->ip_addresses);
+$found_address = FALSE;
 
-    /**
-     * Check if the requests to a controller method exceed a limit
-     *
-     * @access protected
-     * @param string $controller_method The method being called
-     * @return bool TRUE the call limit is below the threshold; otherwise, FALSE
-     */
-/*
-    protected function _check_limit($controller_method)
-    {
-        // They are special, or it might not even have a limit
-        if (empty($this->rest->ignore_limits) === FALSE)
-        {
-            // Everything is fine
-            return TRUE;
-        }
+foreach ($list_ip_addresses as $ip_address)
+{
+if ($this->input->ip_address() === trim($ip_address))
+{
+// there is a match, set the the value to TRUE and break out of the loop
+$found_address = TRUE;
+break;
+}
+}
 
-        $api_key = isset($this->rest->key) ? $this->rest->key : '';
+return $found_address;
+}
+else
+   {
+   // There should be at least one IP address for this private key
+   return FALSE;
+   }
+   }
 
-        switch ($this->config->item('rest_limits_method'))
-        {
-          case 'IP_ADDRESS':
-            $limited_uri = 'ip-address:' .$this->input->ip_address();
-            $api_key = $this->input->ip_address();
-            break;
+   return TRUE;
+   }
 
-          case 'API_KEY':
-            $limited_uri = 'api-key:' . $api_key;
-            break;
+   // No key has been sent
+   return FALSE;
+   }
+   */
 
-          case 'METHOD_NAME':
-            $limited_uri = 'method-name:' . $controller_method;
-            break;
+   /**
+   * Preferred return language
+   *
+   * @access protected
+   * @return string|NULL The language code
+   */
+   /*
+   protected function _detect_lang()
+   {
+   $lang = $this->input->server('HTTP_ACCEPT_LANGUAGE');
+   if ($lang === NULL)
+   {
+   return NULL;
+   }
 
-          case 'ROUTED_URL':
-          default:
-            $limited_uri = $this->uri->ruri_string();
-            if (strpos(strrev($limited_uri), strrev($this->response->format)) === 0)
-            {
-                $limited_uri = substr($limited_uri,0, -strlen($this->response->format) - 1);
-            }
-            $limited_uri = 'uri:'.$limited_uri.':'.$this->request->method; // It's good to differentiate GET from PUT
-            break;
-        }
+   // It appears more than one language has been sent using a comma delimiter
+   if (strpos($lang, ',') !== FALSE)
+   {
+   $langs = explode(',', $lang);
 
-        if (isset($this->methods[$controller_method]['limit']) === FALSE )
-        {
-            // Everything is fine
-            return TRUE;
-        }
+   $return_langs = [];
+   foreach ($langs as $lang)
+   {
+   // Remove weight and trim leading and trailing whitespace
+   list($lang) = explode(';', $lang);
+   $return_langs[] = trim($lang);
+   }
 
-        // How many times can you get to this method in a defined time_limit (default: 1 hour)?
-        $limit = $this->methods[$controller_method]['limit'];
+   return $return_langs;
+   }
 
-        $time_limit = (isset($this->methods[$controller_method]['time']) ? $this->methods[$controller_method]['time'] : 3600); // 3600 = 60 * 60
+   // Otherwise simply return as a string
+   return $lang;
+   }
+   */
 
-        // Get data about a keys' usage and limit to one row
-        $result = $this->rest->db
-            ->where('uri', $limited_uri)
-            ->where('api_key', $api_key)
-            ->get($this->config->item('rest_limits_table'))
-            ->row();
+   /**
+   * Add the request to the log table
+   *
+   * @access protected
+   * @param bool $authorized TRUE the user is authorized; otherwise, FALSE
+   * @return bool TRUE the data was inserted; otherwise, FALSE
+   */
+   /*
+   protected function _log_request($authorized = FALSE)
+   {
+   // Insert the request into the log table
+   $is_inserted = $this->rest->db
+   ->insert(
+   $this->config->item('rest_logs_table'), [
+   'uri' => $this->uri->uri_string(),
+   'method' => $this->request->method,
+   'params' => $this->_args ? ($this->config->item('rest_logs_json_params') === TRUE ? json_encode($this->_args) : serialize($this->_args)) : NULL,
+   'api_key' => isset($this->rest->key) ? $this->rest->key : '',
+   'ip_address' => $this->input->ip_address(),
+   'time' => time(),
+   'authorized' => $authorized
+   ]);
 
-        // No calls have been made for this key
-        if ($result === NULL)
-        {
-            // Create a new row for the following key
-            $this->rest->db->insert($this->config->item('rest_limits_table'), [
-                'uri' => $limited_uri,
-                'api_key' =>$api_key,
-                'count' => 1,
-                'hour_started' => time()
-            ]);
-        }
+   // Get the last insert id to update at a later stage of the request
+   $this->_insert_id = $this->rest->db->insert_id();
 
-        // Been a time limit (or by default an hour) since they called
-        elseif ($result->hour_started < (time() - $time_limit))
-        {
-            // Reset the started period and count
-            $this->rest->db
-                ->where('uri', $limited_uri)
-                ->where('api_key', $api_key)
-                ->set('hour_started', time())
-                ->set('count', 1)
-                ->update($this->config->item('rest_limits_table'));
-        }
+   return $is_inserted;
+   }
+   */
 
-        // They have called within the hour, so lets update
-        else
-        {
-            // The limit has been exceeded
-            if ($result->count >= $limit)
-            {
-                return FALSE;
-            }
+   /**
+   * Check if the requests to a controller method exceed a limit
+   *
+   * @access protected
+   * @param string $controller_method The method being called
+   * @return bool TRUE the call limit is below the threshold; otherwise, FALSE
+   */
+   /*
+   protected function _check_limit($controller_method)
+   {
+   // They are special, or it might not even have a limit
+   if (empty($this->rest->ignore_limits) === FALSE)
+   {
+   // Everything is fine
+   return TRUE;
+   }
 
-            // Increase the count by one
-            $this->rest->db
-                ->where('uri', $limited_uri)
-                ->where('api_key', $api_key)
-                ->set('count', 'count + 1', FALSE)
-                ->update($this->config->item('rest_limits_table'));
-        }
+   $api_key = isset($this->rest->key) ? $this->rest->key : '';
 
-        return TRUE;
-    }
-*/
+   switch ($this->config->item('rest_limits_method'))
+      {
+   case 'IP_ADDRESS':
+      $limited_uri = 'ip-address:' .$this->input->ip_address();
+      $api_key = $this->input->ip_address();
+      break;
 
-    /**
-     * Check if there is a specific auth type set for the current class/method/HTTP-method being called
-     *
-     * @access protected
-     * @return bool
-     */
-/*
-    protected function _auth_override_check()
-    {
-        // Assign the class/method auth type override array from the config
-        $auth_override_class_method = $this->config->item('auth_override_class_method');
+   case 'API_KEY':
+      $limited_uri = 'api-key:' . $api_key;
+      break;
 
-        // Check to see if the override array is even populated
-        if ( ! empty($auth_override_class_method))
-        {
-            // Check for wildcard flag for rules for classes
-            if ( ! empty($auth_override_class_method[$this->router->class]['*'])) // Check for class overrides
-            {
-                // No auth override found, prepare nothing but send back a TRUE override flag
-                if ($auth_override_class_method[$this->router->class]['*'] === 'none')
-                {
-                    return TRUE;
-                }
+   case 'METHOD_NAME':
+      $limited_uri = 'method-name:' . $controller_method;
+      break;
 
-                // Basic auth override found, prepare basic
-                if ($auth_override_class_method[$this->router->class]['*'] === 'basic')
-                {
-                    $this->_prepare_basic_auth();
+   case 'ROUTED_URL':
+   default:
+      $limited_uri = $this->uri->ruri_string();
+      if (strpos(strrev($limited_uri), strrev($this->response->format)) === 0)
+      {
+      $limited_uri = substr($limited_uri,0, -strlen($this->response->format) - 1);
+      }
+      $limited_uri = 'uri:'.$limited_uri.':'.$this->request->method; // It's good to differentiate GET from PUT
+      break;
+      }
 
-                    return TRUE;
-                }
+      if (isset($this->methods[$controller_method]['limit']) === FALSE )
+      {
+      // Everything is fine
+      return TRUE;
+      }
 
-                // Digest auth override found, prepare digest
-                if ($auth_override_class_method[$this->router->class]['*'] === 'digest')
-                {
-                    $this->_prepare_digest_auth();
+      // How many times can you get to this method in a defined time_limit (default: 1 hour)?
+      $limit = $this->methods[$controller_method]['limit'];
 
-                    return TRUE;
-                }
+      $time_limit = (isset($this->methods[$controller_method]['time']) ? $this->methods[$controller_method]['time'] : 3600); // 3600 = 60 * 60
 
-                // Session auth override found, check session
-                if ($auth_override_class_method[$this->router->class]['*'] === 'session')
-                {
-                    $this->_check_php_session();
+      // Get data about a keys' usage and limit to one row
+      $result = $this->rest->db
+      ->where('uri', $limited_uri)
+      ->where('api_key', $api_key)
+      ->get($this->config->item('rest_limits_table'))
+      ->row();
 
-                    return TRUE;
-                }
+      // No calls have been made for this key
+      if ($result === NULL)
+      {
+      // Create a new row for the following key
+      $this->rest->db->insert($this->config->item('rest_limits_table'), [
+      'uri' => $limited_uri,
+      'api_key' =>$api_key,
+      'count' => 1,
+      'hour_started' => time()
+      ]);
+      }
 
-                // Whitelist auth override found, check client's ip against config whitelist
-                if ($auth_override_class_method[$this->router->class]['*'] === 'whitelist')
-                {
-                    $this->_check_whitelist_auth();
+      // Been a time limit (or by default an hour) since they called
+   elseif ($result->hour_started < (time() - $time_limit))
+      {
+      // Reset the started period and count
+      $this->rest->db
+      ->where('uri', $limited_uri)
+      ->where('api_key', $api_key)
+      ->set('hour_started', time())
+      ->set('count', 1)
+      ->update($this->config->item('rest_limits_table'));
+      }
 
-                    return TRUE;
-                }
-            }
+      // They have called within the hour, so lets update
+   else
+      {
+      // The limit has been exceeded
+      if ($result->count >= $limit)
+      {
+      return FALSE;
+      }
 
-            // Check to see if there's an override value set for the current class/method being called
-            if ( ! empty($auth_override_class_method[$this->router->class][$this->router->method]))
-            {
-                // None auth override found, prepare nothing but send back a TRUE override flag
-                if ($auth_override_class_method[$this->router->class][$this->router->method] === 'none')
-                {
-                    return TRUE;
-                }
+      // Increase the count by one
+      $this->rest->db
+      ->where('uri', $limited_uri)
+      ->where('api_key', $api_key)
+      ->set('count', 'count + 1', FALSE)
+      ->update($this->config->item('rest_limits_table'));
+      }
 
-                // Basic auth override found, prepare basic
-                if ($auth_override_class_method[$this->router->class][$this->router->method] === 'basic')
-                {
-                    $this->_prepare_basic_auth();
+      return TRUE;
+      }
+      */
 
-                    return TRUE;
-                }
+      /**
+      * Check if there is a specific auth type set for the current class/method/HTTP-method being called
+      *
+      * @access protected
+      * @return bool
+      */
+      /*
+      protected function _auth_override_check()
+      {
+      // Assign the class/method auth type override array from the config
+      $auth_override_class_method = $this->config->item('auth_override_class_method');
 
-                // Digest auth override found, prepare digest
-                if ($auth_override_class_method[$this->router->class][$this->router->method] === 'digest')
-                {
-                    $this->_prepare_digest_auth();
+      // Check to see if the override array is even populated
+      if ( ! empty($auth_override_class_method))
+      {
+      // Check for wildcard flag for rules for classes
+      if ( ! empty($auth_override_class_method[$this->router->class]['*'])) // Check for class overrides
+      {
+      // No auth override found, prepare nothing but send back a TRUE override flag
+      if ($auth_override_class_method[$this->router->class]['*'] === 'none')
+      {
+      return TRUE;
+      }
 
-                    return TRUE;
-                }
+      // Basic auth override found, prepare basic
+      if ($auth_override_class_method[$this->router->class]['*'] === 'basic')
+      {
+      $this->_prepare_basic_auth();
 
-                // Session auth override found, check session
-                if ($auth_override_class_method[$this->router->class][$this->router->method] === 'session')
-                {
-                    $this->_check_php_session();
+      return TRUE;
+      }
 
-                    return TRUE;
-                }
+      // Digest auth override found, prepare digest
+      if ($auth_override_class_method[$this->router->class]['*'] === 'digest')
+      {
+      $this->_prepare_digest_auth();
 
-                // Whitelist auth override found, check client's ip against config whitelist
-                if ($auth_override_class_method[$this->router->class][$this->router->method] === 'whitelist')
-                {
-                    $this->_check_whitelist_auth();
+      return TRUE;
+      }
 
-                    return TRUE;
-                }
-            }
-        }
+      // Session auth override found, check session
+      if ($auth_override_class_method[$this->router->class]['*'] === 'session')
+      {
+      $this->_check_php_session();
 
-        // Assign the class/method/HTTP-method auth type override array from the config
-        $auth_override_class_method_http = $this->config->item('auth_override_class_method_http');
+      return TRUE;
+      }
 
-        // Check to see if the override array is even populated
-        if ( ! empty($auth_override_class_method_http))
-        {
-            // check for wildcard flag for rules for classes
-            if ( ! empty($auth_override_class_method_http[$this->router->class]['*'][$this->request->method]))
-            {
-                // None auth override found, prepare nothing but send back a TRUE override flag
-                if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'none')
-                {
-                    return TRUE;
-                }
+      // Whitelist auth override found, check client's ip against config whitelist
+      if ($auth_override_class_method[$this->router->class]['*'] === 'whitelist')
+      {
+      $this->_check_whitelist_auth();
 
-                // Basic auth override found, prepare basic
-                if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'basic')
-                {
-                    $this->_prepare_basic_auth();
+      return TRUE;
+      }
+      }
 
-                    return TRUE;
-                }
+      // Check to see if there's an override value set for the current class/method being called
+      if ( ! empty($auth_override_class_method[$this->router->class][$this->router->method]))
+      {
+      // None auth override found, prepare nothing but send back a TRUE override flag
+      if ($auth_override_class_method[$this->router->class][$this->router->method] === 'none')
+      {
+      return TRUE;
+      }
 
-                // Digest auth override found, prepare digest
-                if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'digest')
-                {
-                    $this->_prepare_digest_auth();
+      // Basic auth override found, prepare basic
+      if ($auth_override_class_method[$this->router->class][$this->router->method] === 'basic')
+      {
+      $this->_prepare_basic_auth();
 
-                    return TRUE;
-                }
+      return TRUE;
+      }
 
-                // Session auth override found, check session
-                if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'session')
-                {
-                    $this->_check_php_session();
+      // Digest auth override found, prepare digest
+      if ($auth_override_class_method[$this->router->class][$this->router->method] === 'digest')
+      {
+      $this->_prepare_digest_auth();
 
-                    return TRUE;
-                }
+      return TRUE;
+      }
 
-                // Whitelist auth override found, check client's ip against config whitelist
-                if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'whitelist')
-                {
-                    $this->_check_whitelist_auth();
+      // Session auth override found, check session
+      if ($auth_override_class_method[$this->router->class][$this->router->method] === 'session')
+      {
+      $this->_check_php_session();
 
-                    return TRUE;
-                }
-            }
+      return TRUE;
+      }
 
-            // Check to see if there's an override value set for the current class/method/HTTP-method being called
-            if ( ! empty($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method]))
-            {
-                // None auth override found, prepare nothing but send back a TRUE override flag
-                if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'none')
-                {
-                    return TRUE;
-                }
+      // Whitelist auth override found, check client's ip against config whitelist
+      if ($auth_override_class_method[$this->router->class][$this->router->method] === 'whitelist')
+      {
+      $this->_check_whitelist_auth();
 
-                // Basic auth override found, prepare basic
-                if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'basic')
-                {
-                    $this->_prepare_basic_auth();
+      return TRUE;
+      }
+      }
+      }
 
-                    return TRUE;
-                }
+      // Assign the class/method/HTTP-method auth type override array from the config
+      $auth_override_class_method_http = $this->config->item('auth_override_class_method_http');
 
-                // Digest auth override found, prepare digest
-                if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'digest')
-                {
-                    $this->_prepare_digest_auth();
+      // Check to see if the override array is even populated
+      if ( ! empty($auth_override_class_method_http))
+      {
+      // check for wildcard flag for rules for classes
+      if ( ! empty($auth_override_class_method_http[$this->router->class]['*'][$this->request->method]))
+      {
+      // None auth override found, prepare nothing but send back a TRUE override flag
+      if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'none')
+      {
+      return TRUE;
+      }
 
-                    return TRUE;
-                }
+      // Basic auth override found, prepare basic
+      if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'basic')
+      {
+      $this->_prepare_basic_auth();
 
-                // Session auth override found, check session
-                if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'session')
-                {
-                    $this->_check_php_session();
+      return TRUE;
+      }
 
-                    return TRUE;
-                }
+      // Digest auth override found, prepare digest
+      if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'digest')
+      {
+      $this->_prepare_digest_auth();
 
-                // Whitelist auth override found, check client's ip against config whitelist
-                if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'whitelist')
-                {
-                    $this->_check_whitelist_auth();
+      return TRUE;
+      }
 
-                    return TRUE;
-                }
-            }
-        }
-        return FALSE;
-    }
-*/
+      // Session auth override found, check session
+      if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'session')
+      {
+      $this->_check_php_session();
 
-    /**
-     * Parse the GET request arguments
-     *
-     * @access protected
-     * @return void
-     */
-/*
-    protected function _parse_get()
-    {
-        // Merge both the URI segments and query parameters
-        $this->_get_args = array_merge($this->_get_args, $this->_query_args);
-    }
-*/
+      return TRUE;
+      }
 
-	command _parseGet
-		rigLogMessage "debug", "In _parseGet"
-		put sQueryArgs into sGetArgs["queryArgs"]
-	end _parseGet
+      // Whitelist auth override found, check client's ip against config whitelist
+      if ($auth_override_class_method_http[$this->router->class]['*'][$this->request->method] === 'whitelist')
+      {
+      $this->_check_whitelist_auth();
+
+      return TRUE;
+      }
+      }
+
+      // Check to see if there's an override value set for the current class/method/HTTP-method being called
+      if ( ! empty($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method]))
+      {
+      // None auth override found, prepare nothing but send back a TRUE override flag
+      if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'none')
+      {
+      return TRUE;
+      }
+
+      // Basic auth override found, prepare basic
+      if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'basic')
+      {
+      $this->_prepare_basic_auth();
+
+      return TRUE;
+      }
+
+      // Digest auth override found, prepare digest
+      if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'digest')
+      {
+      $this->_prepare_digest_auth();
+
+      return TRUE;
+      }
+
+      // Session auth override found, check session
+      if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'session')
+      {
+      $this->_check_php_session();
+
+      return TRUE;
+      }
+
+      // Whitelist auth override found, check client's ip against config whitelist
+      if ($auth_override_class_method_http[$this->router->class][$this->router->method][$this->request->method] === 'whitelist')
+      {
+      $this->_check_whitelist_auth();
+
+      return TRUE;
+      }
+      }
+      }
+      return FALSE;
+      }
+      */
+
+      /**
+      * Parse the GET request arguments
+      *
+      * @access protected
+      * @return void
+      */
+      /*
+      protected function _parse_get()
+      {
+      // Merge both the URI segments and query parameters
+      $this->_get_args = array_merge($this->_get_args, $this->_query_args);
+      }
+      */
+
+command _parseGet
+   rigLogMessage "debug", "In _parseGet"
+   put sQueryArgs into sGetArgs["queryArgs"]
+end _parseGet
 
     /**
      * Parse the POST request arguments
@@ -1783,18 +1810,18 @@ end _detectMethod
         }
     }
 */
-	command _parsePost
-		rigLogMessage "debug", "In _parsePost"
-		rigLogMessage "debug", sRequestFormat
-		
-		switch sRequestFormat
-			case "json"
-				put jsonImport($_POST_RAW) into sRequestBody
-				riglogMessage "debug", sRequestBody
-				break
-		end switch
-		//end if
-	end _parsePost
+command _parsePost
+   rigLogMessage "debug", "In _parsePost"
+   rigLogMessage "debug", sRequestFormat
+
+   switch sRequestFormat
+      case "json"
+         put jsonImport($_POST_RAW) into sRequestBody
+         riglogMessage "debug", sRequestBody
+         break
+   end switch
+   //end if
+end _parsePost
 
     /**
      * Parse the PUT request arguments
@@ -1906,10 +1933,10 @@ end _detectMethod
     }
 */
 command _parseQuery
-	rigLogMessage "debug", "in _parseQuery"
-	put $_GET into sQueryArgs
-	##put "sQueryArgs" && jsonExport(sQueryArgs) into tTemp
-	##rigLogMessage "debug", tTemp
+   rigLogMessage "debug", "in _parseQuery"
+   put $_GET into sQueryArgs
+   ##put "sQueryArgs" && jsonExport(sQueryArgs) into tTemp
+   ##rigLogMessage "debug", tTemp
 end _parseQuery
 
     // INPUT FUNCTION --------------------------------------------------------------
@@ -2666,19 +2693,19 @@ end _parseQuery
 -- in parameter
 ------------------------------------------------------------------------
 function livecodeVersion pVersion
-	put the itemDelimiter into oldDelmin
-	set the itemDelimiter to "."
-	put the version into tLivecodeVersion
+   put the itemDelimiter into oldDelmin
+   set the itemDelimiter to "."
+   put the version into tLivecodeVersion
 
-	if (item 1 of pVersion >= item 1 of tLivecodeVersion) and (item 2 of pVersion >= item 2 of tLivecodeVersion) and (item 3 of pVersion >= item 3 of tLivecodeVersion) then
-		put true into tResult
-	else
-		put false into tResult
-	end if
+   if (item 1 of pVersion >= item 1 of tLivecodeVersion) and (item 2 of pVersion >= item 2 of tLivecodeVersion) and (item 3 of pVersion >= item 3 of tLivecodeVersion) then
+      put true into tResult
+   else
+      put false into tResult
+   end if
 
-	set the itemDelimiter to oldDelim
+   set the itemDelimiter to oldDelim
 
-	return tResult
+   return tResult
 end livecodeVersion
 
 
@@ -2687,9 +2714,9 @@ end livecodeVersion
 -- the value passed in pVersion otherwise false.
 ------------------------------------------------------------------------
 function revigniterVersion pVersion
-	//RIVERSION
+   //RIVERSION
 
-	return true
+   return true
 end revigniterVersion
 
 
@@ -2698,29 +2725,29 @@ Check if com.livecode.library.json is installed. Returns boolean true
 if installed othewise false
 */
 function libraryJson
-	/*
-	# CHECK IF FILE EXISTS
-	set the itemDel to "/"
-	put gAPPPATH & tModulePath & "config/" & item -1 of tConfigFileName & gEXT into tFilepath
+   /*
+   # CHECK IF FILE EXISTS
+   set the itemDel to "/"
+   put gAPPPATH & tModulePath & "config/" & item -1 of tConfigFileName & gEXT into tFilepath
 
-	if there is a file tFilepath then
-	else
-		if pFailGracefully is TRUE then
-			return FALSE
-		else
-			rigShowError "The configuration file" && item -1 of tConfigFileName & gEXT && "does not exist."
-		end if
-	end if
-	*/
+   if there is a file tFilepath then
+   else
+      if pFailGracefully is TRUE then
+         return FALSE
+      else
+         rigShowError "The configuration file" && item -1 of tConfigFileName & gEXT && "does not exist."
+      end if
+   end if
+   */
 
 
 
-	return true
+   return true
 end libraryJson
 
 // returns Request Arguments Array
 function requestArgs
-	return sRequestArgsA
+   return sRequestArgsA
 end requestArgs
 
 
@@ -2736,11 +2763,11 @@ end requestArgs
 -- Initialize the REST server and process the request
 ------------------------------------------------------------------------
 
- 	// AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
-  	rigLoadExtension "com.livecode.library.json"
+// AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
+rigLoadExtension "com.livecode.library.json"
 
-	// Verify all the correct software versions are being used
- 	preflightChecks
+// Verify all the correct software versions are being used
+preflightChecks
 
-	// Call the REST Server _remap function
-	_remap
+// Call the REST Server _remap function
+_remap
