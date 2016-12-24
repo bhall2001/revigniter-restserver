@@ -53,25 +53,31 @@ constant XML_FORMAT = "xml"
 /**
 * Default format
 */
-constant DEFAULT_FORMAT = "json" 
+constant DEFAULT_FORMAT = "json"
 
+function toArray @pDataA, pFromType
 
-function toArray @pData, pFromType
+   // make sure the data is an array
+   if pDataA is not an array then
+      return "Error: toArray Data is not an array" for error
+   end if
+
    switch pFromType
       case "json"
-         return _from_json(pData)
+         return _fromJson(pDataA)
          break
       case "lson"
-         return _from_lson(pData)
+         return _fromLson(pDataA)
          break
          //   case "csv"
-         //      return _from_csv(pData)
+         //      return _from_csv(pDataA)
          //      break
          //   case "xml"
-         //      return _from_xml(pData)
+         //      return _from_xml(pDataA)
          //      break
       default
          // we got an error if we get here
+         return "Error: toArray From type not valid" for error
    end switch
 end toArray
 
@@ -401,12 +407,12 @@ end to_lson
 */
 command toLson pDataA
    rigLogMessage "debug", "in toLson..."
-   
+
    if pDataA is an array then
       riglogMessage "debug", "Converting pData to LSON"
       return arrayEncode(pDataA)
    end if
-   
+
    return ""
 end toLson
 
@@ -481,7 +487,7 @@ end _from_csv
  * @param $data Encoded json string
  * @return mixed Decoded json string with leading and trailing whitespace removed
  */
-function _fromJSON @pData
+function _fromJson @pData
   return jsonImport(pData)
 end _fromJSON
 
@@ -489,7 +495,7 @@ end _fromJSON
  * @param string Data to unserialized
  * @return array Unserialized data in array form
  */
-function _fromLSON @pData
+function _fromLson @pData
    return arrayDecode(pData)
 end _fromLSON
 
