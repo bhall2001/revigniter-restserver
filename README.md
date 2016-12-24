@@ -90,16 +90,16 @@ http://example.com/index.lc/v1/books/id/1/format/lson
 (default format if none specified is JSON)
 
 
-The recommend approach is using the HTTP Accept header:
+You can also set the format using the HTTP Headers. This is the recommend approach:
 
 ```
 $ curl -H "Accept: application/json" http://example.com
 ```
-Any responses you make from the function (see responses for more on this) are returned in the designated format.
+Any responses you make from the request are returned in the designated format.
 
 ## Responses
 
-restResponse returns data in the User's requested format. The response data must be in the form of a Livecode Array. Returning the requested format is easy:
+restResponse returns data in the User's requested format. The restResponse parameter data must be in the form of a Livecode Array. Returning the requested data is easy:
 
 ```
 restResponse tDataA
