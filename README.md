@@ -74,8 +74,9 @@ function books_post
 end index_post
 ```
 
-## Content Types
 RestController also supports PUT and DELETE methods, allowing you to support a truly RESTful interface.
+
+## Content Types
 
 RestController supports many request/response formats, including XML, JSON, LSON, CSV and HTML. By default, the library checks the URL and looks for a format either as an extension or as a separate segment.
 
