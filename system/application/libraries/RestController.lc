@@ -319,7 +319,7 @@ local sEndRTime = ""
 ------------------------------------------------------------------------
 --
 ------------------------------------------------------------------------
-local sRestSupportedFormatsA
+local sRestSupportedFormats
 
 ------------------------------------------------------------------------
 -- List all supported methods
@@ -331,7 +331,7 @@ put "application/json" into sSupportedFormatsA["json"]
 --put "application/json" into sSupportedFormatsA["array"]
 --put "application/csv" into sSupportedFormatsA["csv"]
 --put "text/html" into sSupportedFormatsA["html"]
---put "text/plain" into sSupportedFormatsA["lson"]
+put "text/plain" into sSupportedFormatsA["lson"]
 --put "application/xml" into sSupportedFormatsA["xml"]
 
 ------------------------------------------------------------------------
@@ -485,7 +485,9 @@ command preflightChecks
 
    // Determine supported output formats from configuration
    //$supported_formats = $this->config->item('rest_supported_formats');
-   put rigConfigItem("restSupportedFormats") into sRestSupportedFormatsA
+   put rigFetchConfigItem("restSupportedFormats") into sRestSupportedFormats
+   replace " " with "" in sRestSupportedFormats
+   riglogMessage "debug", "sRestSupportedFormats->" & sRestSupportedFormats
 
    /* DON'T NEED THIS
    // Validate the configuration setting output formats
@@ -503,6 +505,10 @@ command preflightChecks
    /*
    // Add silently the default output format if it is missing
    $default_format = $this->_get_default_output_format();
+   */
+   put _getDefaultOutputFormat() into sDefaultFormat
+
+/*
    if (!in_array($default_format, $supported_formats))
    {
    $supported_formats[] = $default_format;
@@ -510,13 +516,11 @@ command preflightChecks
    // Now update $this->_supported_formats
    $this->_supported_formats = array_intersect_key($this->_supported_formats, array_flip($supported_formats));
    */
-   put _getDefaultOutputFormat() into sDefaultFormat
-   put "sDefaultFormat:" && sDefaultFormat into tTemp
-   rigLogMessage "debug", tTemp
 
    // if the default format is not a supported format, add it to the list
-   if sDefaultFormat is not among the keys of sRestSupportedFormatsA then
-      put true into sRestSupportedFormatsA[sDefaultFormat]
+   set the itemDelimiter to ","
+   if sDefaultFormat is not among the items of sRestSupportedFormats then
+      put "," && sDefaultFormat after sRestSupportedFormats
    end if
 
    // Get the language
@@ -525,7 +529,7 @@ command preflightChecks
    //{
    //    $language = 'english';
    //}
-   put rigConfigItem("restLanguage") into tLanguage
+   put rigFetchConfigItem("restLanguage") into tLanguage
    if tLanguage = "" then put "english" into tLanguage
 
    // Load the language file
@@ -587,12 +591,13 @@ command preflightChecks
    // Try to find a format for the request (means we have a request body)
    //$this->request->format = $this->_detect_input_format();
    put _detectInputFormat() into sRequestFormat
-
+   rigLogMessage "debug", "sRequestFormat->" & sRequestFormat
    /*
    // Which format should the data be returned in?
    $this->response->format = $this->_detect_output_format();
    */
    put _detectOutputFormat() into sResponseFormat
+   rigLogMessage "debug", "sResponseFormat->" & sResponseFormat
 
    // Not all methods have a body attached with them
    //$this->request->body = NULL;
@@ -1197,10 +1202,12 @@ end repeat
 	}
 */
 	if sGetArgsA["format"] is not empty then
-   	put sGetArgsA["format"] into tFormat
-   	if sRestSupportedFormatsA[tFormat] is not empty then
-      	rigLogMessage "debug", "sGetArgsA[format]->" & tFormat
-      	return tFormat
+      put sGetArgsA["format"] into tFormat
+      rigLogMessage "debug", "sGetArgsA[format]->" & tFormat
+      set the itemDelimiter to ","
+   	if tFormat is among the items of sRestSupportedFormats then
+         rigLogMessage "debug", "Format is->" & tFormat
+         return tFormat
    	end if
 	end if
 

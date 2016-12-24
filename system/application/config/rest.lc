@@ -45,8 +45,7 @@ put "json" into gConfig["restDefaultFormat"]
 --
 
 //put "json, lson, csv, html, xml" into gConfig["restSupportedFormats"]
-put true into gConfig["restSupportedFormats"]["json"]
-put true into gConfig["restSupportedFormats"]["lson"]
+put "json, lson" into gConfig["restSupportedFormats"]
 
 
 ------------------------------------------------------------------------
