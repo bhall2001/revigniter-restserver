@@ -58,7 +58,7 @@ The RestController Library requires the Livecode 8 JSON Livecode Builder Library
 
 ## Handling Requests
 
-Making an HTTP GET call to index.lc/books, for instance, calls the books_get function in the books.lc controller.
+Making an HTTP GET call to index.lc/books, for instance, calls the `books_get` function in the books.lc controller.
 
 This allows you to implement a RESTful interface easily:
 
@@ -99,12 +99,12 @@ Any responses you make from the request are returned in the designated format.
 
 ## Responses
 
-restResponse returns data in the User's requested format. The restResponse parameter data must be in the form of a Livecode Array. Returning the requested data is easy:
+`restResponse` returns data in the User's requested format. The `restResponse` parameter data must be in the form of a Livecode Array. Returning the requested data is easy:
 
 ```
 restResponse tDataA
 ```
-will automatically return an HTTP 200 OK response. You can also specify a status code in the 2nd parameter:
+will automatically return an `HTTP 200 OK` response. You can also specify a status code in the 2nd parameter:
 ```
 restResponse tDataA, 201 // Send am HTTP 201 Created
 ```
@@ -112,10 +112,6 @@ If you don't specify a response code and the data array has no data, the respons
 ```
 restResponse "" // HTTP 404 Not Found
 ```
-
-
-
-
 
 ## Authentication (COMING SOON...)
 
