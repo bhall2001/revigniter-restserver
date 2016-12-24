@@ -19,6 +19,7 @@ This is a very early development state at the moment. Github is being used to st
 - new restServer.lc samples page (with 1 working sample)
 
 ### What's Not Working
+- query string parameters (use /param1/value1/param2/value2 instead)
 - any form of authentication
 - API Keys
 - whitelist
