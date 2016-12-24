@@ -428,22 +428,22 @@ command preflightChecks
    rigLogMessage "debug", "in preflightChecks"
 
    try
-      // Check to see if Livecode Server is greater then or equal to 8.1.x
+      // Check to see if Livecode Server is greater then or equal to 8.1.0
       //if (is_php('5.4') === FALSE)
-      if livecodeVersion("8.1.0") is false then
+      if isLivecode("8.1.0") is false then
          // Rest Server library requires LC Server 8.1.X and later
          //throw new Exception('Using PHP v'.PHP_VERSION.', though PHP v5.4 or greater is required');
-         throw "Livecode Server Version 8.1.0 or greater is required"
+         throw "RestServer requires Livecode Server Version 8.1.0 or greater"
       end if
 
       // Check to see if Revigniter is greater than 1.9.4
-      if revigniterVersion("1.9.4") is false then
-         throw "Revigniter Version 1.9.4 or greater is required"
+      if isRevigniter("1.9.4") is false then
+         throw "RestServer requires Revigniter Version 1.9.4 or greater"
       end if
 
       // Check if com.livecode.library.json is installed
-      if libraryJson() is false then
-         throw "REST Server requires Extension com.livecode.library.json"
+      if isLibJson() is false then
+         throw "RestServer requires Extension com.livecode.library.json be installed"
       end if
    catch tErrorText
       put "RestController" & gEXT into tCurrentFile
@@ -456,6 +456,9 @@ command preflightChecks
       else
          put FALSE into tDisplayError
       end if
+
+      rigShowError tErrorText
+
       rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
    end try
 
@@ -2699,39 +2702,54 @@ end _parseQuery
 -- current server version is GREATER THAN OR EQUAL to the passed
 -- in parameter
 ------------------------------------------------------------------------
-function livecodeVersion pVersion
-   put the itemDelimiter into oldDelmin
+function isLivecode pVersion
+	rigLogMessage "debug", "In isLivecode"
+
    set the itemDelimiter to "."
    put the version into tLivecodeVersion
 
-   if (item 1 of pVersion >= item 1 of tLivecodeVersion) and (item 2 of pVersion >= item 2 of tLivecodeVersion) and (item 3 of pVersion >= item 3 of tLivecodeVersion) then
+   rigLogMessage "debug", item 1 of pVersion & ":" & item 1 of tLivecodeVersion
+
+
+   if (item 1 of pVersion <= item 1 of tLivecodeVersion) and (item 2 of pVersion <= item 2 of tLivecodeVersion) and (item 3 of pVersion <= item 3 of tLivecodeVersion) then
       put true into tResult
    else
       put false into tResult
    end if
 
-   set the itemDelimiter to oldDelim
+	rigLogMessage "debug", "tResult->" & tResult
 
-   return tResult
-end livecodeVersion
+
+
+	return tResult
+
+end isLivecode
 
 
 ------------------------------------------------------------------------
 -- Check the version of Revigniter. Returns true is greater or equal to
 -- the value passed in pVersion otherwise false.
 ------------------------------------------------------------------------
-function revigniterVersion pVersion
-   //RIVERSION
+function isRevigniter pVersion
+   rigLogMessage "debug", "in isRevigniter"
 
-   return true
-end revigniterVersion
+   set itemDelimiter to "."
+
+   if (item 1 of pVersion <= item 1 of RIVERSION) and (item 2 of pVersion <= item 2 of RIVERSION) and (item 3 of pVersion <= item 3 of RIVERSION) then
+      put true into tResult
+   else
+      put false into tResult
+   end if
+
+   return tResult
+end isRevigniter
 
 
 /*
 Check if com.livecode.library.json is installed. Returns boolean true
 if installed othewise false
 */
-function libraryJson
+function isLibJson
    /*
    # CHECK IF FILE EXISTS
    set the itemDel to "/"
@@ -2750,7 +2768,7 @@ function libraryJson
 
 
    return true
-end libraryJson
+end isLibJson
 
 // returns Request Arguments Array
 function requestArgs
