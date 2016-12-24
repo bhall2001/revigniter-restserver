@@ -462,6 +462,9 @@ command preflightChecks
       rigLogException tErrorData, tDisplayError, tCurrentFile, tCurrentMethod
    end try
 
+   // AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
+   rigLoadExtension "com.livecode.library.json"
+
    // Set the default value of global xss filtering. Same approach as Revigniter
    //$this->_enable_xss = ($this->config->item('global_xss_filtering') === TRUE);
    put rigConfigItem("globalXssFlitering") into sEnableXSS
@@ -2746,28 +2749,19 @@ end isRevigniter
 
 
 /*
-Check if com.livecode.library.json is installed. Returns boolean true
-if installed othewise false
+ * Check if com.livecode.library.json is installed. Returns boolean true
+ * if installed othewise false
 */
 function isLibJson
-   /*
    # CHECK IF FILE EXISTS
-   set the itemDel to "/"
-   put gAPPPATH & tModulePath & "config/" & item -1 of tConfigFileName & gEXT into tFilepath
+   put gAPPPATH & "extensions/com.livecode.library.json/module.lcm" into tFilepath
 
    if there is a file tFilepath then
+      return true
    else
-      if pFailGracefully is TRUE then
-         return FALSE
-      else
-         rigShowError "The configuration file" && item -1 of tConfigFileName & gEXT && "does not exist."
-      end if
+      return FALSE
    end if
-   */
 
-
-
-   return true
 end isLibJson
 
 // returns Request Arguments Array
@@ -2787,9 +2781,6 @@ end requestArgs
 ------------------------------------------------------------------------
 -- Initialize the REST server and process the request
 ------------------------------------------------------------------------
-
-// AUTOMATICALLY LOAD EXTENSION / LIBS / HELPERS / LANGUAGE FILES
-rigLoadExtension "com.livecode.library.json"
 
 // Verify all the correct software versions are being used
 preflightChecks
