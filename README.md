@@ -7,14 +7,31 @@ The first part of this project now works. It is possible to send in a "GET" requ
 This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
 ### Completed
+- Validates Livecode, revIgniter and JSON Library in pre-flight
 - GET Request works (mostly) including URI parameters (ie. users/id/1)
 - URI can contain /format/json or /format/lson for response formats.
+- json and lson response formats
 - Github project created. Please use develop branch for Pushes.
 - project structure
 - rest.lc config file
 - restControllerLang.lc language file
 - new welcome.lc with link to samples page
 - new restServer.lc samples page (with 1 working sample)
+
+### What's Not Working
+- any form of authentication
+- API Keys
+- whitelist
+- blacklist
+- lson request format
+- request format from HEADER
+- response format from HEADER
+- PUT
+- DELETE
+- UPDATE
+- OPTIONS
+- HEAD
+- csv, html, yaml or xml formats
 
 ## Requirements
   * Livecode Server 8.1.0 or above
@@ -23,7 +40,9 @@ This is a very early development state at the moment. Github is being used to st
 
 ## Installation
 
-Copy the application/libraries/Format.lc and application/libraries/RestController.lc files into your revIgniter application's directory. Additionally, copy the application/config/rest.lc file to your application's configuration directory and application/language/english/restControllerLang.lc file to your application's language directory.
+Copy ResController.lc, Format.lc, MY_Input.lc and MY_Output.lc to application/libraries directory.
+
+Additionally, copy the application/config/rest.lc file to your application's configuration directory and application/language/english/restControllerLang.lc file to your application's language directory.
 
 OR
 
@@ -54,6 +73,7 @@ function books_post
 end index_post
 ```
 
+## Content Types
 RestController also supports PUT and DELETE methods, allowing you to support a truly RESTful interface.
 
 RestController supports many request/response formats, including XML, JSON, LSON, CSV and HTML. By default, the library checks the URL and looks for a format either as an extension or as a separate segment.
@@ -77,9 +97,25 @@ Any responses you make from the function (see responses for more on this) are re
 
 ## Responses
 
-Coming Soon...
+restResponse returns data in the User's requested format. The response data must be in the form of a Livecode Array. Returning the requested format is easy:
 
-## Authentication
+```
+restResponse tDataA
+```
+will automatically return an HTTP 200 OK response. You can also specify a status code in the 2nd parameter:
+```
+restResponse tDataA, 201 // Send am HTTP 201 Created
+```
+If you don't specify a response code and the data array has no data, the response code will automatically be set to 404 Not Found:
+```
+restResponse "" // HTTP 404 Not Found
+```
+
+
+
+
+
+## Authentication (COMING SOON...)
 
 The RestController Library also provides rudimentary support for HTTP basic authentication and/or the securer HTTP digest access authentication.
 
@@ -128,7 +164,7 @@ $ curl -X POST -H "X-API-KEY: some_key_here" http://example.com/books
 ```
 
 Additional security is placed on API keys by enabling rate limits for each key. Each call to the API from an authorized key increments a counter for that key. When the number of calls per hour reaches the key's limit, the requester is notified they have reached their hourly limit.
- 
+
 ## Other Documentation / Tutorials
 
 NetTuts: Working with RESTful Services in CodeIgniter (explains the CodeIngniter Class)
