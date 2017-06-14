@@ -2,13 +2,14 @@
 A RESTful Server for revIgniter.
 
 ## EARLY DEVELOPMENT STAGE
-The first part of this project now works. It is possible to send in a "GET" request being sent to the Controller's "get_controllerName" handler. There is a sample in the api directory (users.lc) which demonstrates how this works.
+Some progress to report. Both GET and POST are now working. To use these methods create a "get_controllerName" handler. There are samples in the api directory which demonstrate how this works.
 
 This is a very early development state at the moment. Github is being used to store the project in the hopes of someone wanting to jump onboard to help with development.
 
 ### Completed
+- POST request
+- GET request works including URI parameters (ie. users/id/1)
 - Validates Livecode, revIgniter and JSON Library in pre-flight
-- GET Request works (mostly) including URI parameters (ie. users/id/1)
 - URI can contain /format/json or /format/lson for response formats.
 - json and lson response formats
 - Github project created. Please use develop branch for Pushes.
@@ -37,7 +38,6 @@ This is a very early development state at the moment. Github is being used to st
 ## Requirements
   * Livecode Server 8.1.0 or above
   * revIgniter 1.9.4
-
 
 ## Installation
 
@@ -89,7 +89,6 @@ http://example.com/index.lc/v1/books/id/1/format/lson
 ```
 (default format if none specified is JSON)
 
-
 You can also set the format using the HTTP Headers. This is the recommend approach:
 
 ```
@@ -137,7 +136,7 @@ Any client connecting to your API will be checked against the blacklisted IP lis
 put "123.456.666.0, 987.654.93.1" into gConfig["restIpBlacklist"]
 ```
 
-## API Keys
+## API Keys (coming soon...)
 
 In addition to the authentication methods above, the RestController Library also supports the use of API keys. Enabling API keys is easy. Turn it on in your config/rest.php file:
 ```
