@@ -331,7 +331,7 @@ put "application/json" into sSupportedFormatsA["json"]
 --put "application/json" into sSupportedFormatsA["array"]
 --put "application/csv" into sSupportedFormatsA["csv"]
 --put "text/html" into sSupportedFormatsA["html"]
-put "text/plain" into sSupportedFormatsA["lson"]
+put "application/lc.array" into sSupportedFormatsA["lson"]
 --put "application/xml" into sSupportedFormatsA["xml"]
 
 ------------------------------------------------------------------------
@@ -1096,9 +1096,8 @@ function _detectInputFormat
       //$content_type = (strpos($content_type, ';') !== FALSE ? current(explode(';', $content_type)) : $content_type);
 
 
-      ## REMOVED LIVECODE BELOW FOR NOW...
-      //set the itemDelimiter to ";"
-      //put item 1 of tContentType into tContentType
+      set the itemDelimiter to ";"
+      put item 1 of tContentType into tContentType
 
       // Check all formats against the CONTENT-TYPE header
       //foreach ($this->_supported_formats as $type => $mime)
@@ -1114,6 +1113,7 @@ function _detectInputFormat
       //}
       repeat for each key aType in sSupportedFormatsA
          if tContentType = sSupportedFormatsA[aType] then
+            rigLogMessage "debug", "Input Format->" & aType
             return aType
          end if
       end repeat
@@ -1122,6 +1122,8 @@ function _detectInputFormat
 
 
    // Did not find a supported format so return nothing...
+   rigLogMessage "debug", "** NO INPUT FORMAT DETECTED **"
+
    return ""
 end _detectInputFormat
 
@@ -1139,7 +1141,7 @@ function _getDefaultOutputFormat
    //$default_format = (string) $this->config->item('rest_default_format');
    //return $default_format === '' ? 'json' : $default_format;
 
-   put rigConfigItem("restDefaultFormat") into tDefaultFormat
+   put rigFetchConfigItem("restDefaultFormat") into tDefaultFormat
    if tDefualtFormat = "" then put "json" into tDefaultFormat
 
    return tDefaultFormat
